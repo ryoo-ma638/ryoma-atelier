@@ -1,0 +1,60 @@
+---
+import { categoryLabels } from '../data/works.ts';
+import type { Work } from '../data/works.ts';
+interface Props { work: Work; i?: number; }
+const { work, i = 0 } = Astro.props;
+const cat = categoryLabels[work.category];
+const href = work.link ?? '/works';
+const external = href.startsWith('http');
+---
+<a
+  class={`card reveal d${(i % 4) + 1}`}
+  href={href}
+  style={`--tag:${cat.color}`}
+  {...(external ? { target: '_blank', rel: 'noopener' } : {})}
+>
+  <div class="media">
+    {work.thumb
+      ? <img src={work.thumb} alt={work.title} loading="lazy" />
+      : <span class="noimg">🖼️ 準備中</span>}
+    {work.status && <span class="badge">{work.status}</span>}
+    {work.link?.startsWith('http') && <span class="ext">↗</span>}
+  </div>
+  <div class="body">
+    <span class="tag">{cat.ja}</span>
+    <h3>{work.title}</h3>
+    <p>{work.summary}</p>
+    {work.tools && <span class="tools">{work.tools.slice(0, 3).join(' · ')}</span>}
+  </div>
+  <span class="peel" aria-hidden="true"></span>
+</a>
+
+<style>
+  .card {
+    position: relative; background: var(--card); border: 2px solid var(--ink);
+    border-radius: var(--r-md); overflow: hidden; box-shadow: var(--sh-2);
+    transition: transform .22s var(--spring), box-shadow .22s ease; display: flex; flex-direction: column;
+  }
+  .card:hover { transform: translateY(-8px) rotate(-.8deg); box-shadow: var(--sh-3); }
+  .card:hover .peel { transform: scale(1); opacity: 1; }
+  .card::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--tag); z-index: 2; }
+
+  .media { position: relative; aspect-ratio: 16 / 10; background: var(--paper-3); overflow: hidden; display: grid; place-items: center; }
+  .media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease); }
+  .card:hover .media img { transform: scale(1.06); }
+  .noimg { font-family: var(--f-round); font-weight: 700; color: var(--mut); }
+  .badge { position: absolute; left: .6rem; top: .6rem; font-family: var(--f-mono); font-size: .58rem; font-weight: 700; background: var(--ink); color: var(--paper); padding: .25rem .5rem; border-radius: var(--r-sm); }
+  .ext { position: absolute; right: .5rem; top: .5rem; width: 24px; height: 24px; display: grid; place-items: center; background: var(--amber); color: #3a2606; border-radius: 50%; font-weight: 900; font-size: .8rem; }
+
+  .body { padding: 1rem 1.1rem 1.2rem; flex: 1; }
+  .body h3 { font-size: 1.14rem; margin: .5rem 0 .4rem; line-height: 1.25; }
+  .body p { color: var(--mut); font-weight: 500; font-size: .9rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tools { display: block; margin-top: .7rem; font-family: var(--f-mono); font-size: .62rem; color: var(--amber-d); }
+
+  .peel {
+    position: absolute; top: 0; right: 0; width: 34px; height: 34px; opacity: 0; transform: scale(.4);
+    background: linear-gradient(135deg, transparent 50%, color-mix(in oklab, var(--tag) 30%, var(--paper)) 50%);
+    border-bottom-left-radius: 8px; box-shadow: -3px 3px 6px rgba(27,42,74,.18);
+    transition: transform .22s var(--spring), opacity .2s ease; transform-origin: top right;
+  }
+</style>

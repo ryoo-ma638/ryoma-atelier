@@ -1,0 +1,38 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props { title?: string; description?: string; }
+const {
+  title = '稜馬のポートフォリオ｜大崎稜馬',
+  description = 'つくる人で、バンテリンドームのビール売り子。大崎稜馬（愛知工業大学）のポートフォリオ。CG・画像処理・Web・ゲームを、これだと思ったら最後までつくります。',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <a class="skip" href="#main">本文へスキップ</a>
+  <slot />
+  <script>
+    import '../scripts/motion.js';
+  </script>
+  <style is:global>
+    .skip { position: absolute; left: -999px; top: 0; z-index: 200; background: var(--ink); color: var(--paper); padding: .6rem 1rem; border-radius: 0 0 var(--r-sm) 0; }
+    .skip:focus { left: 0; }
+  </style>
+</body>
+</html>

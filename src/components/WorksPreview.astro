@@ -1,0 +1,33 @@
+---
+import { works } from '../data/works.ts';
+import WorkCard from './WorkCard.astro';
+// 代表作（featured）でサムネのあるものを最大8件。
+const picks = works.filter((w) => w.featured && w.thumb).slice(0, 8);
+---
+<section class="works section" id="works">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <p class="eyebrow reveal"><span class="dot"></span>02 — つくったもの</p>
+        <h2 class="big reveal d1">
+          <span class="rise-char">代</span><span class="rise-char">表</span><span class="rise-char">作</span>
+          <span class="mut small">を、いくつか。</span>
+        </h2>
+      </div>
+      <a class="btn ghost reveal d2" href="/works">ぜんぶ見る →</a>
+    </div>
+
+    <div class="grid">
+      {picks.map((w, i) => <WorkCard work={w} i={i} />)}
+    </div>
+  </div>
+
+  <style>
+    .head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .big .small { font-size: .42em; font-weight: 700; }
+    .grid {
+      margin-top: 2.4rem; display: grid; gap: clamp(1rem, 2.4vw, 1.6rem);
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+  </style>
+</section>

@@ -1,0 +1,57 @@
+/* =========================================================
+   デザイントークン — 「稜馬のアトリエ」
+   生成りの明るい仕事場 / 馬の紺 / たてがみの琥珀 / 手売りの朱
+   ========================================================= */
+:root {
+  /* --- 面 --- */
+  --paper:    #F7F1E4;   /* 生成り（基調） */
+  --paper-2:  #FBF7EE;   /* 一段明るい紙 */
+  --paper-3:  #EFE7D5;   /* 影・沈み */
+  --card:     #FFFDF8;
+
+  /* --- 墨・線 --- */
+  --ink:      #1B2A4A;   /* 馬の紺（純黒は使わない） */
+  --ink-2:    #33405e;
+  --mut:      #6A6152;   /* 副文 */
+
+  /* --- 芯・差し色 --- */
+  --amber:    #E8A13A;   /* たてがみの琥珀＝サイトを貫く芯 */
+  --amber-d:  #C9871F;
+  --amber-l:  #F6C878;
+  --scarlet:  #E4572E;   /* 手売りの熱・判子の朱 */
+  --scarlet-d:#C33E1A;
+
+  /* --- 分野色（プリズム＝色々な分野。凡例/タグでのみ使う） --- */
+  --c-blue:   #3E7BFA;
+  --c-cyan:   #17B0B8;
+  --c-red:    #E4572E;
+  --c-yellow: #E8A13A;
+  --c-green:  #2FA46B;
+  --c-violet: #8A6BE0;
+  --c-orange: #EE7A3A;
+
+  /* --- かたち --- */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 26px;
+  --r-pill: 999px;
+
+  /* --- 影（紙の浮き） --- */
+  --sh-1: 0 2px 0 var(--paper-3);
+  --sh-2: 4px 6px 0 rgba(27,42,74,.12);
+  --sh-3: 8px 12px 24px rgba(27,42,74,.14);
+  --sh-stamp: 0 4px 0 var(--amber-d);
+
+  /* --- 間 --- */
+  --gutter: clamp(1.1rem, 5vw, 4rem);
+  --stack:  clamp(3.5rem, 9vw, 8rem);
+
+  /* --- 動き --- */
+  --spring: cubic-bezier(.34, 1.56, .64, 1);   /* 弾む */
+  --ease:   cubic-bezier(.22, 1, .36, 1);      /* 滑らか */
+
+  /* --- 書体 --- */
+  --f-head: "Zen Kaku Gothic New", system-ui, sans-serif;
+  --f-round:"Zen Maru Gothic", "Zen Kaku Gothic New", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+}

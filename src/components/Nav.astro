@@ -1,0 +1,116 @@
+---
+// ※「弓木」は作品（著作権に配慮した非公式ファンサイト）なのでヘッダーには置かず、
+//   作品セクションのカードから到達させる。
+const links = [
+  { ja: '作品',   en: 'WORKS',  href: '/works' },
+  { ja: 'ぼく',   en: 'ABOUT',  href: '/about' },
+  { ja: 'CEED',  en: 'CLUB',   href: '/ceed' },
+];
+// 現在地のハイライト（トップは「作品」を仮アクティブに）
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+<header class="bar">
+  <a class="brand" href="/" aria-label="稜馬のポートフォリオ トップへ">
+    <img class="horse" src="/assets/mascot/logo3d.png" alt="うまくん" />
+    <span class="name">稜馬<small>のアトリエ</small></span>
+  </a>
+
+  <nav class="links" aria-label="メイン">
+    {links.map((l) => (
+      <a href={l.href} class={isActive(l.href) ? 'lk active' : 'lk'} aria-current={isActive(l.href) ? 'page' : undefined}>
+        <span class="ja">{l.ja}</span>
+        <span class="en">{l.en}</span>
+        <svg class="mk" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M2,6 C20,2 42,9 58,5 C74,2 90,7 98,4" />
+        </svg>
+      </a>
+    ))}
+    <a class="btn call" href="#contact" data-confetti="26">声かけて<span class="wave">👋</span></a>
+  </nav>
+
+  <!-- 芯ライン＝スクロールでビールのように満ちる -->
+  <div class="spine" data-progress aria-hidden="true">
+    <span class="fill"></span>
+    <span class="foam"></span>
+  </div>
+</header>
+
+<style>
+  .bar {
+    position: sticky; top: 0; z-index: 80;
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: .7rem var(--gutter);
+    background: color-mix(in oklab, var(--paper) 78%, transparent);
+    backdrop-filter: blur(12px) saturate(1.15);
+    -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  }
+
+  /* --- ブランド（馬＋名前） --- */
+  .brand { display: flex; align-items: center; gap: .6rem; }
+  .horse {
+    width: 48px; height: 48px; flex: 0 0 auto; object-fit: contain;
+    transform-origin: 70% 80%;
+    animation: gallopIn 1s var(--spring) both;
+  }
+  .brand:hover .horse { animation: earTwitch .5s var(--spring); }
+  @keyframes gallopIn {
+    0%   { opacity: 0; transform: translateX(-56px) rotate(-14deg); }
+    60%  { opacity: 1; transform: translateX(6px) rotate(3deg); }
+    100% { opacity: 1; transform: none; }
+  }
+  @keyframes earTwitch {
+    0%,100% { transform: rotate(0); } 40% { transform: rotate(-7deg) translateY(-2px); } 70% { transform: rotate(4deg); }
+  }
+  .name { font-weight: 900; font-size: 1.28rem; line-height: .95; letter-spacing: .02em; }
+  .name small {
+    display: block; font-family: var(--f-round); font-weight: 700; font-size: .72rem;
+    letter-spacing: .04em; color: var(--amber-d); margin-top: 1px;
+  }
+
+  /* --- リンク --- */
+  .links { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
+  .lk { position: relative; padding: .2rem .15rem .35rem; font-weight: 700; }
+  .lk .ja { font-size: 1.04rem; }
+  .lk .en { display: block; font-family: var(--f-mono); font-size: .54rem; font-weight: 500; letter-spacing: .14em; color: var(--mut); }
+  .lk .mk {
+    position: absolute; left: -4px; right: -4px; bottom: -2px; width: calc(100% + 8px); height: 9px;
+    overflow: visible;
+  }
+  .lk .mk path {
+    fill: none; stroke: var(--amber); stroke-width: 5; stroke-linecap: round;
+    stroke-dasharray: 120; stroke-dashoffset: 120;
+    transition: stroke-dashoffset .45s var(--ease);
+  }
+  .lk:hover .mk path { stroke-dashoffset: 0; }
+  .lk.active .mk path { stroke-dashoffset: 0; stroke: var(--amber); }
+  .lk:hover { color: var(--amber-d); }
+
+  .call { padding: .58rem 1.15rem; font-size: .98rem; }
+  .call .wave { display: inline-block; transform-origin: 70% 80%; animation: wave 2.6s ease-in-out infinite; }
+  @keyframes wave { 0%,88%,100% { transform: rotate(0); } 92% { transform: rotate(18deg); } 96% { transform: rotate(-8deg); } }
+
+  /* --- 芯ライン（ビール充填） --- */
+  .spine { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: color-mix(in oklab, var(--amber) 24%, var(--paper)); }
+  .spine .fill {
+    position: absolute; inset: 0; transform-origin: left; transform: scaleX(var(--p, 0));
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .spine .foam {
+    position: absolute; top: -2px; height: 7px; width: 7px; border-radius: 50%;
+    background: var(--amber-l); box-shadow: 0 0 8px var(--amber-l);
+    left: calc(var(--p, 0) * 100%); transform: translateX(-50%);
+    opacity: calc(var(--p, 0) * 3);
+  }
+
+  @media (max-width: 720px) {
+    .lk .en { display: none; }
+    .links { gap: 1rem; }
+    .name small { display: none; }
+    .horse { width: 38px; height: 38px; }
+  }
+  @media (max-width: 520px) {
+    .brand .name { font-size: 1.1rem; }
+    .lk:not(.active):not(.call) { display: none; } /* 省スペース：主要のみ（後で正式メニュー化） */
+  }
+</style>

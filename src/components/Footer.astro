@@ -1,0 +1,50 @@
+---
+const year = 2026;
+---
+<footer class="foot" id="contact">
+  <div class="wrap inner">
+    <span class="pony2" data-horse aria-hidden="true"></span>
+    <p class="eyebrow reveal"><span class="dot"></span>まだ、作ってる。</p>
+    <h2 class="cta-head reveal d1">声、かけてください。</h2>
+    <p class="sub reveal d2">現場でも、ここでも。まずは雑談からでも、うれしいです。</p>
+
+    <div class="btns reveal d3">
+      <a class="btn big" href="mailto:osaki638ryoma@gmail.com" data-confetti="60">メールする ✉️</a>
+      <a class="btn ghost" href="https://www.instagram.com/ryoma_v_dome/" target="_blank" rel="noopener">Instagram →</a>
+      <a class="btn ghost" href="https://github.com/ryoo-ma638" target="_blank" rel="noopener">GitHub →</a>
+    </div>
+
+    <p class="mark" aria-hidden="true">RYOMA</p>
+    <p class="copy">© {year} 大崎稜馬 — つくって、手渡す。</p>
+  </div>
+
+  <style>
+    .foot { position: relative; margin-top: var(--stack); padding: var(--stack) 0 3rem; background: var(--ink); color: var(--paper); overflow: hidden; }
+    .foot::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, var(--amber), var(--scarlet)); }
+    .inner { position: relative; z-index: 2; text-align: center; }
+
+    .foot .eyebrow { color: var(--amber-l); justify-content: center; }
+    .foot .eyebrow .dot { background: var(--amber); }
+    .cta-head { font-size: clamp(2.4rem, 8vw, 5.5rem); margin: .6rem 0 .8rem; }
+    .sub { color: color-mix(in oklab, var(--paper) 78%, transparent); font-weight: 500; }
+
+    .btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+    .btn.big { font-size: 1.15rem; padding: .95rem 2rem; }
+    .foot .btn.ghost { color: var(--paper); border-color: var(--paper); }
+    .foot .btn.ghost:hover { color: var(--amber-l); border-color: var(--amber-l); }
+
+    .mark {
+      font-weight: 900; font-size: clamp(4rem, 20vw, 15rem); line-height: .8; margin-top: 1.5rem;
+      color: transparent; -webkit-text-stroke: 2px color-mix(in oklab, var(--paper) 22%, transparent);
+      letter-spacing: .02em; user-select: none; pointer-events: none;
+    }
+    .copy { font-family: var(--f-mono); font-size: .72rem; color: color-mix(in oklab, var(--paper) 55%, transparent); margin-top: -.6rem; }
+
+    .pony2 {
+      position: absolute; bottom: 12%; right: 6%; width: 150px; height: 120px; opacity: .16;
+      background: var(--amber);
+      -webkit-mask: url('/assets/horse-wire.png') center/contain no-repeat;
+      mask: url('/assets/horse-wire.png') center/contain no-repeat;
+    }
+  </style>
+</footer>

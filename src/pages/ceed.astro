@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="CEED ― 稜馬のアトリエ" description="学生団体CEED（副部長）での活動。準備中。">
+  <Nav />
+  <main id="main">
+    <header class="chero wrap">
+      <p class="eyebrow"><span class="dot"></span>CLUB · CEED</p>
+      <h1 class="ctitle">CEED<span class="sub">（副部長）</span></h1>
+      <p class="lead">発表・スライド制作、イベント企画、WEB班 ―― 「誰も置いてけぼりにしない」を大切に。</p>
+      <div class="soon"><span class="hanko-mini" aria-hidden="true">馬</span>このページは準備中です。<br /><a class="btn ghost" href="/works">先に作品を見る →</a></div>
+    </header>
+  </main>
+  <Footer />
+</Base>
+<style>
+  .chero { padding: clamp(3rem, 8vw, 6rem) 0; }
+  .ctitle { font-size: clamp(3rem, 10vw, 6rem); }
+  .ctitle .sub { font-size: .32em; color: var(--mut); font-weight: 700; }
+  .lead { margin-top: 1rem; max-width: 40ch; }
+  .soon { position: relative; margin-top: 2.5rem; background: var(--card); border: 2px dashed var(--ink); border-radius: var(--r-lg); padding: 2rem; font-family: var(--f-round); font-weight: 700; box-shadow: var(--sh-1); }
+  .soon .btn { margin-top: 1rem; }
+  .hanko-mini { position: absolute; right: 1rem; top: 1rem; width: 34px; height: 34px; display: grid; place-items: center; color: #fff; background: var(--scarlet); border-radius: 24% 26% 22% 28%; transform: rotate(-8deg); font-size: .8rem; }
+</style>

@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { works, categoryLabels, type Category } from '../data/works.ts';
+
+// 分野の並び（専門優先）。
+const order: Category[] = ['web', 'imaging', 'cg', 'video', 'planning', 'graphic', 'sound'];
+const groups = order
+  .map((c) => ({ c, label: categoryLabels[c], items: works.filter((w) => w.category === c) }))
+  .filter((g) => g.items.length);
+const total = works.length;
+---
+<Base title="作品 ― 稜馬のアトリエ" description="大崎稜馬の作品一覧。CG・画像処理・Web・映像・企画・グラフィックを分野ごとに。">
+  <Nav />
+  <main id="main">
+    <header class="whero">
+      <div class="wrap">
+        <p class="eyebrow"><span class="dot"></span>WORKS · つくったもの</p>
+        <h1 class="wtitle">作品<span class="hanko" aria-hidden="true">馬</span></h1>
+        <p class="wlead">「これだ」と思って、最後までつくったもの。<b>全{total}点</b>を分野ごとに並べています。</p>
+        <nav class="jump" aria-label="分野で移動">
+          {groups.map((g) => (
+            <a href={`#cat-${g.c}`} style={`--tag:${g.label.color}`}>
+              <span class="jd"></span>{g.label.ja}<span class="jc">{g.items.length}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    {groups.map((g, gi) => (
+      <section class="cat section" id={`cat-${g.c}`} style={`--tag:${g.label.color}`}>
+        <div class="wrap">
+          <h2 class="cat-head reveal">
+            <span class="num">{String(gi + 1).padStart(2, '0')}</span>
+            <span class="cja">{g.label.ja}</span>
+            <span class="cen">{g.label.en}</span>
+            <span class="ccnt">{g.items.length}</span>
+          </h2>
+          <div class="grid">
+            {g.items.map((w, i) => <WorkCard work={w} i={i} />)}
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <p class="tail wrap">
+      弓木さんの推しサイト「YUMIKI WORLD」は、<b>著作権・肖像権に配慮した非公式ファンサイト</b>としてWeb作品に入れています。
+    </p>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .whero { padding: clamp(2.5rem, 7vw, 5rem) 0 1rem; }
+  .wtitle { font-size: clamp(3rem, 11vw, 7rem); display: inline-block; position: relative; }
+  .wtitle .hanko { position: absolute; top: -.05em; right: -.7em; width: 1em; height: 1em; display: grid; place-items: center; font-family: var(--f-round); font-weight: 700; font-size: .3em; color: #fff; background: var(--scarlet); border-radius: 24% 26% 22% 28%; transform: rotate(-8deg); box-shadow: inset 0 0 0 3px rgba(255,255,255,.35); }
+  .wlead { margin-top: 1rem; font-size: clamp(1rem, 2.2vw, 1.25rem); font-weight: 700; }
+  .wlead b { color: var(--amber-d); }
+
+  .jump { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.8rem; }
+  .jump a { display: inline-flex; align-items: center; gap: .45rem; font-family: var(--f-round); font-weight: 700; font-size: .9rem; padding: .45rem .9rem; border-radius: var(--r-pill); background: var(--card); border: 2px solid var(--ink); box-shadow: var(--sh-1); transition: transform .15s var(--spring); }
+  .jump a:hover { transform: translateY(-3px); }
+  .jump .jd { width: 10px; height: 10px; border-radius: 50%; background: var(--tag); }
+  .jump .jc { font-family: var(--f-mono); font-size: .7rem; color: var(--mut); }
+
+  .cat { padding-block: clamp(2.2rem, 5vw, 3.6rem); scroll-margin-top: 90px; }
+  .cat-head { display: flex; align-items: baseline; gap: .8rem; flex-wrap: wrap; padding-bottom: .3rem; border-bottom: 3px solid var(--tag); margin-bottom: 1.8rem; }
+  .cat-head .num { font-family: var(--f-mono); font-size: 1.1rem; color: var(--tag); font-weight: 700; }
+  .cat-head .cja { font-size: clamp(1.5rem, 4vw, 2.3rem); font-weight: 900; }
+  .cat-head .cen { font-family: var(--f-mono); font-size: .7rem; color: var(--mut); letter-spacing: .1em; }
+  .cat-head .ccnt { margin-left: auto; font-family: var(--f-round); font-weight: 700; color: var(--tag); }
+  .grid { display: grid; gap: clamp(1rem, 2.4vw, 1.6rem); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+  .tail { display: block; margin-top: 2rem; color: var(--mut); font-weight: 500; font-size: .95rem; }
+  .tail b { color: var(--ink); }
+</style>
