@@ -1,0 +1,437 @@
+---
+import Yumiki from "../../layouts/Yumiki.astro";
+import { nav, sns, img } from "../../data/yumiki.ts";
+const cards = nav.filter((n) => n.href !== "/yumiki/");
+const cardDesc: Record<string, string> = {
+  "/yumiki/profile": "生年月日・経歴・参加シングル・出演番組",
+  "/yumiki/charm": "弓木ワールド・会話力・努力家・まとめ",
+  "/yumiki/memory": "ライブ・ミーグリ・イベントの思い出",
+  "/yumiki/relations": "首ンセス（軍団）・お世話になっている方々",
+  "/yumiki/words": "ブログや発言から集めた、弓木さん本人の言葉",
+};
+const cardColor: Record<string, string> = {
+  "/yumiki/profile": "var(--y-sky)",
+  "/yumiki/charm": "var(--y-pink)",
+  "/yumiki/memory": "var(--y-mint)",
+  "/yumiki/relations": "var(--y-butter)",
+  "/yumiki/words": "var(--y-peach)",
+};
+// 各ナビを「アルバムに貼ったチェキ／シール」に。代表チェキの実在画像・キャプション・口語CTA・付箋メモを紐付け（事実とdataは不変・見せ方のみ）。
+const cardCheki: Record<
+  string,
+  { img: string; alt: string; cap: string; cta: string; note: string; stamp: string; pos?: string }
+> = {
+  "/yumiki/profile": {
+    img: "card_profile.jpg",
+    alt: "弓木奈於さん",
+    cap: "NAO YUMIKI",
+    cta: "沼の入口へ →",
+    note: "京都府・2/3生まれ",
+    stamp: "PROFILE",
+    pos: "center 42%",
+  },
+  "/yumiki/charm": {
+    img: "bg-summary.jpg",
+    alt: "弓木奈於さん",
+    cap: "YUMIKI WORLD",
+    cta: "魅力にハマる →",
+    note: "はんなりすっとこどっこい",
+    stamp: "CHARM ♡",
+  },
+  "/yumiki/memory": {
+    img: "card_relations.jpg",
+    alt: "弓木奈於さん",
+    cap: "LIVE & EVENT",
+    cta: "現場レポへ →",
+    note: "全ツ・ミーグリの記録",
+    stamp: "MEMORY",
+  },
+  "/yumiki/relations": {
+    img: "fav_shot_03.jpg",
+    alt: "弓木奈於さん",
+    cap: "RELATIONS",
+    cta: "首ンセス図鑑へ →",
+    note: "軍団＆お世話になった方々",
+    stamp: "RELATIONS",
+  },
+  "/yumiki/words": {
+    img: "card_words.jpg",
+    alt: "弓木奈於さん",
+    cap: "HER WORDS",
+    cta: "言葉を読む →",
+    note: "ブログ・発言から",
+    stamp: "WORDS ✍",
+    pos: "center 40%",
+  },
+};
+const heroLead =
+  "天真爛漫なトークでバラエティを沸かせ、影では努力を惜しまない——乃木坂46 4期生・弓木奈於さんの魅力を、ファン目線でめいっぱい詰め込んだ非公式ファンサイトです。";
+// ヒーロー写真（サムネ）の背面に斜めで流すゴーストの言葉（ポートフォリオの hero-kinetic を弓木仕様に）
+const kineticWords = ["弓木奈於", "NAO YUMIKI", "ゆみっきー", "乃木坂46", "はんなり", "なおちゃん"];
+// 今の弓木さん（2026年6月時点の最新トピックス・事実）
+const now = [
+  { emoji: "💿", t: "最新シングル", d: "42nd『是非に及ばず』(2026.7.22)に選抜入り。センターは一ノ瀬美空", c: "var(--y-sky)" },
+  { emoji: "📸", t: "最新グラビア", d: "『B.L.T. 2026年5月号』に登場（“ふつうで幸せな日曜日”）", c: "var(--y-pink)" },
+  { emoji: "⭐️", t: "選抜の常連", d: "選抜入りを続ける、グループに欠かせない存在に", c: "var(--y-butter)" },
+  { emoji: "📺", t: "バラエティで活躍", d: "『ラヴィット！』『乃木坂工事中』などで天然トークが炸裂", c: "var(--y-mint)" },
+];
+---
+<Yumiki>
+  <!-- HERO -->
+  <section class="y-hero">
+    <div class="y-hero-glow" aria-hidden="true"></div>
+    <div class="y-hero-kinetic" aria-hidden="true">
+      <div class="yhk-row yhk-row--1">{[...kineticWords, ...kineticWords, ...kineticWords].map((w, i) => (<span class:list={{ on: i % 3 === 1 }}>{w} <i>✦</i> </span>))}</div>
+      <div class="yhk-row yhk-row--2">{[...kineticWords, ...kineticWords, ...kineticWords].map((w, i) => (<span class:list={{ on: i % 3 === 2 }}>{w} <i>♡</i> </span>))}</div>
+      <div class="yhk-row yhk-row--3">{[...kineticWords, ...kineticWords, ...kineticWords].map((w, i) => (<span class:list={{ on: i % 4 === 0 }}>{w} <i>✿</i> </span>))}</div>
+    </div>
+    <div class="y-container y-hero-inner">
+      <div class="y-hero-text y-reveal">
+        <span class="y-hero-eyebrow">NOGIZAKA46 <i>✦</i> 4<small>TH</small> GENERATION</span>
+        <h1 class="y-hero-title">
+          <span class="y-hero-kicker">ようこそ、</span>
+          <span class="y-hero-big"><span class="y-hero-name">弓木ワールド</span><span class="y-hero-he">へ。</span></span>
+        </h1>
+        <p class="y-hero-romaji">YUMIKI&nbsp;NAO &nbsp;/&nbsp; 弓木 奈於</p>
+        <p class="y-hero-lead">{heroLead}</p>
+        <ul class="y-hero-facts">
+          <li><span>🎂</span> 1999.2.3</li>
+          <li><span>📍</span> 京都府</li>
+          <li><span>📏</span> 165cm</li>
+          <li><span>🩷</span> 赤 × 黄緑</li>
+        </ul>
+        <div class="y-hero-btns">
+          <a href="/yumiki/charm" class="y-btn y-btn--peach">魅力を見る ♡</a>
+          <a href="/yumiki/profile" class="y-btn y-btn--soft">プロフィール</a>
+        </div>
+        <div class="y-hero-sns">
+          {sns.map((s) => (<a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}><img src={img(s.icon)} alt={s.label} loading="lazy" /></a>))}
+        </div>
+      </div>
+      <div class="y-hero-photo y-reveal" data-delay="1">
+        <span class="y-photo-card" aria-hidden="true"></span>
+        <span class="y-photo-ring" aria-hidden="true"></span>
+        <div class="y-photo-frame">
+          <img src={img("arsha/42.jpg")} alt="弓木奈於さん（42ndシングル アー写）" fetchpriority="high" onerror="this.src='/assets/yumiki/arsha/42.jpg'" />
+        </div>
+        <span class="y-photo-badge" aria-hidden="true"><b>♡</b><i>MY OSHI</i></span>
+        <span class="y-blob y-blob--1">♡</span>
+        <span class="y-blob y-blob--2">✦</span>
+        <span class="y-blob y-blob--3">✿</span>
+        <span class="y-blob y-blob--4">⭐️</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 流れるリボン -->
+  <div class="y-ribbon" aria-hidden="true">
+    <div class="y-ribbon-track">
+      {Array.from({ length: 4 }).map(() => (
+        <span class="y-ribbon-unit">弓木奈於 <i>✦</i> NAO YUMIKI <i>✦</i> 乃木坂46 4期生 <i>✦</i> ゆみっきー <i>✦</i> </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- お誕生日カウントダウン（2/3・クライアント側で毎日自動更新） -->
+  <section class="y-bday-sec">
+    <div class="y-container">
+      <div class="y-bday y-reveal" id="y-bday">
+        <span class="y-bday-tape" aria-hidden="true"></span>
+        <figure class="sb-cheki y-bday-photo" style="--tape:var(--y-pink)">
+          <img src={img("birthday-26.jpg")} alt="弓木奈於さんの誕生日をお祝いする様子" loading="lazy" />
+          <figcaption>🎂 Happy Birthday なお</figcaption>
+        </figure>
+        <div class="y-bday-body">
+          <span class="y-bday-cake" aria-hidden="true">🎂</span>
+          <p class="y-bday-msg" id="y-bday-msg">弓木さんのお誕生日は <b>2月3日</b></p>
+          <p class="y-bday-count" id="y-bday-count">もうすぐ ♡</p>
+        </div>
+        <span class="y-bday-deco y-bday-deco--1" aria-hidden="true">✦</span>
+        <span class="y-bday-deco y-bday-deco--2" aria-hidden="true">♡</span>
+        <span class="y-bday-deco y-bday-deco--3" aria-hidden="true">✿</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOW / 最新トピックス -->
+  <section class="y-section y-now-sec">
+    <div class="y-container">
+      <div class="sb-head y-reveal">
+        <span class="sb-num sb-head-num" style="--cc:var(--y-pink)" aria-hidden="true">01</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Now</span>
+          <h2>✨ 今の<span class="sb-mark" style="--cc:var(--y-butter)">弓木さん</span></h2>
+        </span>
+        <span class="sb-stamp sb-head-stamp" style="--cc:var(--y-peach)">♡ LATEST</span>
+      </div>
+      <div class="y-now-grid">
+        {now.map((n, i) => (
+          <div class="y-memo y-reveal" data-delay={(i % 4) + 1} style={`--cc:${n.c}`}>
+            <span class="y-memo-tape" aria-hidden="true"></span>
+            <span class="y-memo-emoji">{n.emoji}</span>
+            <h3 class="y-memo-t">{n.t}</h3>
+            <p class="y-memo-d">{n.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- NAV CARDS（探検ナビ：均一角丸カード → アルバムに貼り混ぜたチェキ／シール風） -->
+  <section class="y-section sb-explore">
+    <div class="sb-grid sb-explore-paper" aria-hidden="true"></div>
+    <div class="y-container">
+      <!-- 中央寄せテンプレを崩すノートの章見出し（左寄せ＋テープ＋通し番号） -->
+      <div class="sb-head y-reveal">
+        <span class="sb-num sb-head-num" style="--cc:var(--y-peach)" aria-hidden="true">02</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Explore</span>
+          <h2><span class="sb-mark" style="--cc:var(--y-butter)">弓木ワールド</span>を探検しよう</h2>
+        </span>
+        <span class="sb-stamp sb-head-stamp" style="--cc:var(--y-pink)">♡ INDEX</span>
+      </div>
+      <p class="sb-note sb-explore-note">気になるページから、好きにめくってね</p>
+
+      <div class="sb-album">
+        {cards.map((c, i) => {
+          const ck = cardCheki[c.href];
+          return (
+            <a
+              href={c.href}
+              class="sb-album-item y-reveal"
+              data-delay={(i % 4) + 1}
+              style={`--cc:${cardColor[c.href]}`}
+            >
+              <figure class="sb-cheki sb-taped sb-album-cheki" style={`--tape:${cardColor[c.href]}`}>
+                <span class={`sb-tape ${i % 2 === 0 ? "l" : "r"}`} aria-hidden="true"></span>
+                <span class="sb-stamp sb-album-stamp" aria-hidden="true">{c.emoji} {ck.stamp}</span>
+                <img src={img(ck.img)} alt={ck.alt} loading="lazy" style={ck.pos ? `object-position:${ck.pos}` : undefined} />
+                <figcaption>{ck.cap}</figcaption>
+              </figure>
+              <div class="sb-sticky sb-album-sticky">
+                <h3 class="sb-album-title"><span class="sb-album-emoji" aria-hidden="true">{c.emoji}</span>{c.label}</h3>
+                <p class="sb-album-desc">{cardDesc[c.href]}</p>
+                <span class="sb-album-cta">{ck.cta}</span>
+              </div>
+              <span class="sb-note sb-album-note" aria-hidden="true">{ck.note}</span>
+              <span class="sb-doodle sb-album-doodle" aria-hidden="true">{["♡", "✦", "✿", "⭐️", "♪"][i % 5]}</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* ===== HERO（雑誌風・大型） ===== */
+    .y-hero { position: relative; padding: clamp(1.5rem, 5vw, 3.5rem) 0 clamp(2rem, 5vw, 3.5rem); overflow: hidden; }
+    .y-hero-glow { position: absolute; inset: -25% -10% auto -10%; height: 130%; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(38% 48% at 78% 22%, color-mix(in srgb, var(--y-peach) 55%, transparent), transparent 70%),
+        radial-gradient(44% 52% at 18% 62%, color-mix(in srgb, var(--y-sky) 48%, transparent), transparent 70%),
+        radial-gradient(40% 40% at 62% 92%, color-mix(in srgb, var(--y-lav) 42%, transparent), transparent 70%);
+      filter: blur(10px); opacity: .85; animation: y-hero-glow 15s ease-in-out infinite alternate; }
+    @keyframes y-hero-glow { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(0,-2%,0) scale(1.07); } }
+
+    /* ヒーロー背景：斜めに流れるゴーストの言葉（サムネ背面・ポートフォリオの hero-kinetic を弓木仕様に） */
+    .y-hero-kinetic { position: absolute; inset: -14% -12%; z-index: 0; display: flex; flex-direction: column; justify-content: center; gap: clamp(.1rem, 1.6vh, .9rem); transform: rotate(-8deg); pointer-events: none; opacity: .8; }
+    .yhk-row { display: flex; gap: 1.3rem; width: max-content; white-space: nowrap; font-family: var(--y-font-en); font-weight: 900; font-size: clamp(1.9rem, 8.4vw, 5.8rem); line-height: 1.05; color: transparent; -webkit-text-stroke: 1.6px color-mix(in srgb, var(--y-peach) 30%, transparent); }
+    .yhk-row i { font-style: normal; }
+    .yhk-row .on { -webkit-text-stroke: 0; }
+    .yhk-row--1 { animation: yhk1 52s linear infinite; }
+    .yhk-row--1 .on { color: color-mix(in srgb, var(--y-pink) 44%, transparent); }
+    .yhk-row--2 { -webkit-text-stroke-color: color-mix(in srgb, var(--y-sky) 32%, transparent); animation: yhk2 68s linear infinite; }
+    .yhk-row--2 .on { color: color-mix(in srgb, var(--y-sky) 42%, transparent); }
+    .yhk-row--3 { -webkit-text-stroke-color: color-mix(in srgb, var(--y-lav) 30%, transparent); animation: yhk1 86s linear infinite; }
+    .yhk-row--3 .on { color: color-mix(in srgb, var(--y-lav) 44%, transparent); }
+    @keyframes yhk1 { to { transform: translateX(-33.33%); } }
+    @keyframes yhk2 { from { transform: translateX(-33.33%); } to { transform: translateX(0); } }
+
+    .y-hero-inner { position: relative; z-index: 1; display: grid; gap: clamp(2rem, 4vw, 3rem); grid-template-columns: 1fr; align-items: center; }
+    @media (min-width: 880px) { .y-hero-inner { grid-template-columns: 1.05fr 0.95fr; } }
+
+    .y-hero-eyebrow { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--y-font-en); font-weight: 700; font-size: .78rem; letter-spacing: .14em; color: var(--y-ink-soft); background: #fff; border: 2px solid var(--y-line); padding: .42rem .95rem; border-radius: 999px; box-shadow: var(--y-shadow-sm); }
+    .y-hero-eyebrow i { color: var(--y-rose); font-style: normal; }
+    .y-hero-eyebrow small { font-size: .65em; }
+
+    .y-hero-title { margin: 1.1rem 0 .5rem; line-height: 1.06; }
+    .y-hero-kicker { display: block; font-size: clamp(1.1rem, 3vw, 1.7rem); font-weight: 700; color: var(--y-ink); }
+    .y-hero-big { display: block; font-size: clamp(2.9rem, 9.2vw, 5.6rem); font-weight: 900; letter-spacing: -.01em; }
+    .y-hero-name { background: linear-gradient(100deg, var(--y-peach), var(--y-lav) 45%, var(--y-sky) 82%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: y-shine 7s ease-in-out infinite; }
+    @keyframes y-shine { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    .y-hero-he { color: var(--y-ink); }
+
+    .y-hero-romaji { font-family: var(--y-font-en); font-weight: 700; letter-spacing: .1em; color: var(--y-muted); font-size: .82rem; margin-bottom: 1.1rem; }
+    .y-hero-lead { color: var(--y-ink-soft); max-width: 44ch; margin-bottom: 1.3rem; font-size: .96rem; }
+
+    .y-hero-facts { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; gap: .55rem; }
+    .y-hero-facts li { display: inline-flex; align-items: center; gap: .35rem; background: #fff; border: 2px solid var(--y-line); border-radius: 999px; padding: .4rem .85rem; font-size: .82rem; font-weight: 700; color: var(--y-ink); box-shadow: var(--y-shadow-sm); }
+
+    .y-hero-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+    .y-hero-sns { display: flex; gap: 0.7rem; }
+    .y-hero-sns a { width: 44px; height: 44px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: var(--y-shadow-sm); transition: transform .3s var(--y-ease); }
+    .y-hero-sns a:hover { transform: translateY(-3px) scale(1.08); }
+    .y-hero-sns img { width: 22px; height: 22px; }
+
+    /* 写真：背景カード＋回転リング＋多層フレーム＋ステッカー */
+    .y-hero-photo { position: relative; justify-self: center; width: min(80vw, 390px); aspect-ratio: 4/5; }
+    .y-photo-card { position: absolute; inset: 7% -6% -8% 7%; border-radius: 44px; background: linear-gradient(135deg, var(--y-pink), var(--y-lav)); transform: rotate(6deg); box-shadow: var(--y-shadow); }
+    .y-photo-ring { position: absolute; inset: -7%; border-radius: 50%; border: 2px dashed color-mix(in srgb, var(--y-peach) 65%, #fff); animation: y-spin 28s linear infinite; }
+    .y-photo-ring::before { content: "✦"; position: absolute; top: -2px; left: 50%; transform: translate(-50%,-50%); color: var(--y-butter); font-size: 1.3rem; }
+    @keyframes y-spin { to { transform: rotate(360deg); } }
+    .y-photo-frame { position: absolute; inset: 0; border-radius: 44px; overflow: hidden; border: 6px solid #fff; box-shadow: var(--y-shadow); animation: floaty 6s ease-in-out infinite; }
+    .y-photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .y-photo-badge { position: absolute; bottom: -5%; left: -7%; width: clamp(68px, 19%, 90px); aspect-ratio: 1; border-radius: 50%; background: #fff; box-shadow: var(--y-shadow); display: grid; place-content: center; text-align: center; line-height: 1; transform: rotate(-8deg); animation: wobble 5s ease-in-out infinite; }
+    .y-photo-badge b { color: var(--y-rose); font-size: 1.5rem; }
+    .y-photo-badge i { display: block; font-family: var(--y-font-en); font-style: normal; font-weight: 700; font-size: .55rem; letter-spacing: .08em; color: var(--y-ink-soft); margin-top: 2px; }
+
+    .y-blob { position: absolute; font-size: 2rem; animation: twinkle 2.6s ease-in-out infinite, floaty 7s ease-in-out infinite; pointer-events: none; }
+    .y-blob--1 { top: -4%; right: 3%; color: var(--y-peach); }
+    .y-blob--2 { top: 15%; left: -8%; color: var(--y-butter); animation-delay: .6s, .3s; font-size: 2.3rem; }
+    .y-blob--3 { bottom: 7%; right: -5%; color: var(--y-lav); animation-delay: 1.1s, .8s; }
+    .y-blob--4 { top: 46%; right: -7%; color: var(--y-sky); animation-delay: .4s, 1.2s; font-size: 1.4rem; }
+
+    /* 流れるリボン */
+    .y-ribbon { margin-top: clamp(1.6rem, 4vw, 2.6rem); padding: .7rem 0; background: linear-gradient(90deg, var(--y-peach), var(--y-butter), var(--y-mint), var(--y-sky), var(--y-lav), var(--y-peach)); overflow: hidden; transform: rotate(-1.2deg) scale(1.04); }
+    .y-ribbon-track { display: flex; width: max-content; animation: y-marquee 28s linear infinite; }
+    .y-ribbon-unit { font-family: var(--y-font-en); font-weight: 700; font-size: 1rem; letter-spacing: .04em; color: #fff; white-space: nowrap; padding-right: 1rem; text-shadow: 0 1px 2px rgba(120,90,80,.2); }
+    .y-ribbon-unit i { font-style: normal; }
+    @keyframes y-marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .y-ribbon-track, .y-photo-ring, .y-hero-glow, .y-hero-name, .yhk-row { animation: none; } }
+
+    .y-now-sec { padding-top: 0; }
+    /* スクラップブックのメモ風（付箋＋マスキングテープ＋互い違いの傾き） */
+    .y-now-grid { display: grid; gap: 1.4rem 1.2rem; grid-template-columns: repeat(2, 1fr); max-width: 760px; margin-inline: auto; }
+    @media (min-width: 880px) { .y-now-grid { grid-template-columns: repeat(4, 1fr); max-width: none; } }
+    .y-memo { position: relative; background: color-mix(in srgb, var(--cc) 15%, #fff); border: 1.5px solid color-mix(in srgb, var(--cc) 32%, #fff);
+      border-radius: 14px; padding: 1.6rem 1.3rem 1.4rem; box-shadow: var(--y-shadow-sm); transition: transform .35s var(--y-ease), box-shadow .35s var(--y-ease); }
+    .y-memo:nth-child(odd) { transform: rotate(-1.5deg); }
+    .y-memo:nth-child(even) { transform: rotate(1.5deg); margin-top: 1.5rem; }
+    .y-memo:hover { transform: rotate(0) translateY(-5px); box-shadow: var(--y-shadow); z-index: 1; }
+    .y-memo-tape { position: absolute; top: -9px; left: 20px; width: 66px; height: 22px; transform: rotate(-8deg); opacity: 0.85;
+      background: color-mix(in srgb, var(--cc) 62%, transparent); box-shadow: 0 2px 5px rgba(120,90,80,0.12);
+      -webkit-mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); }
+    .y-memo-emoji { font-size: 1.6rem; line-height: 1; }
+    .y-memo-t { font-size: 1.08rem; margin: 0.4rem 0 0.4rem; }
+    .y-memo-d { color: var(--y-ink-soft); font-size: 0.85rem; line-height: 1.75; }
+
+    /* ===== 探検ナビ＝スクラップブック・アルバム（チェキ＋付箋＋テープ＋通し番号） ===== */
+    .sb-explore { position: relative; overflow: hidden; }
+    /* 方眼ノートの紙地を背面に薄く敷く（本文の可読性は保つ） */
+    .sb-explore-paper { position: absolute; inset: 0; z-index: 0; opacity: .5; pointer-events: none;
+      -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 55%, transparent 100%); mask-image: radial-gradient(120% 100% at 50% 0%, #000 55%, transparent 100%); }
+    .sb-explore > .y-container { position: relative; z-index: 1; }
+    .sb-head-stamp { margin-left: auto; align-self: center; }
+    .sb-explore-note { margin: -.6rem 0 2rem .4rem; }
+
+    /* アルバム面：チェキを互い違いに貼り混ぜる非対称グリッド */
+    /* 中央寄せflex＝5枚を上3＋下2の中央寄せに（右側に空セルの空白を作らない） */
+    .sb-album { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 2.4rem 1.6rem; }
+    .sb-album-item { flex: 0 1 calc(50% - 1rem); }
+    @media (min-width: 760px) { .sb-album { gap: 2.8rem 2rem; } .sb-album-item { flex-basis: calc(33.333% - 1.4rem); } }
+    @media (max-width: 520px) { .sb-album { gap: 2.6rem; max-width: 360px; margin-inline: auto; } .sb-album-item { flex-basis: 100%; } }
+
+    .sb-album-item { position: relative; display: block; padding-top: .4rem;
+      transition: transform .35s var(--y-ease); }
+    /* チェキを少しずつ違う角度で貼った“手で並べた”感（互い違いの微回転） */
+    .sb-album-item:nth-child(1) { transform: rotate(-2.5deg); }
+    .sb-album-item:nth-child(2) { transform: rotate(1.8deg); margin-top: 1.6rem; }
+    .sb-album-item:nth-child(3) { transform: rotate(-1.2deg); }
+    .sb-album-item:nth-child(4) { transform: rotate(2.2deg); margin-top: 1rem; }
+    .sb-album-item:nth-child(5) { transform: rotate(-2deg); }
+    .sb-album-item:hover, .sb-album-item:focus-visible { transform: rotate(0) translateY(-7px) scale(1.02); z-index: 2; outline: none; }
+    .sb-album-item:focus-visible .sb-album-cheki { box-shadow: 0 0 0 3px color-mix(in srgb, var(--cc) 70%, #fff), var(--y-shadow); }
+
+    /* 代表チェキ（サイズ違い・テープ留め） */
+    .sb-album-cheki { display: block; width: 100%; padding: .6rem .6rem 1.5rem; transition: box-shadow .35s var(--y-ease); }
+    .sb-album-cheki > img { aspect-ratio: 3 / 2; object-position: center top; }
+    .sb-album-cheki figcaption { letter-spacing: .12em; }
+    /* 偶数番目のチェキは少し縦長＝サイズ違いで単調さを崩す */
+    .sb-album-item:nth-child(even) .sb-album-cheki > img { aspect-ratio: 3 / 2; }
+    .sb-album-stamp { position: absolute; top: -10px; right: -8px; z-index: 4; background: #fff;
+      font-size: .62rem; padding: .22rem .55rem; box-shadow: var(--y-shadow-sm); }
+
+    /* 付箋（タイトル＋説明＋口語CTA）。チェキに少し重ねて貼った感 */
+    .sb-album-sticky { margin: -.7rem .35rem 0; position: relative; z-index: 1; }
+    .sb-album-title { font-size: 1.18rem; margin: 0 0 .25rem; display: flex; align-items: center; gap: .4rem; }
+    .sb-album-emoji { font-size: 1.15rem; }
+    .sb-album-desc { color: var(--y-ink-soft); font-size: .82rem; line-height: 1.65; margin: 0 0 .7rem; }
+    .sb-album-cta { display: inline-flex; align-items: center; font-family: var(--y-font-en); font-weight: 700; font-size: .82rem; color: var(--y-ink);
+      background: color-mix(in srgb, var(--cc) 32%, #fff); padding: .35rem .9rem; border-radius: 999px; transition: gap .3s var(--y-ease), transform .3s var(--y-ease); }
+    .sb-album-item:hover .sb-album-cta, .sb-album-item:focus-visible .sb-album-cta { transform: translateX(3px); }
+
+    /* 欄外の手書きメモ＆落書き（背面・余白に薄く） */
+    .sb-album-note { position: absolute; bottom: .2rem; right: .2rem; max-width: 60%; text-align: right; opacity: .9; }
+    .sb-album-item:nth-child(even) .sb-album-note { left: .2rem; right: auto; text-align: left; }
+    .sb-album-doodle { font-size: 1.5rem; }
+    .sb-album-item:nth-child(1) .sb-album-doodle { top: 40%; left: -10px; }
+    .sb-album-item:nth-child(2) .sb-album-doodle { top: -6px; right: 18%; }
+    .sb-album-item:nth-child(3) .sb-album-doodle { bottom: 22%; right: -8px; }
+    .sb-album-item:nth-child(4) .sb-album-doodle { top: 8%; left: -6px; }
+    .sb-album-item:nth-child(5) .sb-album-doodle { bottom: 30%; left: -10px; }
+
+    /* ===== お誕生日カウントダウン（スクラップブック風） ===== */
+    .y-bday-sec { padding: clamp(1.2rem, 3vw, 1.8rem) 0 0; }
+    .y-bday { position: relative; max-width: 700px; margin-inline: auto; text-align: center;
+      background: color-mix(in srgb, var(--y-pink) 16%, #fff);
+      border: 2px solid color-mix(in srgb, var(--y-pink) 34%, #fff);
+      border-radius: 18px; padding: 1.5rem 1.4rem 1.35rem; box-shadow: var(--y-shadow-sm);
+      transform: rotate(-1deg); }
+    .y-bday-tape { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(2deg); width: 92px; height: 24px; opacity: .85;
+      background: color-mix(in srgb, var(--y-butter) 78%, transparent); box-shadow: 0 2px 5px rgba(120,90,80,.12);
+      -webkit-mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); }
+    .y-bday-cake { font-size: 2.2rem; line-height: 1; display: block; animation: wobble 5s ease-in-out infinite; }
+    .y-bday-msg { color: var(--y-ink-soft); font-size: .9rem; font-weight: 700; margin: .55rem 0 .25rem; }
+    .y-bday-msg b { color: var(--y-peach); }
+    .y-bday-count { font-size: clamp(1.35rem, 5vw, 1.95rem); font-weight: 900; color: var(--y-ink); line-height: 1.2; }
+    .y-bday-count b { font-family: var(--y-font-en); color: var(--y-rose); font-size: 1.45em; padding: 0 .08em; }
+    .y-bday-sub { color: var(--y-muted); font-size: .8rem; font-weight: 700; margin-top: .3rem; }
+    .y-bday-photo { width: min(340px, 86%); margin: 1.1rem auto 0; padding: .45rem .45rem .9rem; transform: rotate(-1.5deg); }
+    .y-bday-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+    .y-bday-photo figcaption { font-family: var(--y-font-en); font-weight: 700; text-align: center; margin-top: .35rem; color: var(--y-rose); font-size: .78rem; }
+    @media (min-width: 620px) {
+      .y-bday { display: grid; grid-template-columns: 240px 1fr; gap: 1.6rem; align-items: center; }
+      .y-bday-photo { width: 100%; margin: 0; }
+      .y-bday-body { text-align: center; }
+    }
+    .y-bday.is-today { background: color-mix(in srgb, var(--y-butter) 22%, #fff); border-color: color-mix(in srgb, var(--y-peach) 48%, #fff); }
+    .y-bday-deco { position: absolute; font-size: 1.3rem; pointer-events: none; animation: twinkle 2.6s ease-in-out infinite; }
+    .y-bday-deco--1 { top: -7px; right: 16px; color: var(--y-sky); }
+    .y-bday-deco--2 { bottom: -9px; left: 20px; color: var(--y-peach); animation-delay: .7s; }
+    .y-bday-deco--3 { bottom: 8px; right: -6px; color: var(--y-mint); animation-delay: 1.2s; }
+    @media (prefers-reduced-motion: reduce) { .y-bday-cake, .y-bday-deco { animation: none; } }
+  </style>
+
+  <script>
+    // 弓木奈於さんのお誕生日（2月3日）までのカウントダウン。
+    // SSG（ビルド時に固定）ではなく、閲覧者のブラウザで毎日正しく表示されるようクライアント側で計算する。
+    (function () {
+      const BIRTH_YEAR = 1999, BIRTH_MONTH = 2, BIRTH_DAY = 3;
+      const box = document.getElementById("y-bday");
+      const msg = document.getElementById("y-bday-msg");
+      const count = document.getElementById("y-bday-count");
+      if (!box || !msg || !count) return;
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      let next = new Date(today.getFullYear(), BIRTH_MONTH - 1, BIRTH_DAY);
+      if (next < today) next = new Date(today.getFullYear() + 1, BIRTH_MONTH - 1, BIRTH_DAY);
+      const days = Math.round((next - today) / 86400000);
+      const age = next.getFullYear() - BIRTH_YEAR;
+      if (days === 0) {
+        box.classList.add("is-today");
+        msg.innerHTML = "🎉 お誕生日 おめでとうございます！";
+        count.innerHTML = "弓木さん <b>" + age + "</b> 歳 ♡";
+      } else if (days === 1) {
+        msg.innerHTML = "弓木さんのお誕生日（<b>2月3日</b>）は";
+        count.innerHTML = "あした！ ♡";
+      } else {
+        msg.innerHTML = "弓木さんのお誕生日（<b>2月3日</b>）まで";
+        count.innerHTML = "あと <b>" + days + "</b> 日";
+        const sub = document.createElement("p");
+        sub.className = "y-bday-sub";
+        sub.textContent = "今度のお誕生日で " + age + " 歳になります 🎂";
+        count.insertAdjacentElement("afterend", sub);
+      }
+    })();
+  </script>
+</Yumiki>

@@ -1,0 +1,353 @@
+/* =========================================================
+   YUMIKI WORLD — 推しサイト専用デザイン（ゆるふわ・可愛い・夢の世界）
+   ポートフォリオ本体（ダーク/クール）とは対照的に、
+   あたたかいクリーム地＋パステル多色＋丸ゴシックで「弓木ワールド」を表現。
+   ※推しカラー単色には寄せない（多色パステルで可愛く）。
+   ========================================================= */
+
+:root {
+  --y-cream: #fff8f1;
+  --y-cream-2: #fdeee2;
+  --y-ink: #4a3b34;        /* やわらかいこげ茶（黒より可愛い） */
+  --y-ink-soft: #7a685f;
+  --y-muted: #857262;        /* コントラスト改善（旧#a99a90はクリーム地で約2.3:1=WCAG未達） */
+  --y-line: #f0ddcd;
+  --y-card: #ffffff;
+
+  /* パステル多色 */
+  --y-peach: #ff9fb2;
+  --y-pink: #ffc2d1;
+  --y-butter: #ffd98a;
+  --y-mint: #9fe3c5;
+  --y-lav: #cdbcff;
+  --y-sky: #a9d8ff;
+  --y-rose: color-mix(in srgb, var(--y-peach) 40%, var(--y-ink));   /* 読ませる文字用の濃いめローズ（クリーム地で可読性確保・装飾用の淡色とは別） */
+
+  --y-font-jp: "Zen Maru Gothic", "Noto Sans JP", system-ui, sans-serif;
+  --y-font-en: "Quicksand", "Zen Maru Gothic", system-ui, sans-serif;
+  --y-font-hand: "Yomogi", "Zen Maru Gothic", system-ui, cursive; /* 手書きアクセント（キャプション・引用・メモ。本文には使わない＝可読性のため） */
+
+  --y-radius: 28px;
+  --y-radius-sm: 16px;
+  --y-shadow: 0 18px 40px rgba(255, 159, 178, 0.18);
+  --y-shadow-sm: 0 8px 22px rgba(120, 90, 80, 0.10);
+  --y-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.yumiki { font-family: var(--y-font-jp); color: var(--y-ink); background: var(--y-cream); line-height: 1.75; }
+.yumiki * { box-sizing: border-box; }
+.yumiki img { display: block; max-width: 100%; }
+.yumiki figure { margin: 0; }
+.yumiki a { color: inherit; text-decoration: none; }
+.yumiki h1, .yumiki h2, .yumiki h3 { font-weight: 700; line-height: 1.3; letter-spacing: 0.01em; }
+
+/* パステルなドット背景 */
+.yumiki-bg {
+  position: fixed; inset: 0; z-index: -2; background: var(--y-cream);
+  background-image: radial-gradient(var(--y-line) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+.yumiki-bg::before, .yumiki-bg::after {
+  content: ""; position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.5;
+}
+.yumiki-bg::before { width: 42vw; height: 42vw; background: var(--y-pink); top: -8vw; right: -8vw; }
+.yumiki-bg::after { width: 38vw; height: 38vw; background: var(--y-sky); bottom: -10vw; left: -8vw; }
+
+/* 前景でやさしく瞬くキラキラ */
+.y-sparkles { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+.y-sparkles span { position: absolute; font-size: 1.5rem; opacity: 0.45; color: var(--y-lav); animation: twinkle 3.2s ease-in-out infinite, floaty 8s ease-in-out infinite; }
+.y-sparkles span:nth-child(1) { color: var(--y-peach); }
+.y-sparkles span:nth-child(2) { color: var(--y-pink); animation-delay: 0.5s, 0.8s; }
+.y-sparkles span:nth-child(3) { color: var(--y-butter); animation-delay: 1s, 0.3s; font-size: 1.2rem; }
+.y-sparkles span:nth-child(4) { color: var(--y-mint); animation-delay: 1.4s, 1.1s; }
+.y-sparkles span:nth-child(5) { color: var(--y-sky); animation-delay: 0.8s, 1.6s; }
+.y-sparkles span:nth-child(6) { color: var(--y-lav); animation-delay: 1.8s, 0.6s; font-size: 1.1rem; }
+@media (prefers-reduced-motion: reduce) { .y-sparkles span { animation: none; } }
+
+.y-container { width: min(100% - 2rem, 1100px); margin-inline: auto; }
+.y-narrow { max-width: 780px; }
+.y-section { padding-block: clamp(2.5rem, 7vw, 5rem); position: relative; }
+
+/* セクション見出し */
+.y-head { text-align: center; margin-bottom: 3rem; }
+.y-head .y-eyebrow { font-family: var(--y-font-en); font-weight: 700; letter-spacing: 0.2em; color: var(--y-rose); text-transform: uppercase; font-size: 0.85rem; }
+.y-head :is(h1, h2) { font-size: clamp(1.7rem, 4vw, 2.6rem); margin-top: 0.4rem; }
+.y-head :is(h1, h2) .wave { background: linear-gradient(transparent 62%, var(--y-butter) 62%); padding-inline: 0.1em; }
+
+/* バッジ/タグ */
+.y-tag { display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--y-font-en); font-weight: 700; font-size: 0.78rem; padding: 0.35rem 0.9rem; border-radius: 999px; color: var(--y-ink); }
+
+/* ボタン */
+.y-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; padding: 0.95rem 1.8rem; border-radius: 999px; background: var(--y-ink); color: #fff; transition: transform 0.3s var(--y-ease), box-shadow 0.3s var(--y-ease); }
+.y-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: var(--y-shadow); }
+.y-btn--soft { background: #fff; color: var(--y-ink); border: 2px solid var(--y-line); }
+.y-btn--peach { background: var(--y-peach); color: #fff; }
+
+/* 共通：閉じる(×)ボタン（モーダル等）。白カード＋パステル枠でサイトと一体化し、ホバー/フォーカスでピーチに回転 */
+.y-x { width: 40px; height: 40px; border-radius: 50%; background: #fff; border: 2px solid var(--y-line); box-shadow: var(--y-shadow-sm);
+  color: var(--y-ink); font-size: 1.05rem; line-height: 1; display: grid; place-items: center; cursor: pointer;
+  transition: transform .3s var(--y-ease), background .3s, color .3s, border-color .3s, box-shadow .3s; }
+.y-x:hover, .y-x:focus-visible { background: var(--y-peach); border-color: var(--y-peach); color: #fff; transform: rotate(90deg) scale(1.08); box-shadow: var(--y-shadow); outline: none; }
+@media (prefers-reduced-motion: reduce) { .y-x:hover, .y-x:focus-visible { transform: none; } }
+
+/* カード */
+.y-card { background: var(--y-card); border-radius: var(--y-radius); box-shadow: var(--y-shadow-sm); border: 2px solid #fff; overflow: hidden; }
+
+/* キラキラ */
+.sparkle { display: inline-block; animation: twinkle 2.4s ease-in-out infinite; }
+@keyframes twinkle { 0%,100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(1.25) rotate(20deg); opacity: 0.7; } }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes wobble { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+
+/* リビール（.js が付く＝JS有効時のみ隠す。JS無効/失敗でも本文は表示。reduced-motion は即時表示で空白を作らない） */
+.js .y-reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s var(--y-ease), transform 0.8s var(--y-ease); }
+.y-reveal.is-visible { opacity: 1; transform: none; }
+.y-reveal[data-delay="1"]{ transition-delay: .1s } .y-reveal[data-delay="2"]{ transition-delay: .2s } .y-reveal[data-delay="3"]{ transition-delay: .3s } .y-reveal[data-delay="4"]{ transition-delay: .4s }
+@media (prefers-reduced-motion: reduce) { .js .y-reveal { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) { .yumiki *, .yumiki *::before, .yumiki *::after { animation: none !important; transition-duration: .001ms !important; } }
+
+/* ===== ヘッダー ===== */
+.y-header { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); background: rgba(255, 248, 241, 0.8); border-bottom: 2px dashed var(--y-line); }
+.y-header-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.y-logo { font-family: var(--y-font-en); font-weight: 700; font-size: 1.22rem; display: inline-flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
+.y-logo .heart { color: var(--y-peach); }
+.y-nav { display: flex; gap: 0.16rem; align-items: center; flex-wrap: nowrap; }
+.y-nav a { font-size: 0.85rem; font-weight: 700; padding: 0.46rem 0.72rem; border-radius: 999px; color: var(--y-ink-soft); white-space: nowrap; flex-shrink: 0; transition: background 0.25s, color 0.25s; }
+.y-nav a:hover, .y-nav a.active { background: var(--y-pink); color: var(--y-ink); }
+.y-back { font-size: 0.78rem; color: var(--y-muted); border: 2px solid var(--y-line); padding: 0.4rem 0.66rem; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+.y-back:hover { color: var(--y-ink); }
+/* メニュー開閉ボタン：サイトの“白カード＋パステル枠＋やわ影”に合わせた丸ボタン。開くとピンク地のバツに */
+.y-burger { display: none; flex-direction: column; gap: 5px; width: 46px; height: 46px; align-items: center; justify-content: center;
+  background: #fff; border: 2px solid var(--y-line); border-radius: 50%; box-shadow: var(--y-shadow-sm);
+  transition: transform .3s var(--y-ease), box-shadow .3s var(--y-ease), background .3s, border-color .3s; }
+.y-burger:hover { transform: translateY(-2px) scale(1.05); box-shadow: var(--y-shadow); }
+.y-burger span { width: 19px; height: 2.5px; background: var(--y-ink); border-radius: 3px; transition: transform .3s var(--y-ease), opacity .3s, background .3s; }
+.y-burger[aria-expanded="true"] { background: var(--y-pink); border-color: color-mix(in srgb, var(--y-peach) 55%, #fff); }
+.y-burger[aria-expanded="true"] span:nth-child(1){ transform: translateY(7.5px) rotate(45deg) }
+.y-burger[aria-expanded="true"] span:nth-child(2){ opacity: 0 }
+.y-burger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7.5px) rotate(-45deg) }
+@media (prefers-reduced-motion: reduce) { .y-burger { transition: background .2s, border-color .2s; } .y-burger:hover { transform: none; } }
+
+@media (max-width: 1080px) {
+  .y-nav { position: fixed; inset: 68px 0 auto 0; flex-direction: column; background: var(--y-cream); padding: 1rem; gap: 0.3rem; border-bottom: 2px dashed var(--y-line); transform: translateY(-130%); transition: transform .4s var(--y-ease); }
+  .y-nav.open { transform: none; }
+  .y-nav a { font-size: 1.1rem; }
+  .y-burger { display: flex; }
+  .y-back { display: none; }
+  /* 折りたたみ時はヘッダーから消すが、開いたメニュー内では導線を残す */
+  .y-nav.open .y-back { display: inline-block; margin-top: 0.5rem; }
+}
+
+/* ===== フッター ===== */
+.y-footer { background: var(--y-cream-2); border-top: 2px dashed var(--y-line); padding: 3rem 0 2rem; text-align: center; margin-top: 4rem; }
+.y-footer .y-sns { display: flex; justify-content: center; gap: 1rem; margin: 1.2rem 0; }
+.y-footer .y-sns a { width: 48px; height: 48px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: var(--y-shadow-sm); transition: transform .3s var(--y-ease); }
+.y-footer .y-sns a:hover { transform: translateY(-4px) scale(1.08); }
+.y-footer .y-sns img { width: 24px; height: 24px; }
+.y-disclaimer { font-size: 0.72rem; color: var(--y-ink-soft); max-width: 60ch; margin: 1rem auto 0; line-height: 1.7; }
+
+/* =========================================================
+   スクラップブック（推し活ノート）共通パーツ
+   ── 全ページで使い回し、世界観を統一する。各ページは原則
+   これらの class を使う（独自の見た目を増やしてバラけさせない）。
+   色は --cc を指定すると差し色が切り替わる（既定はピーチ）。
+   ========================================================= */
+
+/* 紙地：方眼ノート／罫線ノート（セクションやカードの背景に敷く） */
+.sb-grid { background-color: #fffdf8;
+  background-image: linear-gradient(color-mix(in srgb, var(--y-line) 80%, transparent) 1px, transparent 1px),
+                    linear-gradient(90deg, color-mix(in srgb, var(--y-line) 80%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px; }
+.sb-ruled { background-color: #fffdf8;
+  background-image: repeating-linear-gradient(transparent 0 31px, color-mix(in srgb, var(--y-sky) 30%, transparent) 31px 32px); }
+
+/* washi マスキングテープ（.sb-taped を付けた要素に擬似的なテープ片を貼る） */
+.sb-taped { position: relative; }
+.sb-tape { position: absolute; z-index: 3; width: 84px; height: 26px; top: -12px; left: 50%; transform: translateX(-50%) rotate(-5deg);
+  background: color-mix(in srgb, var(--tape, var(--cc, var(--y-pink))) 60%, transparent); opacity: .9; box-shadow: 0 2px 5px rgba(120,90,80,.12);
+  -webkit-mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); }
+.sb-tape.l { left: 26px; transform: rotate(-8deg); }
+.sb-tape.r { left: auto; right: 26px; transform: rotate(7deg); }
+
+/* チェキ（白フチのポラロイド／チェキ風フレーム） */
+.sb-cheki { display: inline-block; background: #fff; padding: .55rem .55rem 1.4rem; border-radius: 4px; box-shadow: var(--y-shadow-sm); border: 1px solid #f3e8dd; }
+.sb-cheki > img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; display: block; }
+.sb-cheki figcaption, .sb-cheki .cap { font-family: var(--y-font-en); font-weight: 700; text-align: center; margin-top: .5rem; color: var(--y-ink-soft); font-size: .82rem; }
+
+/* 付箋（手書きメモ。角を不揃いに、紙の継ぎ目感） */
+.sb-sticky { position: relative; background: color-mix(in srgb, var(--cc, var(--y-butter)) 17%, #fff);
+  border: 1px solid color-mix(in srgb, var(--cc, var(--y-butter)) 32%, #fff); border-radius: 3px 12px 9px 11px;
+  padding: 1rem 1.15rem; box-shadow: var(--y-shadow-sm); }
+
+/* スタンプ／シール風ラベル（破線丸・少し傾く） */
+.sb-stamp { display: inline-flex; align-items: center; gap: .3rem; font-family: var(--y-font-en); font-weight: 700; font-size: .72rem;
+  border: 2px dashed color-mix(in srgb, var(--cc, var(--y-peach)) 58%, #fff); color: var(--y-ink-soft);
+  padding: .2rem .65rem; border-radius: 999px; transform: rotate(-3deg); background: #fff; }
+
+/* 大きな通し番号（ストローク・紙面の手書き番号） */
+.sb-num { font-family: var(--y-font-en); font-weight: 800; line-height: 1; color: transparent;
+  -webkit-text-stroke: 2px color-mix(in srgb, var(--cc, var(--y-peach)) 42%, transparent); }
+
+/* 手書き風マーカー下線（既存 .wave の汎用版・色可変） */
+.sb-mark { background: linear-gradient(transparent 58%, color-mix(in srgb, var(--cc, var(--y-butter)) 72%, transparent) 58%); padding-inline: .1em; }
+
+/* 落書きドゥードル（♡✦✿ などを散らす・ゆらぐ） */
+.sb-doodle { position: absolute; pointer-events: none; color: var(--cc, var(--y-peach)); opacity: .8;
+  animation: twinkle 2.8s ease-in-out infinite, floaty 7s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .sb-doodle { animation: none; } }
+
+/* 欄外の手書きツッコミメモ（ノートの余白に書いた一言） */
+.sb-note { font-family: var(--y-font-jp); font-weight: 500; font-size: .82rem; color: var(--y-ink-soft);
+  display: inline-block; transform: rotate(-2deg); }
+.sb-note::before { content: "✐ "; color: var(--y-peach); }
+
+/* 見出しのバリエーション：中央寄せテンプレを崩す“ノートの章見出し”（左寄せ＋テープ＋通し番号） */
+.sb-head { display: flex; align-items: flex-end; gap: .8rem; margin-bottom: 1.8rem; }
+/* 見出し右のスタンプ（♡ MY OSHI 等＝短い文言）：flex行で潰れて2行折り返しするのを防ぐ。
+   ※長い日付スタンプ等もある共通 .sb-stamp 全体には掛けない（はみ出し防止のためスコープ限定）。 */
+.sb-head .sb-stamp { flex-shrink: 0; white-space: nowrap; }
+.sb-head .sb-head-num { font-size: clamp(2.2rem, 6vw, 3.4rem); }
+.sb-head .sb-head-tt { display: flex; flex-direction: column; }
+.sb-head .sb-head-eyebrow { font-family: var(--y-font-en); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: .72rem; color: var(--y-rose); }
+.sb-head :is(h1, h2) { font-size: clamp(1.5rem, 4vw, 2.2rem); }
+
+/* チケット半券（思い出などで使用：右側にミシン目） */
+.sb-ticket { position: relative; background: #fff; border-radius: 10px; box-shadow: var(--y-shadow-sm); padding: 1rem 1.1rem; }
+.sb-ticket::after { content: ""; position: absolute; top: 8px; bottom: 8px; right: 64px; width: 2px;
+  background-image: radial-gradient(circle, var(--y-line) 1.4px, transparent 1.5px); background-size: 2px 9px; }
+
+/* =========================================================
+   追加ユーティリティ（2026-06-18・つながり/ことば 強化で新設）
+   ── 既存 sb-* の寸法は変えず“足すだけ”。他ページに無害。
+   ========================================================= */
+
+/* 紙の粒状感（クリーム地のベタ塗りを上質に）。固定オーバーレイ＝背景だけに薄く乗り、文字/カードは汚さない */
+.y-grain { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"); }
+
+/* シール化（白フチ＋落ち影＝切り抜きステッカー）。box-shadowと違い透明な形に沿う */
+.sb-decal { filter: drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff) drop-shadow(0 -1.5px 0 #fff) drop-shadow(0 4px 5px rgba(120, 90, 80, .3)); }
+
+/* 触るとぷるんと弾む（ばねイージング）。装飾チップ・絵文字シールに */
+.sb-jiggle { transition: transform .35s var(--y-ease); }
+.sb-jiggle:hover { transform: scale(1.16) rotate(-5deg); }
+.sb-jiggle:active { transform: scale(.94) rotate(-2deg); }
+@media (prefers-reduced-motion: reduce) { .sb-jiggle, .sb-jiggle:hover, .sb-jiggle:active { transition: none; transform: none; } }
+
+/* カーソル追従キラキラ（layout の JS が生成・fine pointer かつ motion 許可時のみ） */
+.y-trail { position: fixed; pointer-events: none; z-index: 200; font-size: .8rem; line-height: 1; will-change: transform, opacity;
+  transform: translate(-50%, -50%); animation: y-trail-pop .7s ease forwards; }
+@keyframes y-trail-pop { from { transform: translate(-50%, -50%) scale(.4) rotate(0); opacity: .85; } to { transform: translate(-50%, -150%) scale(1.05) rotate(22deg); opacity: 0; } }
+
+/* =========================================================
+   フェーズ①：全体の一体感（2026-06-18）
+   ── ページ遷移(ノートめくり)・付箋タブナビ・めくる回遊・フッター作品化。
+   全ページ共通（レイアウト/共通CSS）。reduced-motion対応。
+   ========================================================= */
+
+/* ① ページ遷移＝ノートをめくる（CSSのみのクロスドキュメントView Transition。
+      Chrome等で有効、未対応ブラウザは通常遷移にフォールバック＝SPA化しないので既存スクリプトは無傷） */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: y-page-out .3s ease both; }
+::view-transition-new(root) { animation: y-page-in .42s var(--y-ease) both; }
+@keyframes y-page-out { to { opacity: 0; transform: translateX(-22px); } }
+@keyframes y-page-in { from { opacity: 0; transform: translateX(26px); } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+/* ② ナビ＝手帳のインデックス付箋タブ（emojiは活かす・active は前に飛び出す） */
+.y-nav a { border-radius: 13px 13px 6px 6px; position: relative; transition: background .25s, color .25s, transform .25s var(--y-ease); }
+.y-nav a:hover { background: color-mix(in srgb, var(--y-pink) 32%, #fff); color: var(--y-ink); transform: translateY(-2px); }
+.y-nav a.active { background: var(--y-pink); color: var(--y-ink); transform: translateY(-2px); box-shadow: var(--y-shadow-sm); }
+.y-nav a.active::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 4px; height: 2.5px; border-radius: 2px; background: color-mix(in srgb, var(--y-peach) 75%, #fff); }
+@media (prefers-reduced-motion: reduce) { .y-nav a:hover, .y-nav a.active { transform: none; } }
+
+/* ③ 回遊＝ノートをめくる（次のページへ） */
+.y-next-wrap { width: min(100% - 2rem, 760px); margin: clamp(2.4rem, 7vw, 4.5rem) auto 0; }
+.y-next { position: relative; display: grid; justify-items: center; gap: .12rem; text-align: center;
+  background: #fffdf8; border: 2px dashed var(--y-line); border-radius: var(--y-radius);
+  padding: clamp(1.3rem, 4vw, 1.9rem) 1.4rem; box-shadow: var(--y-shadow-sm);
+  transform: rotate(-.5deg); transition: transform .35s var(--y-ease), box-shadow .35s var(--y-ease); }
+.y-next:hover { transform: rotate(0) translateY(-4px); box-shadow: var(--y-shadow); }
+.y-next-tape { position: absolute; top: -12px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 96px; height: 26px;
+  background: color-mix(in srgb, var(--y-pink) 60%, transparent); opacity: .9; box-shadow: 0 2px 5px rgba(120,90,80,.12);
+  -webkit-mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); mask-image: repeating-linear-gradient(90deg,#000 0 5px,transparent 5px 7px); }
+.y-next-eyebrow { font-family: var(--y-font-en); font-weight: 700; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--y-muted); }
+.y-next-eyebrow i { color: var(--y-rose); font-style: normal; }
+.y-next-title { font-size: clamp(1.2rem, 4vw, 1.7rem); font-weight: 700; color: var(--y-ink); }
+.y-next-arrow { font-family: var(--y-font-hand); font-size: .92rem; color: var(--y-peach); margin-top: .2rem; }
+@media (prefers-reduced-motion: reduce) { .y-next, .y-next:hover { transform: none; } }
+
+/* ④ フッター作品化＝巨大な淡い「YUMIKI」ウォーターマーク（本体PFと呼応） */
+.y-footer { position: relative; overflow: hidden; }
+.y-footer::before { content: "YUMIKI"; position: absolute; left: 50%; bottom: -.28em; transform: translateX(-50%);
+  font-family: var(--y-font-en); font-weight: 700; font-size: clamp(4rem, 17vw, 11rem); letter-spacing: .02em; line-height: .8;
+  color: transparent; -webkit-text-stroke: 2px color-mix(in srgb, var(--y-peach) 24%, transparent); opacity: .55; white-space: nowrap; pointer-events: none; z-index: 0; }
+.y-footer > .y-container { position: relative; z-index: 1; }
+
+/* ⑤ 初回イントロ（ノートをひらく・軽め）。既定は非表示＝JS無効/2回目以降/reduced-motionで出さない */
+.y-intro { display: none; }
+.y-intro-on .y-intro { display: grid; place-items: center; position: fixed; inset: 0; z-index: 400;
+  background-color: var(--y-cream);
+  background-image: radial-gradient(var(--y-line) 1.6px, transparent 1.6px); background-size: 26px 26px;
+  animation: y-intro-hold 1.5s var(--y-ease) forwards; }
+.y-intro.done { display: none !important; }
+.y-intro-inner { text-align: center; padding: 1rem; animation: y-intro-pop .7s var(--y-ease) both; }
+.y-intro-logo { display: block; font-family: var(--y-font-en); font-weight: 700; font-size: clamp(1.9rem, 7vw, 3.2rem); color: var(--y-ink); letter-spacing: .02em; }
+.y-intro-logo .heart { color: var(--y-peach); }
+.y-intro-sub { display: block; margin-top: .55rem; font-family: var(--y-font-hand); color: var(--y-ink-soft); font-size: clamp(.85rem, 2.6vw, 1.05rem); }
+@keyframes y-intro-pop { from { opacity: 0; transform: scale(.92) translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes y-intro-hold { 0%, 55% { opacity: 1; transform: none; } 100% { opacity: 0; transform: scale(1.04); visibility: hidden; } }
+
+/* =========================================================
+   フェーズ②：ご褒美・遊び（2026-06-18）
+   ── 紙吹雪／隠しハート集め／ご褒美カード／時間帯で背景の表情。
+   ========================================================= */
+
+/* 紙吹雪（誕生日・ハート全集め時に発火。JS生成・自動破棄・reduced-motionでは発火しない） */
+.y-confetti { position: fixed; z-index: 1200; pointer-events: none; transform: translate(-50%, -50%); will-change: transform, opacity; animation: y-confetti-fall 1.9s ease-in forwards; }
+@keyframes y-confetti-fall { to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--rot)); opacity: 0; } }
+
+/* 隠しハート（ページごとに違う隅に小さく＝見つける楽しみ） */
+/* 隠しハート：未発見はピンクのまま“ゆっくり脈打つ＋ふんわり光る”＝目を引いて見つけやすく。
+   発見済み(.found)は静止＆くっきり＝「集めた」状態と明確に区別。 */
+.y-egg { position: fixed; z-index: 60; width: 34px; height: 34px; display: grid; place-items: center; border: none; background: none; cursor: pointer;
+  color: color-mix(in srgb, var(--y-peach) 62%, transparent); font-size: 1.3rem; line-height: 1; opacity: .58;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--y-peach) 50%, transparent));
+  animation: y-egg-beat 1.9s var(--y-ease) infinite;
+  transition: transform .3s var(--y-ease), opacity .3s, color .3s; }
+.y-egg:hover, .y-egg:focus-visible { opacity: 1; transform: scale(1.35) rotate(-8deg); color: var(--y-peach); outline: none; animation: none; }
+.y-egg.found { color: var(--y-peach); opacity: .92; animation: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,.12)); }
+.y-egg.pop { animation: y-egg-pop .5s var(--y-ease); }
+@keyframes y-egg-pop { 0% { transform: scale(1); } 40% { transform: scale(1.85) rotate(-10deg); } 100% { transform: scale(1); } }
+@keyframes y-egg-beat { 0%, 100% { transform: scale(1); opacity: .42; } 50% { transform: scale(1.16); opacity: .72; } }
+@media (prefers-reduced-motion: reduce) { .y-egg { animation: none; opacity: .6; } .y-egg.pop { animation: none; } .y-egg:hover { transform: none; } }
+
+/* フッターの収集カウンタ */
+.y-egg-count { font-family: var(--y-font-en); font-weight: 700; font-size: .74rem; color: var(--y-muted); letter-spacing: .04em; margin: .2rem 0 .7rem; }
+.y-egg-count b { color: var(--y-rose); font-size: 1.05em; }
+
+/* ご褒美カード（全7枚集めた時） */
+.y-egg-reward { position: fixed; inset: 0; z-index: 1300; display: grid; place-items: center; padding: 1.2rem;
+  background: color-mix(in srgb, var(--y-ink) 38%, transparent); backdrop-filter: blur(4px); }
+.y-egg-reward-card { background: #fff; border: 3px solid var(--y-peach); border-radius: var(--y-radius); padding: 2rem 1.6rem 1.7rem; max-width: 360px; text-align: center; box-shadow: var(--y-shadow); animation: y-intro-pop .35s var(--y-ease); }
+.y-egg-reward-stamp { display: inline-block; font-family: var(--y-font-en); font-weight: 700; letter-spacing: .1em; color: var(--y-peach); border: 2px dashed color-mix(in srgb, var(--y-peach) 55%, #fff); border-radius: 999px; padding: .25rem .8rem; transform: rotate(-3deg); }
+.y-egg-reward-msg { margin: 1.1rem 0 1.4rem; color: var(--y-ink-soft); line-height: 1.95; font-size: .95rem; }
+@media (prefers-reduced-motion: reduce) { .y-egg-reward-card { animation: none; } }
+
+/* 時間帯で背景の表情をほんの少し（クリーム地を微調整＝“生きてるノート”） */
+html[data-tod="morning"] body.yumiki { --y-cream: #fffaf3; }
+html[data-tod="evening"] body.yumiki { --y-cream: #fff5ee; }
+html[data-tod="night"] body.yumiki { --y-cream: #f8f2f7; }
+
+/* 最初の1枚を見つけた時のヒント・トースト（「集めよう！」） */
+.y-egg-hint { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); z-index: 1250; max-width: min(86vw, 350px);
+  display: flex; align-items: center; gap: .65rem; background: #fff; border: 2px solid var(--y-peach); border-radius: 16px;
+  padding: .8rem 1.1rem; box-shadow: var(--y-shadow); color: var(--y-ink); font-size: .85rem; line-height: 1.6; font-weight: 700;
+  opacity: 0; transition: opacity .35s var(--y-ease), transform .35s var(--y-ease); pointer-events: none; }
+.y-egg-hint.show { opacity: 1; transform: translate(-50%, 0); }
+.y-egg-hint-i { font-size: 1.5rem; color: var(--y-peach); line-height: 1; }
+.y-egg-hint b { color: var(--y-peach); }
+@media (prefers-reduced-motion: reduce) { .y-egg-hint { transition: opacity .2s; transform: translate(-50%, 0); } }

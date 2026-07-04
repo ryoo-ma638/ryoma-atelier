@@ -28,7 +28,7 @@ const year = 2026;
 
     <div class="mark-row" aria-hidden="true">
       <p class="mark">RYOMA</p>
-      <span class="uma">
+      <span class="uma" data-confetti-click="34" title="うまくんにタッチ！">
         <span class="uma-note hand">きてくれて、ありがとう！</span>
         <img src="/assets/mascot/wave.png" alt="" loading="lazy" />
       </span>
@@ -40,6 +40,13 @@ const year = 2026;
     .foot { position: relative; margin-top: var(--stack); padding: var(--stack) 0 3rem; background: var(--ink); color: var(--paper); overflow: hidden; }
     /* 上辺＝琥珀→朱のライン（夜にならないための灯） */
     .foot::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: linear-gradient(90deg, var(--amber), var(--scarlet)); }
+    /* 破り紙のギザギザ（生成りの紙から千切った継ぎ目） */
+    .foot::after {
+      content: ''; position: absolute; left: 0; right: 0; top: 0; height: 13px; z-index: 3; pointer-events: none;
+      background:
+        linear-gradient(45deg, var(--paper) 6.5px, transparent 0) 0 0 / 18px 13px repeat-x,
+        linear-gradient(-45deg, var(--paper) 6.5px, transparent 0) 9px 0 / 18px 13px repeat-x;
+    }
     .inner { position: relative; z-index: 2; text-align: center; }
 
     .foot .eyebrow { color: var(--amber-l); justify-content: center; }

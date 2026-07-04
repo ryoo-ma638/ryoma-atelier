@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/tokens.css';
 import '../styles/base.css';
 
@@ -23,6 +24,7 @@ const {
     href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Yusei+Magic&display=swap"
     rel="stylesheet"
   />
+  <ClientRouter />
 </head>
 <body>
   <a class="skip" href="#main">本文へスキップ</a>

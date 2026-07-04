@@ -57,6 +57,7 @@ const total = works.length;
     {groups.map((g, gi) => (
       <section class="cat section" id={`cat-${g.c}`} style={`--tag:${g.label.color}`}>
         <div class="wrap">
+          <span class="ghost" aria-hidden="true" style={`font-size:min(${Math.min(7, 74 / g.label.en.length).toFixed(2)}rem, 9vw)`}>{g.label.en}</span>
           <h2 class="cat-head reveal">
             <span class="num">{String(gi + 1).padStart(2, '0')}</span>
             <span class="cja">{g.label.ja}</span>
@@ -149,7 +150,15 @@ const total = works.length;
   /* ===== 分野セクション ===== */
   .cat { padding-block: clamp(2.4rem, 5.5vw, 4rem); scroll-margin-top: 84px; }
 
-  .cat-head { display: flex; align-items: baseline; gap: .85rem; flex-wrap: wrap; }
+  .cat .wrap { position: relative; }
+  /* 巨大ゴースト英字（分野の空気を出す・読みは邪魔しない） */
+  .ghost {
+    position: absolute; right: 0; top: -2.2rem; z-index: 0;
+    font-family: var(--f-mono); font-weight: 700;
+    letter-spacing: .02em; color: transparent; -webkit-text-stroke: 2px color-mix(in oklab, var(--tag) 26%, transparent);
+    pointer-events: none; user-select: none; white-space: nowrap;
+  }
+  .cat-head { display: flex; align-items: baseline; gap: .85rem; flex-wrap: wrap; position: relative; z-index: 1; }
   .cat-head .num {
     font-family: var(--f-mono); font-size: 1.05rem; font-weight: 700;
     color: color-mix(in oklab, var(--tag) 80%, var(--ink));

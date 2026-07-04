@@ -1,0 +1,262 @@
+---
+import Yumiki from "../../layouts/Yumiki.astro";
+import Lightbox from "../../components/Lightbox.astro";
+import { memories, img } from "../../data/yumiki.ts";
+// 自分で撮った/ブログ由来でOKな写真だけ表示。それ以外（会場内・配信・ミーグリ会場）はプレースホルダ。
+const safeMem = new Set([
+  // 既存（自分で撮った/ブログ由来でOK）
+  "live_summer2024_goods.jpg", "live_yoda_dome_outside.jpg", "event_stamp_rally.jpg", "event_tgs_pcclub.jpg", "event_nogizaka_cafe.jpg",
+  // 2026-06-22 追加（本人提供の現場・グッズ写真。HEIC→jpg/webp化・向き補正・EXIF除去済み）
+  "live_13th_birthday.jpg", "live_2025_tour_shizuoka.jpg", "live_2025_jingu.jpg", "live_kubo_grad_d2.jpg", "live_myrespect_d2.jpg", "live_umezawa_14th_d3.jpg",
+  "meet_37th_kyoto.jpg", "meet_38th_nagoya.jpg", "meet_39th_nagoya.jpg", "meet_40th_kyoto.jpg",
+  "event_daikanshasai2024_d1.jpg", "event_fukubukuro_2025.jpg", "event_nogikoi_2025.jpg", "event_nogicafe_2025.jpg", "event_birthday20_nao_cake.jpg",
+]);
+const tapes = ["var(--y-pink)", "var(--y-mint)", "var(--y-lav)", "var(--y-sky)", "var(--y-butter)", "var(--y-peach)"];
+// 写真を載せられない思い出（会場内・ミーグリ会場・配信）は、空白ではなく“描いて残した”装飾カードで埋める。
+const memDeco = (m: { title: string; text: string }, kind: "live" | "meet" | "other") => {
+  if (kind === "live") return { emoji: "🎫", label: "LIVE", sub: "心に焼きつけた" };
+  if (kind === "meet") return { emoji: "🎟️", label: "MEET & GREET", sub: "会えた、その瞬間" };
+  if (m.title.includes("配信") || m.text.includes("配信")) return { emoji: "📺", label: "ON AIR ♡", sub: "おうちで全力参戦" };
+  return { emoji: "♪", label: "MEMORY", sub: "心に残った一コマ" };
+};
+---
+<Yumiki title="思い出 — YUMIKI WORLD">
+  <section class="y-section mem-page">
+    <div class="y-container">
+      <!-- 日記の表紙 -->
+      <div class="mem-cover y-reveal">
+        <span class="sb-stamp" style="--cc:var(--y-peach)">📔 FAN DIARY</span>
+        <div class="y-head" style="margin-bottom:1rem">
+          <span class="y-eyebrow">Memories</span>
+          <h1>💭 推し活の<span class="wave">思い出</span></h1>
+        </div>
+        <p class="sb-note">手で貼って綴った、わたしの推し活ノート。</p>
+        <span class="sb-doodle" style="--cc:var(--y-pink); top:-4px; right:8%; font-size:1.6rem" aria-hidden="true">♡</span>
+        <span class="sb-doodle" style="--cc:var(--y-lav); bottom:-8px; left:6%; font-size:1.3rem; animation-delay:.6s,1s" aria-hidden="true">✦</span>
+      </div>
+
+      <!-- 01 ライブ：チケット半券のレール -->
+      <div class="sb-head sb-taped" style="--cc:var(--y-peach)">
+        <span class="sb-tape l" style="--tape:var(--y-peach)" aria-hidden="true"></span>
+        <span class="sb-head-num sb-num" style="--cc:var(--y-peach)">01</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Live</span>
+          <h2>🎤 ライブの思い出</h2>
+        </span>
+      </div>
+
+      <div class="mem-tickets">
+        {memories.lives.map((m, i) => (
+          <article class="sb-ticket mem-ticket y-reveal" data-delay={(i % 3) + 1} style={`--cc:${tapes[i % tapes.length]}; --tilt:${i % 2 === 0 ? "-1.2deg" : "1.1deg"}`}>
+            <figure class="sb-cheki mem-ticket-cheki sb-taped" style={`--tape:${tapes[i % tapes.length]}`}>
+              <span class="sb-tape l" aria-hidden="true"></span>
+              <span class="sb-tape r" aria-hidden="true"></span>
+              {safeMem.has(m.img) ? (
+                <div class="mem-photo" style={`--mbg:url(${img(m.img)})`} data-gallery={JSON.stringify([img(m.img)])} data-index="0" data-caption={m.title} role="button" tabindex="0" aria-label={`${m.title} の写真を拡大`}>
+                  <img src={img(m.img)} alt={m.title} loading="lazy" />
+                </div>
+              ) : (
+                <div class="mem-photo noimg mem-noimg" style={`--cc:${tapes[i % tapes.length]}`} aria-hidden="true">
+                  <span class="mem-noimg-emoji sb-decal">{memDeco(m, "live").emoji}</span>
+                  <span class="mem-noimg-label">{memDeco(m, "live").label}</span>
+                  <span class="mem-noimg-sub">{memDeco(m, "live").sub}</span>
+                </div>
+              )}
+            </figure>
+            <div class="mem-ticket-body">
+              <span class="sb-stamp" style={`--cc:${tapes[i % tapes.length]}`}>🎫 {m.date}</span>
+              <h3>{m.title}</h3>
+              <div class="sb-sticky mem-sticky" style={`--cc:${tapes[i % tapes.length]}`}>
+                <p>{m.text}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- 02 ミーグリ：1日のしおり（大きな見開き） -->
+      <div class="sb-head sb-taped" style="--cc:var(--y-mint)">
+        <span class="sb-tape l" style="--tape:var(--y-mint)" aria-hidden="true"></span>
+        <span class="sb-head-num sb-num" style="--cc:var(--y-mint)">02</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Meet &amp; Greet</span>
+          <h2>🤝 リアルミーグリの思い出</h2>
+        </span>
+      </div>
+
+      {memories.meet.map((m, i) => (
+        <div class="mem-shiori sb-ruled y-reveal">
+          <span class="sb-doodle" style="--cc:var(--y-peach); top:10px; right:14px; font-size:1.4rem" aria-hidden="true">✿</span>
+          <figure class="sb-cheki mem-shiori-cheki sb-taped" style="--tape:var(--y-mint)">
+            <span class="sb-tape l" aria-hidden="true"></span>
+            <span class="sb-tape r" aria-hidden="true"></span>
+            {safeMem.has(m.img) ? (
+              <div class="mem-photo mem-photo--tall" style={`--mbg:url(${img(m.img)})`} data-gallery={JSON.stringify([img(m.img)])} data-index="0" data-caption={m.title} role="button" tabindex="0" aria-label={`${m.title} の写真を拡大`}>
+                <img src={img(m.img)} alt={m.title} loading="lazy" />
+              </div>
+            ) : (
+              <div class="mem-photo mem-photo--tall noimg mem-noimg" style="--cc:var(--y-mint)" aria-hidden="true">
+                <span class="mem-noimg-emoji sb-decal">{memDeco(m, "meet").emoji}</span>
+                <span class="mem-noimg-label">{memDeco(m, "meet").label}</span>
+                <span class="mem-noimg-sub">{memDeco(m, "meet").sub}</span>
+              </div>
+            )}
+            <figcaption>{m.date}</figcaption>
+          </figure>
+          <div class="mem-shiori-text">
+            <span class="sb-head-eyebrow">A Day's Bookmark</span>
+            <div class="mem-shiori-head">
+              <span class="sb-num mem-bignum" style="--cc:var(--y-mint)">#{i + 1}</span>
+              <h3>{m.head}</h3>
+            </div>
+            <span class="sb-stamp" style="--cc:var(--y-peach)">{m.kind}</span>
+            <h4 class="mem-shiori-title"><span class="sb-mark" style="--cc:var(--y-mint)">{m.title}</span></h4>
+            <div class="sb-sticky mem-sticky" style="--cc:var(--y-mint)">
+              <p>{m.text}</p>
+            </div>
+            {i === 0 && <span class="sb-note">この日のことは一生忘れない。</span>}
+          </div>
+        </div>
+      ))}
+
+      <!-- 03 その他：手で貼ったチェキの寄せ集め -->
+      <div class="sb-head sb-taped" style="--cc:var(--y-lav)">
+        <span class="sb-tape l" style="--tape:var(--y-lav)" aria-hidden="true"></span>
+        <span class="sb-head-num sb-num" style="--cc:var(--y-lav)">03</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Others</span>
+          <h2>🎵 その他の思い出</h2>
+        </span>
+      </div>
+
+      <div class="mem-scatter">
+        {memories.others.map((m, i) => (
+          <article class="mem-scatter-item y-reveal" data-delay={(i % 3) + 1} style={`--tilt:${i % 2 === 0 ? "-1.6deg" : "1.4deg"}`}>
+            <figure class="sb-cheki mem-scatter-cheki sb-taped" style={`--tape:${tapes[(i + 2) % tapes.length]}`}>
+              <span class={i % 2 === 0 ? "sb-tape l" : "sb-tape r"} aria-hidden="true"></span>
+              {safeMem.has(m.img) ? (
+                <div class="mem-photo mem-photo--wide" style={`--mbg:url(${img(m.img)})`} data-gallery={JSON.stringify([img(m.img)])} data-index="0" data-caption={m.title} role="button" tabindex="0" aria-label={`${m.title} の写真を拡大`}>
+                  <img src={img(m.img)} alt={m.title} loading="lazy" />
+                </div>
+              ) : (
+                <div class="mem-photo mem-photo--wide noimg mem-noimg" style={`--cc:${tapes[(i + 2) % tapes.length]}`} aria-hidden="true">
+                  <span class="mem-noimg-emoji sb-decal">{memDeco(m, "other").emoji}</span>
+                  <span class="mem-noimg-label">{memDeco(m, "other").label}</span>
+                  <span class="mem-noimg-sub">{memDeco(m, "other").sub}</span>
+                </div>
+              )}
+            </figure>
+            <div class="sb-sticky mem-sticky mem-scatter-note" style={`--cc:${tapes[(i + 2) % tapes.length]}`}>
+              <h3>{m.title}</h3>
+              {m.date && <span class="sb-stamp mem-scatter-date" style={`--cc:${tapes[(i + 2) % tapes.length]}`}>🗓 {m.date}</span>}
+              <p>{m.text}</p>
+            </div>
+          </article>
+        ))}
+        <span class="sb-doodle" style="--cc:var(--y-butter); bottom:-10px; right:4%; font-size:1.5rem" aria-hidden="true">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <Lightbox />
+
+  <style>
+    /* ページ全体を方眼ノートの紙地に */
+    .mem-page.y-section { background: transparent; }
+    .mem-page::before { content: ""; position: absolute; inset: 0; z-index: -1;
+      background-color: #fffdf8;
+      background-image: linear-gradient(color-mix(in srgb, var(--y-line) 80%, transparent) 1px, transparent 1px),
+                        linear-gradient(90deg, color-mix(in srgb, var(--y-line) 80%, transparent) 1px, transparent 1px);
+      background-size: 22px 22px; opacity: .85; }
+
+    /* 日記の表紙 */
+    .mem-cover { position: relative; text-align: center; margin-bottom: 2.6rem; }
+    .mem-cover .sb-stamp { transform: rotate(-3deg); }
+    .mem-cover .sb-note { margin-top: .4rem; }
+
+    /* 章見出しを少し傾けて“貼った”質感 */
+    .sb-head { margin-top: 3.2rem; }
+    .sb-head:first-of-type { margin-top: 2rem; }
+
+    /* 共通：写真枠（縦長でも見切れない＝ぼかし背景＋contain） */
+    .mem-photo { position: relative; overflow: hidden; background: var(--y-cream-2); cursor: zoom-in; aspect-ratio: 3 / 4; border-radius: 2px; }
+    .mem-photo--wide { aspect-ratio: 4 / 3; }
+    .mem-photo--tall { aspect-ratio: 3 / 4; }
+    .mem-photo::before { content: ""; position: absolute; inset: 0; background-image: var(--mbg); background-size: cover; background-position: center; filter: blur(16px) brightness(0.92) saturate(1.1); transform: scale(1.1); z-index: 0; }
+    .mem-photo img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; transition: transform .5s var(--y-ease); }
+    .mem-photo:hover img { transform: scale(1.04); }
+    .mem-photo.noimg::before { display: none; }
+    .mem-photo.noimg img { display: none; }
+    .mem-photo.noimg::after { content: "✿"; display: grid; place-items: center; height: 100%; font-size: 2.2rem; color: var(--y-pink); }
+
+    /* 写真がない思い出＝“描いて残した”装飾カード（番組内・配信・ミーグリ会場の跡地） */
+    .mem-noimg.noimg::after { content: none; }
+    .mem-noimg { display: grid; place-content: center; justify-items: center; gap: .3rem; text-align: center; padding: .7rem;
+      background: linear-gradient(150deg, color-mix(in srgb, var(--cc, var(--y-pink)) 32%, #fff), color-mix(in srgb, var(--cc, var(--y-pink)) 10%, #fffdf8)); }
+    .mem-noimg-emoji { font-size: clamp(1.7rem, 7vw, 2.5rem); line-height: 1; }
+    .mem-noimg-label { font-family: var(--y-font-en); font-weight: 700; font-size: .64rem; letter-spacing: .1em; color: var(--y-ink-soft); }
+    .mem-noimg-sub { font-family: var(--y-font-hand); font-size: .74rem; line-height: 1.4; color: var(--y-ink-soft); max-width: 16ch; }
+
+    /* sb-cheki の中身を contain 表示にしたいので cover を上書き（チェキ枠の白フチは維持） */
+    .sb-cheki .mem-photo { width: 100%; }
+
+    /* 共通：付箋本文 */
+    .mem-sticky { transform: rotate(-.6deg); }
+    .mem-sticky p { color: var(--y-ink-soft); font-size: 0.9rem; line-height: 1.8; margin: 0; }
+
+    /* ===== 01 ライブ＝チケット半券レール ===== */
+    .mem-tickets { display: grid; gap: 1.6rem; max-width: 820px; }
+    .mem-ticket { display: grid; grid-template-columns: 150px 1fr; gap: 1.1rem 1.3rem; align-items: start;
+      transform: rotate(var(--tilt, -1deg)); transition: transform .35s var(--y-ease), box-shadow .35s var(--y-ease); }
+    .mem-ticket:hover { transform: rotate(0) translateY(-5px); box-shadow: var(--y-shadow); z-index: 1; }
+    /* 半券のミシン目を左側の写真／本文の境目あたりに寄せる */
+    .mem-ticket.sb-ticket::after { right: auto; left: calc(150px + .65rem); }
+    .mem-ticket-cheki { width: 150px; padding: .45rem .45rem 1rem; }
+    .mem-ticket-cheki .mem-photo { aspect-ratio: 3 / 4; }
+    .mem-ticket-body { display: flex; flex-direction: column; gap: .55rem; padding-left: .4rem; }
+    .mem-ticket-body .sb-stamp { align-self: flex-start; }
+    .mem-ticket-body h3 { font-size: 1.1rem; margin: .1rem 0 .15rem; line-height: 1.4; }
+
+    @media (max-width: 560px) {
+      .mem-ticket { grid-template-columns: 1fr; justify-items: center; text-align: left; }
+      .mem-ticket.sb-ticket::after { display: none; }
+      .mem-ticket-cheki { width: 60%; min-width: 150px; }
+      .mem-ticket-body { width: 100%; }
+    }
+
+    /* ===== 02 ミーグリ＝1日のしおり（大きな見開き） ===== */
+    .mem-shiori { position: relative; display: grid; grid-template-columns: minmax(220px, 320px) 1fr; gap: 2rem;
+      align-items: center; border-radius: var(--y-radius-sm); padding: clamp(1.4rem, 4vw, 2.4rem); box-shadow: var(--y-shadow-sm);
+      border: 2px solid #fff; margin-bottom: 1.6rem; }
+    .mem-shiori-cheki { width: 100%; transform: rotate(-2deg); }
+    .mem-shiori-cheki .mem-photo { aspect-ratio: 3 / 4; }
+    .mem-shiori-cheki figcaption { font-family: var(--y-font-en); }
+    .mem-shiori-text { display: flex; flex-direction: column; gap: .7rem; align-items: flex-start; }
+    .mem-shiori-head { display: flex; align-items: baseline; gap: .7rem; }
+    .mem-bignum { font-size: clamp(2.8rem, 9vw, 4.6rem); }
+    .mem-shiori-head h3 { font-size: clamp(1.2rem, 3.5vw, 1.7rem); margin: 0; }
+    .mem-shiori-title { font-size: 1rem; margin: 0; font-weight: 700; }
+    .mem-shiori .mem-sticky { width: 100%; }
+
+    @media (max-width: 720px) {
+      .mem-shiori { grid-template-columns: 1fr; gap: 1.4rem; }
+      .mem-shiori-cheki { max-width: 280px; margin-inline: auto; }
+    }
+
+    /* ===== 03 その他＝手で貼ったチェキの寄せ集め ===== */
+    .mem-scatter { position: relative; display: grid; gap: 2.2rem 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: start; }
+    .mem-scatter-item { transform: rotate(var(--tilt, -1deg)); transition: transform .35s var(--y-ease); }
+    .mem-scatter-item:hover { transform: rotate(0) translateY(-5px); z-index: 1; }
+    .mem-scatter-cheki { display: block; width: 100%; }
+    .mem-scatter-cheki .mem-photo { aspect-ratio: 4 / 3; }
+    .mem-scatter-note { margin-top: -.6rem; position: relative; z-index: 2; transform: rotate(.8deg); }
+    .mem-scatter-note h3 { font-size: 1.02rem; margin: 0 0 .35rem; line-height: 1.4; }
+    .mem-scatter-date { margin: 0 0 .55rem; font-size: .66rem; }
+    .mem-scatter-note p { color: var(--y-ink-soft); font-size: .86rem; line-height: 1.75; margin: 0; }
+
+    /* 微回転は reduced-motion でも見た目（静的tilt）は維持。動くアニメだけ停止 */
+    @media (prefers-reduced-motion: reduce) {
+      .mem-photo img { transition: none; }
+    }
+  </style>
+</Yumiki>

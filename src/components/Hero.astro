@@ -52,8 +52,8 @@ const strip = stripOrder
       </div>
     </div>
 
-    <!-- ===== 右：躍動コラージュ（モック再現） ===== -->
-    <div class="art-col" aria-hidden="true">
+    <!-- ===== 右：躍動コラージュ（モック再現・マウスでゆるく視差） ===== -->
+    <div class="art-col" aria-hidden="true" data-px-scene>
       <!-- ブラシのスプラッシュ（琥珀＋紺） -->
       <svg class="splash amber" viewBox="0 0 640 560" preserveAspectRatio="none">
         <path d="M120,540 C40,470 60,380 140,330 C90,260 130,160 230,130 C250,60 350,20 440,50 C520,10 610,60 620,150 C660,240 600,330 520,360 C520,440 440,510 340,500 C270,560 170,580 120,540 Z" />
@@ -70,23 +70,23 @@ const strip = stripOrder
       <span class="cf c4"></span><span class="cf c5"></span><span class="cf c6"></span><span class="cf c7"></span>
 
       <!-- 本人写真（イメージ・実写差し替え可） -->
-      <div class="photo">
+      <div class="photo" data-px="7">
         <img src="/assets/photo/hero.jpg" alt="" />
       </div>
 
       <!-- 手書き落書きラベル -->
-      <span class="doodle d-game hand">🎮 GAME
+      <span class="doodle d-game hand" data-px="18">🎮 GAME
         <svg viewBox="0 0 60 24" class="d-arrow"><path d="M4,20 C20,16 34,10 54,4 M54,4 l-10,0 M54,4 l-2,9" /></svg>
       </span>
-      <span class="doodle d-cg hand">✦ CG →</span>
-      <span class="doodle d-ip hand">IMAGE<br />PROCESSING</span>
+      <span class="doodle d-cg hand" data-px="22">✦ CG →</span>
+      <span class="doodle d-ip hand" data-px="15">IMAGE<br />PROCESSING</span>
 
-      <!-- うまくん（本物の2コマでギャロップ） -->
-      <span class="pony" data-horse>
+      <!-- うまくん（本物の2コマでギャロップ・クリックで紙吹雪） -->
+      <span class="pony" data-horse data-confetti-click="30" data-px="12" style="pointer-events:auto">
         <img class="f1" src="/assets/mascot/run.png" alt="" />
         <img class="f2" src="/assets/mascot/run2.png" alt="" />
       </span>
-      <span class="hello hand">うまくん、よろしく！</span>
+      <span class="hello hand" data-px="14">うまくん、よろしく！</span>
     </div>
   </div>
 

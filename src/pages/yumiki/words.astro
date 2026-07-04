@@ -1,0 +1,205 @@
+---
+import Yumiki from "../../layouts/Yumiki.astro";
+import { words } from "../../data/yumiki.ts";
+
+// テーマごとの“紙メタファー”。本文の意味は不変・見せ方だけ切り替える（index順＝yumiki.ts の words と対応）。
+// paper: カードの質感／stamp: 章スタンプ／sticker: プルクオートに貼る大シール絵文字。
+const themeStyle = [
+  { paper: "bubble", stamp: "天然語録", sticker: "🗣" }, // 弓木ワールド（語録）＝吹き出し＝本人がしゃべってる感
+  { paper: "legend", stamp: "★ LEGEND", sticker: "🎤" }, // 弓木ワールド（伝説）＝スポットライト
+  { paper: "memo", stamp: "やさしさ", sticker: "🌱" }, // 頼れるお姉さん（人柄）＝あたたかいメモ
+  { paper: "praise", stamp: "★ PRO", sticker: "⭐️" }, // プロも認める才能＝推薦コメント
+  { paper: "letter", stamp: "♡ HEART", sticker: "💌" }, // 心の言葉＝便箋（手紙）
+];
+const defStyle = { paper: "memo", stamp: "ことば", sticker: "✍" };
+// カードを“手で貼った”感に：少しずつ違う角度を循環
+const tilts = [-2.4, 1.9, -1.4, 2.3, -2, 1.4];
+---
+<Yumiki title="ことば — YUMIKI WORLD" description="弓木奈於さんがブログやインタビューで語った“本人の言葉”を、テーマ別に集めたページ。">
+  <section class="y-section wd-page sb-grid">
+    <div class="y-container">
+      <!-- 表紙＝ノートに貼ったチェキの扉 -->
+      <div class="wd-cover y-reveal sb-taped" style="--tape:var(--y-pink)">
+        <span class="sb-tape l" aria-hidden="true"></span>
+        <span class="sb-tape r" aria-hidden="true"></span>
+        <span class="sb-stamp wd-cover-stamp" style="--cc:var(--y-peach)" aria-hidden="true">✍ Her Words</span>
+        <div class="y-head" style="margin-bottom:.4rem">
+          <span class="y-eyebrow">Her Words</span>
+          <h1>🗒 弓木さんの<span class="wave">ことば</span></h1>
+        </div>
+        <p class="sb-note wd-intro">ブログやインタビューで弓木さん本人が語った“実際の言葉”を集めました。気になる言葉から、関連するページにも飛べます。</p>
+        <span class="sb-doodle wd-cover-d1 sb-jiggle" style="--cc:var(--y-pink)" aria-hidden="true">♡</span>
+        <span class="sb-doodle wd-cover-d2 sb-jiggle" style="--cc:var(--y-sky)" aria-hidden="true">✦</span>
+      </div>
+
+      {words.map((g, gi) => {
+        const st = themeStyle[gi] || defStyle;
+        const pull = g.items[0];               // 各テーマの代表ひとこと＝特大引用へ
+        const cards = g.items.slice(1);         // 残りを貼り壁カードに（重複なし）
+        return (
+        <div class={`wd-sec is-${st.paper}`} style={`--cc:${g.cc}`}>
+          <!-- 章見出し（左寄せ＋テープ＋通し番号＋スタンプ） -->
+          <div class="sb-head wd-head sb-taped y-reveal" style={`--cc:${g.cc}`}>
+            <span class="sb-tape l" style={`--tape:${g.cc}`} aria-hidden="true"></span>
+            <span class="sb-head-num sb-num" style={`--cc:${g.cc}`} aria-hidden="true">{String(gi + 1).padStart(2, "0")}</span>
+            <span class="sb-head-tt">
+              <span class="sb-head-eyebrow">{g.en}</span>
+              <h2>{g.emoji} {g.theme}</h2>
+            </span>
+            <span class="sb-stamp wd-head-stamp" style={`--cc:${g.cc}`} aria-hidden="true">{st.stamp}</span>
+          </div>
+
+          <!-- 特大プルクオート（章の“見せ場・息継ぎ”） -->
+          <figure class="wd-pull y-reveal" style={`--cc:${g.cc}`}>
+            <span class="wd-pull-mark" aria-hidden="true">“</span>
+            <span class="sb-decal wd-pull-sticker sb-jiggle" aria-hidden="true">{st.sticker}</span>
+            <blockquote class="wd-pull-q">{pull.quote}</blockquote>
+            {pull.context && <p class="wd-pull-ctx">{pull.context}</p>}
+            <figcaption class="wd-pull-src">— {pull.src}</figcaption>
+            {(pull.link || pull.video) && (
+              <div class="wd-links wd-pull-links">
+                {pull.link && <a class="wd-link wd-pull-link" href={pull.link} target={pull.link.startsWith("http") ? "_blank" : undefined} rel={pull.link.startsWith("http") ? "noopener noreferrer" : undefined}>{pull.linkLabel} →</a>}
+                {pull.video && <a class="wd-link wd-pull-link wd-link--video" href={pull.video} target="_blank" rel="noopener noreferrer">{pull.videoLabel || "📺 公式動画"} →</a>}
+              </div>
+            )}
+          </figure>
+
+          <!-- 残りの言葉を“貼り壁”masonry に -->
+          <div class="wd-grid">
+            {cards.map((it, ii) => (
+              <article class="wd-card y-reveal" data-delay={(ii % 3) + 1} style={`--rot:${tilts[(gi + ii) % tilts.length]}deg`}>
+                <span class="wd-q-mark" aria-hidden="true">“</span>
+                <p class="wd-quote">{it.quote}</p>
+                {it.context && <p class="wd-ctx">{it.context}</p>}
+                <p class="wd-src">— {it.src}</p>
+                {(it.link || it.video) && (
+                  <div class="wd-links">
+                    {it.link && <a class="wd-link" href={it.link} target={it.link.startsWith("http") ? "_blank" : undefined} rel={it.link.startsWith("http") ? "noopener noreferrer" : undefined}>{it.linkLabel} →</a>}
+                    {it.video && <a class="wd-link wd-link--video" href={it.video} target="_blank" rel="noopener noreferrer">{it.videoLabel || "📺 公式動画"} →</a>}
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        </div>
+        );
+      })}
+
+      <p class="sb-note wd-foot">※ 引用はすべてブログ・インタビュー等からの抜粋です（出典を併記）。非公式ファンサイトとして、著作権に配慮し短く引用しています。</p>
+    </div>
+  </section>
+
+  <style>
+    .wd-page { position: relative; border-radius: var(--y-radius); }
+
+    /* ===== 表紙 ===== */
+    .wd-cover { position: relative; text-align: center; margin-bottom: clamp(2rem, 5vw, 3rem);
+      background: #fffdf8; border: 1.5px solid var(--y-line); border-radius: var(--y-radius);
+      padding: clamp(1.9rem, 5vw, 2.7rem) 1.2rem clamp(1.6rem, 4vw, 2.2rem); box-shadow: var(--y-shadow-sm);
+      transform: rotate(-0.5deg); }
+    .wd-cover-stamp { display: inline-block; margin-bottom: 0.6rem; }
+    .wd-intro { display: block; max-width: 46ch; margin: 0.4rem auto 0; }
+    .wd-cover-d1 { top: 8%; right: 14%; font-size: 1.6rem; }
+    .wd-cover-d2 { bottom: 6%; left: 13%; font-size: 1.35rem; }
+    @media (prefers-reduced-motion: reduce) { .wd-cover { transform: none; } }
+
+    /* スマホ：章見出しの詰め込み崩れを解消（タイトルに幅を与え、途中改行と圧縮を防ぐ） */
+    @media (max-width: 560px) {
+      .wd-head { flex-wrap: wrap; gap: 0.25rem 0.55rem; align-items: center; }
+      .wd-head .sb-head-num { font-size: 2rem; }
+      .wd-head .sb-head-tt { flex: 1 1 auto; min-width: 0; }
+      .wd-head .sb-head-tt h2 { font-size: 1.45rem; line-height: 1.4; }
+      .wd-head-stamp { display: none; } /* 狭い行で潰れるスタンプはスマホでは省略（PCは表示） */
+      .wd-cover { padding-left: 1rem; padding-right: 1rem; }
+    }
+
+    /* ===== テーマのまとまり ===== */
+    .wd-sec { margin-top: clamp(2.8rem, 7vw, 4.2rem); }
+    .wd-sec:first-of-type { margin-top: 1.4rem; }
+    .wd-head { margin-bottom: 1.1rem; }
+    .wd-head-stamp { margin-left: auto; align-self: center; }
+
+    /* ===== 特大プルクオート（章の見せ場） ===== */
+    .wd-pull { position: relative; overflow: hidden; margin: 0 0 1.9rem;
+      padding: clamp(1.7rem, 4.5vw, 2.8rem) clamp(1.4rem, 4vw, 2.6rem) clamp(1.4rem, 4vw, 2.2rem);
+      background: linear-gradient(158deg, color-mix(in srgb, var(--cc) 24%, #fff), color-mix(in srgb, var(--cc) 7%, #fffdf8));
+      border: 2px dashed color-mix(in srgb, var(--cc) 45%, #fff); border-radius: var(--y-radius);
+      box-shadow: var(--y-shadow-sm); transform: rotate(-0.6deg); }
+    .wd-pull-mark { position: absolute; top: -0.42em; left: 0.04em; font-family: Georgia, "Times New Roman", serif; font-weight: 700;
+      font-size: clamp(7rem, 24vw, 14rem); line-height: 1; color: color-mix(in srgb, var(--cc) 34%, #fff); pointer-events: none; z-index: 0; }
+    .wd-pull-sticker { position: absolute; top: 0.9rem; right: 1rem; font-size: clamp(1.8rem, 6vw, 2.6rem); transform: rotate(9deg); z-index: 2; }
+    .wd-pull-q { position: relative; z-index: 1; margin: 0; font-family: var(--y-font-en); font-weight: 700;
+      font-size: clamp(1.35rem, 4.2vw, 2.25rem); line-height: 1.5; color: var(--y-ink); letter-spacing: 0.005em; }
+    .wd-pull-q:lang(ja) { letter-spacing: 0.02em; }
+    /* 語録プルクオートを“キネティックに立ち上げる”（マスク・ワイプ・イン） */
+    .js .wd-pull-q { clip-path: inset(0 100% 0 0); }
+    .wd-pull.is-visible .wd-pull-q { animation: wd-pull-wipe 0.75s var(--y-ease) 0.12s forwards; }
+    @keyframes wd-pull-wipe { to { clip-path: inset(0 0 0 0); } }
+    @media (prefers-reduced-motion: reduce) { .js .wd-pull-q { clip-path: none; } .wd-pull.is-visible .wd-pull-q { animation: none; } }
+    .wd-pull-ctx { position: relative; z-index: 1; margin: 0.85rem 0 0; font-size: 0.92rem; line-height: 1.85; color: var(--y-ink-soft); max-width: 62ch; }
+    .wd-pull-src { position: relative; z-index: 1; margin: 0.8rem 0 0; font-size: 0.8rem; color: var(--y-ink-soft); font-family: var(--y-font-jp); line-height: 1.6; }
+    .wd-pull-links { margin-top: 1rem; }
+    .wd-pull-link { margin-top: 0; }
+    @media (prefers-reduced-motion: reduce) { .wd-pull { transform: none; } }
+
+    /* ===== 貼り壁 masonry（賑やかに3列まで） ===== */
+    .wd-grid { columns: 1; column-gap: 1.3rem; }
+    @media (min-width: 660px) { .wd-grid { columns: 2; column-gap: 1.5rem; } }
+    @media (min-width: 1040px) { .wd-grid { columns: 3; } }
+
+    .wd-card { break-inside: avoid; position: relative; margin: 0 0 1.45rem; padding: 1.7rem 1.25rem 1.15rem;
+      background: #fffdf8; border-radius: 6px; border: 1px solid var(--y-line); box-shadow: var(--y-shadow-sm);
+      transform: rotate(var(--rot, -2deg)); transition: transform 0.35s var(--y-ease), box-shadow 0.35s var(--y-ease); }
+    .wd-card:hover { transform: rotate(0) translateY(-5px) scale(1.02); box-shadow: var(--y-shadow); z-index: 2; }
+    /* 全カード共通：washiテープで留める（位置を交互に＝手貼り感） */
+    .wd-card::before { content: ""; position: absolute; top: -9px; left: 24px; width: 56px; height: 18px; z-index: 3;
+      background: color-mix(in srgb, var(--cc) 52%, transparent); opacity: 0.85; transform: rotate(-5deg); box-shadow: 0 2px 5px rgba(120, 90, 80, 0.12);
+      -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px); mask-image: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px); }
+    .wd-card:nth-child(2n)::before { left: auto; right: 24px; transform: rotate(5deg); }
+    .wd-card:nth-child(3n)::before { left: 50%; transform: translateX(-50%) rotate(-2deg); width: 70px; }
+    /* 特大の飾り引用符（本文の背面に薄く） */
+    .wd-q-mark { position: absolute; top: -0.12em; left: 0.1em; font-family: Georgia, "Times New Roman", serif; font-weight: 700;
+      font-size: 3.4rem; line-height: 1; color: color-mix(in srgb, var(--cc) 34%, #fff); pointer-events: none; z-index: 0; }
+    .wd-quote { position: relative; z-index: 1; margin: 0 0 0.6rem; font-size: 1.02rem; line-height: 1.78; color: var(--y-ink); font-weight: 500; }
+    .wd-ctx { position: relative; z-index: 1; margin: 0 0 0.7rem; font-size: 0.82rem; line-height: 1.72; color: var(--y-ink-soft); }
+    .wd-src { position: relative; z-index: 1; margin: 0; font-family: var(--y-font-hand); font-size: 0.78rem; color: var(--y-ink-soft); line-height: 1.55; }
+    .wd-links { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.9rem; position: relative; z-index: 1; }
+    .wd-link { display: inline-block; font-family: var(--y-font-en); font-weight: 700; font-size: 0.76rem;
+      color: color-mix(in srgb, var(--y-ink) 55%, var(--cc)); background: color-mix(in srgb, var(--cc) 18%, #fff);
+      padding: 0.32rem 0.78rem; border-radius: 999px; transition: transform 0.25s var(--y-ease), background 0.25s var(--y-ease); position: relative; z-index: 1; }
+    .wd-link:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--cc) 34%, #fff); }
+    /* 公式動画リンクはピーチで区別（記事＝テーマ色） */
+    .wd-link--video { color: color-mix(in srgb, var(--y-ink) 50%, var(--y-peach)); background: color-mix(in srgb, var(--y-peach) 24%, #fff); }
+    .wd-link--video:hover { background: color-mix(in srgb, var(--y-peach) 40%, #fff); }
+    @media (prefers-reduced-motion: reduce) { .wd-card { transform: none; } .wd-card:hover { transform: translateY(-4px); } }
+
+    /* ===== テーマ別“紙メタファー”（章ごとに景色が変わる） ===== */
+    /* 01 語録＝吹き出し（本人がしゃべってる感） */
+    .is-bubble .wd-card { background: color-mix(in srgb, var(--cc) 13%, #fff); border: 1.5px solid color-mix(in srgb, var(--cc) 30%, #fff); border-radius: 18px 18px 18px 5px; }
+    .is-bubble .wd-card::after { content: ""; position: absolute; left: 22px; bottom: -11px; width: 0; height: 0;
+      border: 8px solid transparent; border-top-color: color-mix(in srgb, var(--cc) 13%, #fff); border-bottom: 0; filter: drop-shadow(0 2px 1px rgba(120, 90, 80, 0.08)); }
+    .is-bubble .wd-card:nth-child(2n)::after { left: auto; right: 22px; }
+
+    /* 02 伝説＝スポットライト＋★ */
+    .is-legend .wd-card { background: radial-gradient(120% 80% at 80% 0%, color-mix(in srgb, var(--cc) 22%, #fff), #fff 70%); border: 1.5px solid color-mix(in srgb, var(--cc) 42%, #fff); border-radius: 8px; }
+    .is-legend .wd-card::after { content: "★"; position: absolute; top: -12px; right: 12px; z-index: 4; font-size: 1.2rem;
+      color: color-mix(in srgb, var(--cc) 85%, var(--y-peach)); filter: drop-shadow(0 2px 2px rgba(120, 90, 80, 0.2)); }
+
+    /* 03 お姉さん＝あたたかいメモ（角を不揃いに） */
+    .is-memo .wd-card { background: color-mix(in srgb, var(--cc) 15%, #fff); border: 1px solid color-mix(in srgb, var(--cc) 28%, #fff); border-radius: 3px 13px 9px 12px; }
+
+    /* 04 才能＝推薦コメント（言葉を強く・話者を立てる・⭐️） */
+    .is-praise .wd-card { background: linear-gradient(160deg, color-mix(in srgb, var(--cc) 17%, #fff), #fff); border: 1.5px solid color-mix(in srgb, var(--cc) 34%, #fff); border-radius: 10px; }
+    .is-praise .wd-quote { font-weight: 700; }
+    .is-praise .wd-src { font-weight: 700; color: color-mix(in srgb, var(--y-ink) 58%, var(--cc)); }
+    .is-praise .wd-card::after { content: "⭐️"; position: absolute; top: -13px; left: 16px; z-index: 4; font-size: 1.3rem; }
+
+    /* 05 心の言葉＝便箋（横罫＋左マージン線＋署名） */
+    .is-letter .wd-card { border: 1px solid color-mix(in srgb, var(--cc) 30%, #fff); border-left: 4px solid color-mix(in srgb, var(--cc) 55%, #fff); border-radius: 3px;
+      background-color: #fffdf8;
+      background-image: repeating-linear-gradient(transparent 0 30px, color-mix(in srgb, var(--cc) 24%, transparent) 30px 31px);
+      background-position: 0 1.6rem; }
+    .is-letter .wd-quote { line-height: 1.94; }
+    .is-letter .wd-src::after { content: " ✍"; color: var(--y-peach); }
+  </style>
+</Yumiki>

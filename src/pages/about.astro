@@ -52,7 +52,7 @@ const skills = [
           <span class="cf c1" aria-hidden="true"></span><span class="cf c2" aria-hidden="true"></span>
           <span class="cf c3" aria-hidden="true"></span><span class="cf c4" aria-hidden="true"></span>
           <span class="cf c5" aria-hidden="true"></span>
-          <img class="avatar" src="/assets/mascot/wave.png" alt="手を振る案内役のうまくん" />
+          <img class="avatar" src="/assets/mascot/wave.png" alt="手を振る案内役のうまくん" data-confetti-click="30" />
           <span class="p-hello hand">ようこそ！</span>
           <span class="hanko-mini" aria-hidden="true">馬</span>
         </div>
@@ -125,7 +125,7 @@ const skills = [
             <span class="ba-tag on">AFTER</span>
             <div class="media">
               {kama?.video
-                ? <video src={kama.video} muted loop playsinline preload="none" poster={kama.thumb}></video>
+                ? <video data-autoplay src={kama.video} muted loop playsinline preload="none" poster={kama.thumb}></video>
                 : <img src={kama?.thumb} alt={kama?.title} />}
               <span class="badge">開発中 · 水野研で再設計</span>
             </div>

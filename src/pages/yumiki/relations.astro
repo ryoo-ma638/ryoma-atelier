@@ -1,0 +1,665 @@
+---
+import Yumiki from "../../layouts/Yumiki.astro";
+import Lightbox from "../../components/Lightbox.astro";
+import { unit, relations, img } from "../../data/yumiki.ts";
+const { keyBonds, generations, groups } = relations;
+const initial = (name: string) => name.replace(/[\s　]/g, "").charAt(0);
+---
+<Yumiki title="つながり — YUMIKI WORLD">
+  <section class="y-section rel-page sb-grid">
+    <div class="y-container">
+      <div class="y-head y-reveal rel-cover sb-taped" style="--tape:var(--y-pink)">
+        <span class="rel-cover-glow" aria-hidden="true"></span>
+        <span class="sb-tape l" aria-hidden="true"></span>
+        <span class="sb-tape r" aria-hidden="true"></span>
+        <span class="sb-doodle rel-doodle rel-doodle--a sb-jiggle" aria-hidden="true" style="--cc:var(--y-lav)">✦</span>
+        <span class="sb-doodle rel-doodle rel-doodle--b sb-jiggle" aria-hidden="true" style="--cc:var(--y-mint)">♡</span>
+        <span class="sb-doodle rel-doodle rel-doodle--c sb-jiggle" aria-hidden="true" style="--cc:var(--y-sky)">✿</span>
+        <span class="sb-stamp rel-cover-stamp" style="--cc:var(--y-peach)">♡ Friendship Map</span>
+        <span class="y-eyebrow">Connections</span>
+        <h1>🤝 弓木さんの<span class="wave">つながり</span></h1>
+        <p class="rel-intro">同期との2人旅、軍団、慕う後輩、お世話になった先輩、高校の同級生、番組での共演まで。弓木さんを中心に、人とのつながりを“相関図”にしてみました。</p>
+        <p class="rel-hint"><span class="rel-hint-dot" aria-hidden="true">♡</span> マークのついた人は <b>タップでエピソード</b> が読めます</p>
+      </div>
+
+      <!-- 軍団 首ンセス -->
+      <article class="unit y-reveal" style="--tape:var(--y-butter)">
+        <span class="unit-deco" aria-hidden="true">♛</span>
+        <span class="unit-crest" aria-hidden="true">♛</span>
+        <span class="sb-stamp unit-stamp" style="--cc:var(--y-lav)">♛ Royal Squad</span>
+        <div class="unit-head">
+          <span class="unit-badge">弓木 奈於 率いる軍団</span>
+          <h2 class="unit-name"><span class="sb-mark" style="--cc:var(--y-pink)">{unit.name}</span><small>（{unit.reading}）</small></h2>
+          <p class="unit-meta">{unit.formed} 結成 ／ {unit.song}</p>
+          <p class="unit-origin">{unit.origin}</p>
+          <div class="unit-members">
+            <span class="unit-chip unit-chip--leader">👑 {unit.leader.name}<small>軍団長・{unit.leader.gen}</small></span>
+            {unit.members.map((m) => (
+              <span class="unit-chip">{m.name}<small>{m.gen}</small></span>
+            ))}
+          </div>
+        </div>
+        <figure class="sb-cheki sb-taped unit-photo" style="--tape:var(--y-lav)" data-gallery={JSON.stringify([img("kubinsess.jpg")])} data-index="0" data-caption="軍団「首ンセス」" role="button" tabindex="0" aria-label="首ンセスの写真を拡大">
+          <span class="sb-tape r" aria-hidden="true"></span>
+          <img src={img("kubinsess.jpg")} alt="軍団「首ンセス」の集合写真" loading="lazy" />
+          <figcaption>👑 首ンセス・全員集合</figcaption>
+        </figure>
+        <span class="sb-note unit-note" aria-hidden="true">“首のケアを怠らない”理念がすき</span>
+      </article>
+
+      <!-- ★ 中心相関図（縁の深い人を線でつなぐ） -->
+      <div class="sb-head rel-head rel-head--1 y-reveal sb-taped" style="--cc:var(--y-pink);--tape:var(--y-pink)">
+        <span class="sb-tape l" aria-hidden="true"></span>
+        <span class="sb-num sb-head-num" style="--cc:var(--y-pink)">01</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Closest bonds</span>
+          <h2 class="rel-head-h">弓木さんと、特に縁の深い人たち</h2>
+        </span>
+        <span class="sb-doodle rel-head-doodle" aria-hidden="true" style="--cc:var(--y-butter)">✿</span>
+      </div>
+      <div class="cor-legend-wrap y-reveal">
+        <div class="sb-sticky cor-legend" style="--cc:var(--y-mint)">
+          <span class="cor-legend-ttl" aria-hidden="true">✐ いろ＝関係</span>
+          <span class="cor-leg" style="--gc:var(--y-pink)"><i></i>同期</span>
+          <span class="cor-leg" style="--gc:var(--y-mint)"><i></i>後輩</span>
+          <span class="cor-leg" style="--gc:var(--y-butter)"><i></i>先輩</span>
+          <span class="cor-leg" style="--gc:var(--y-lav)"><i></i>高校</span>
+          <span class="cor-legend-hint">♡ の線でつながってる人＝とくに縁が深い人。タップでエピソード！</span>
+        </div>
+      </div>
+      <div class="cor y-reveal" id="cor">
+        <svg class="cor-svg" id="corSvg" aria-hidden="true" preserveAspectRatio="none"></svg>
+        <div class="cor-grid">
+          {keyBonds.slice(0, 3).map((p) => (
+            <button class="cor-node node--link" data-name={p.name} data-sub={p.cat} data-rel={p.rel} data-note={p.note} style={`--gc:${p.color}`}>
+              <span class="cor-rel">{p.rel}</span>
+              <span class="cor-av" aria-hidden="true">{initial(p.name)}</span>
+              <span class="cor-nm">{p.name}</span>
+            </button>
+          ))}
+          {keyBonds.slice(3, 4).map((p) => (
+            <button class="cor-node node--link" data-name={p.name} data-sub={p.cat} data-rel={p.rel} data-note={p.note} style={`--gc:${p.color}`}>
+              <span class="cor-rel">{p.rel}</span>
+              <span class="cor-av" aria-hidden="true">{initial(p.name)}</span>
+              <span class="cor-nm">{p.name}</span>
+            </button>
+          ))}
+
+          <div class="cor-hub" id="corHub">
+            <span class="cor-hub-halo" aria-hidden="true"></span>
+            <span class="cor-hub-crown" aria-hidden="true">♛</span>
+            <span class="cor-hub-photo">
+              <span class="cor-hub-ring" aria-hidden="true"></span>
+              <img src={img("arsha/42.jpg")} alt="弓木奈於さん" loading="lazy" onerror="this.src='/assets/yumiki/arsha/42.jpg'" />
+            </span>
+            <b>弓木 奈於</b>
+            <small>ゆみっきー</small>
+            <span class="cor-hub-tag" aria-hidden="true">♡ MY OSHI</span>
+            <span class="cor-hub-spark s1" aria-hidden="true">✦</span>
+            <span class="cor-hub-spark s2" aria-hidden="true">♡</span>
+            <span class="cor-hub-spark s3" aria-hidden="true">✿</span>
+          </div>
+
+          {keyBonds.slice(4, 8).map((p) => (
+            <button class="cor-node node--link" data-name={p.name} data-sub={p.cat} data-rel={p.rel} data-note={p.note} style={`--gc:${p.color}`}>
+              <span class="cor-rel">{p.rel}</span>
+              <span class="cor-av" aria-hidden="true">{initial(p.name)}</span>
+              <span class="cor-nm">{p.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- 全員ロスター（世代別） -->
+      <div class="sb-head rel-head rel-head--2 y-reveal sb-taped" style="--cc:var(--y-sky);--tape:var(--y-sky)">
+        <span class="sb-tape r" aria-hidden="true"></span>
+        <span class="sb-num sb-head-num" style="--cc:var(--y-sky)">02</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Roster by generation</span>
+          <h2 class="rel-head-h rel-head-h--sm">同じ時代を生きる乃木坂46の仲間（現役メンバー）</h2>
+        </span>
+        <span class="sb-doodle rel-head-doodle" aria-hidden="true" style="--cc:var(--y-mint)">✦</span>
+      </div>
+      <div class="gen-grid">
+        {generations.map((g, gi) => {
+          const active = g.members.filter((m) => !m.grad);
+          const grads = g.members.filter((m) => m.grad);
+          return (
+          <div class={`cluster cluster--sb y-reveal cl-tilt-${gi % 3}`} style={`--gc:${g.color}`} data-delay={(gi % 2) + 1}>
+            <span class="sb-doodle cluster-doodle" aria-hidden="true">♡</span>
+            <h4 class="cluster-title">{g.gen}<small>現役 {active.length}名{grads.length ? `・卒業 ${grads.length}名` : ""}</small></h4>
+            <div class="nodes">
+              {active.map((m) => (
+                m.bond ? (
+                  <button class="node node--link" data-name={m.name} data-sub={g.gen} data-rel={m.rel} data-note={m.bond} style={`--gc:${g.color}`}>
+                    <span class="node-av" aria-hidden="true">{initial(m.name)}<span class="node-badge">♡</span></span>
+                    <span class="node-name">{m.name}</span>
+                    {m.rel && <span class="node-rel">{m.rel}</span>}
+                  </button>
+                ) : (
+                  <span class="node">
+                    <span class="node-av node-av--plain" style={`--gc:${g.color}`} aria-hidden="true">{initial(m.name)}</span>
+                    <span class="node-name">{m.name}</span>
+                  </span>
+                )
+              ))}
+            </div>
+            {grads.length > 0 && (
+              <>
+                <p class="cluster-grad-label">卒業メンバー</p>
+                <div class="nodes nodes--grad">
+                  {grads.map((m) => (
+                    <button class="node node--link node--grad" data-name={m.name} data-sub={`${g.gen}・${m.grad}`} data-rel={m.rel} data-note={m.bond} style={`--gc:${g.color}`}>
+                      <span class="node-av node-av--grad" aria-hidden="true">{initial(m.name)}<span class="node-badge node-badge--grad">卒</span></span>
+                      <span class="node-name">{m.name}</span>
+                      <span class="node-rel node-rel--grad">{m.grad}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          );
+        })}
+      </div>
+
+      <!-- 世代外のつながり -->
+      <div class="sb-head rel-head rel-head--3 y-reveal sb-taped" style="--cc:var(--y-lav);--tape:var(--y-lav)">
+        <span class="sb-tape l" aria-hidden="true"></span>
+        <span class="sb-num sb-head-num" style="--cc:var(--y-lav)">03</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Around her</span>
+          <h2 class="rel-head-h rel-head-h--sm">弓木さんを支える、まわりの人々</h2>
+        </span>
+        <span class="sb-note rel-head-note" aria-hidden="true">先輩・同級生・番組のみなさん</span>
+      </div>
+      <div class="grp-grid">
+        {groups.map((g, gi) => (
+          <div class={`cluster cluster--sb y-reveal cl-tilt-${(gi + 1) % 3}`} style={`--gc:${g.color}`} data-delay={(gi % 2) + 1}>
+            <span class="sb-stamp cluster-stamp" aria-hidden="true">♢ Friends</span>
+            <h4 class="cluster-title cluster-title--sm">{g.group}</h4>
+            <div class="nodes">
+              {g.people.map((p) => (
+                p.note ? (
+                  <button class="node node--link" data-name={p.name} data-sub={p.role} data-rel={p.rel} data-note={p.note} style={`--gc:${g.color}`}>
+                    <span class="node-av" aria-hidden="true">{initial(p.name)}<span class="node-badge">♡</span></span>
+                    <span class="node-name">{p.name}</span>
+                    {p.rel && <span class="node-rel">{p.rel}</span>}
+                  </button>
+                ) : (
+                  <span class="node">
+                    <span class="node-av node-av--plain" style={`--gc:${g.color}`} aria-hidden="true">{initial(p.name)}</span>
+                    <span class="node-name">{p.name}</span>
+                  </span>
+                )
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p class="rel-foot y-reveal"><span class="sb-note rel-foot-note">※ メンバー在籍は2026年6月時点。番組での共演・本人やメンバーの発信など、公開されている情報をもとにファンが作成したものです。</span></p>
+    </div>
+  </section>
+
+  <!-- メンバー詳細ポップアップ -->
+  <div id="ymem" class="ymem" aria-hidden="true" role="dialog" aria-modal="true" aria-label="メンバーの詳細">
+    <button class="y-x ymem-x" aria-label="閉じる">✕</button>
+    <div class="ymem-card" role="document">
+      <span class="ymem-av" id="ymemAv"></span>
+      <h3 class="ymem-name" id="ymemName"></h3>
+      <span class="ymem-rel" id="ymemRel"></span>
+      <span class="ymem-sub" id="ymemSub"></span>
+      <p class="ymem-note" id="ymemNote"></p>
+    </div>
+  </div>
+
+  <Lightbox />
+</Yumiki>
+
+<style>
+  .rel-intro { margin-top: 0.9rem; color: var(--y-ink-soft); font-size: 0.95rem; max-width: 52ch; margin-inline: auto; line-height: 1.85; }
+  .rel-hint { margin-top: 0.7rem; font-size: 0.82rem; color: var(--y-ink-soft); background: #fff; border: 1.5px dashed var(--y-line); border-radius: 999px; padding: 0.4rem 1rem; display: inline-block; }
+  .rel-hint-dot { color: var(--y-peach); }
+
+  /* 軍団 首ンセス */
+  .unit { position: relative; overflow: hidden; margin-bottom: clamp(2.4rem, 7vw, 4rem); border: 2px dashed var(--y-line); border-radius: var(--y-radius);
+    padding: clamp(1.6rem, 5vw, 2.6rem); box-shadow: var(--y-shadow-sm); text-align: center;
+    background: linear-gradient(150deg, color-mix(in srgb, var(--y-lav) 20%, #fff), color-mix(in srgb, var(--y-sky) 18%, #fff)); }
+  .unit-deco { position: absolute; top: -1rem; right: 0.4rem; font-size: 6rem; color: var(--y-butter); opacity: 0.35; pointer-events: none; }
+  .unit-head { position: relative; z-index: 1; }
+  .unit-badge { display: inline-block; font-weight: 700; font-size: 0.74rem; color: #fff; background: var(--y-peach); padding: 0.32rem 0.95rem; border-radius: 999px; }
+  .unit-name { font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0.6rem 0 0.3rem; }
+  .unit-name small { font-size: 0.42em; color: var(--y-muted); font-weight: 500; }
+  .unit-meta { font-family: var(--y-font-en); font-weight: 700; font-size: 0.82rem; color: var(--y-rose); }
+  .unit-origin { color: var(--y-ink-soft); font-size: 0.9rem; max-width: 56ch; margin: 0.8rem auto 0; line-height: 1.85; }
+  .unit-photo { position: relative; z-index: 1; width: min(440px, 90%); margin: 1.5rem auto 0; padding: 0.5rem 0.5rem 1rem; transform: rotate(-1.2deg); cursor: zoom-in; transition: transform 0.35s var(--y-ease), box-shadow 0.35s var(--y-ease); }
+  .unit-photo:hover { transform: rotate(0deg) scale(1.02); box-shadow: var(--y-shadow); }
+  .unit-photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 3px; }
+  .unit-photo figcaption { font-family: var(--y-font-en); font-weight: 700; text-align: center; margin-top: 0.4rem; color: var(--y-ink-soft); font-size: 0.8rem; }
+  .unit-members { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; }
+  .unit-chip { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.25; font-weight: 700; font-size: 0.9rem; color: var(--y-ink);
+    background: #fff; border: 1.5px solid var(--y-line); border-radius: 14px; padding: 0.45rem 0.9rem; box-shadow: var(--y-shadow-sm); }
+  .unit-chip small { font-size: 0.68rem; font-weight: 600; color: var(--y-muted); margin-top: 2px; }
+  .unit-chip--leader { background: color-mix(in srgb, var(--y-butter) 30%, #fff); border-color: color-mix(in srgb, var(--y-peach) 40%, #fff); }
+
+  .rel-sec-title { text-align: center; font-size: 1.12rem; margin: clamp(2.4rem, 6vw, 3.4rem) 0 1.4rem; }
+  .rel-sec-title::before { content: "♡"; color: var(--y-peach); margin-right: 0.4rem; }
+
+  /* 色の凡例 */
+  .cor-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.45rem 0.9rem; margin: -0.4rem auto 1.2rem; }
+  .cor-leg { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.76rem; font-weight: 700; color: var(--y-ink-soft); }
+  .cor-leg i { width: 13px; height: 13px; border-radius: 50%; background: var(--gc); box-shadow: var(--y-shadow-sm); }
+
+  /* ===== 中心相関図 ===== */
+  .cor { position: relative; max-width: 780px; margin: 0 auto clamp(1rem, 4vw, 2rem); }
+  .cor-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: visible; }
+  .cor-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.8rem, 3vw, 1.7rem); align-items: center; }
+
+  .cor-hub { display: grid; place-content: center; justify-items: center; gap: 0.2rem; text-align: center;
+    background: #fff; border: 3px solid var(--y-peach); border-radius: var(--y-radius); padding: 0.7rem 0.5rem; box-shadow: var(--y-shadow); }
+  .cor-hub img { width: clamp(56px, 13vw, 84px); height: clamp(56px, 13vw, 84px); border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--y-pink); }
+  .cor-hub b { font-size: clamp(0.82rem, 2.3vw, 1.05rem); margin-top: 0.3rem; }
+  .cor-hub small { font-size: 0.64rem; color: var(--y-muted); font-family: var(--y-font-en); font-weight: 700; }
+
+  .cor-node { display: flex; flex-direction: column; align-items: center; gap: 0.32rem; padding: 0.7rem 0.4rem 0.8rem; cursor: pointer;
+    background: color-mix(in srgb, var(--gc) 13%, #fff); border: 1.5px solid color-mix(in srgb, var(--gc) 34%, #fff); border-radius: 16px;
+    box-shadow: var(--y-shadow-sm); transition: transform 0.25s var(--y-ease), box-shadow 0.25s var(--y-ease); }
+  .cor-node:hover { transform: translateY(-4px); box-shadow: var(--y-shadow); }
+  .cor-node:focus-visible { outline: 3px solid var(--y-peach); outline-offset: 3px; }
+  .cor-rel { font-size: 0.6rem; font-weight: 700; color: color-mix(in srgb, var(--y-ink) 55%, var(--gc)); background: color-mix(in srgb, var(--gc) 18%, #fff); padding: 0.14rem 0.5rem; border-radius: 999px; line-height: 1.4; }
+  .cor-av { width: clamp(38px, 10vw, 50px); height: clamp(38px, 10vw, 50px); border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: var(--y-ink);
+    background: var(--gc); font-size: 1.05rem; box-shadow: 0 5px 14px color-mix(in srgb, var(--gc) 50%, transparent); outline: 2px solid #fff; outline-offset: 2px; }
+  .cor-nm { font-size: 0.74rem; font-weight: 700; text-align: center; line-height: 1.3; }
+
+  @media (max-width: 700px) {
+    .cor-svg { display: none; }
+    .cor-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+    /* ハブは“縦カード”のまま最上段に中央寄せ。横並び(row)や grid の place-content 依存だと
+       一部ブラウザ(iOS Safari 等)で中心がズレ得るため、flex の縦積みで明示的に中央寄せして堅牢化。 */
+    .cor-hub { grid-column: 1 / -1; order: -1; justify-self: center; width: min(100%, 230px); margin: 0.4rem auto 0.9rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
+    .cor-hub img { width: 66px; height: 66px; }
+  }
+
+  /* クラスター共通 */
+  .gen-grid, .grp-grid { display: grid; gap: clamp(1.1rem, 3vw, 1.6rem); grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .gen-grid { grid-template-columns: repeat(2, 1fr); } .grp-grid { grid-template-columns: repeat(2, 1fr); } }
+  .cluster { position: relative; border-radius: var(--y-radius); padding: 1.5rem 1.1rem 1.3rem;
+    background: color-mix(in srgb, var(--gc) 11%, #fff); border: 1.5px solid color-mix(in srgb, var(--gc) 28%, #fff); }
+  .cluster::before { content: "♡"; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; display: grid; place-items: center;
+    border-radius: 50%; background: var(--gc); color: #fff; font-size: 0.78rem; box-shadow: var(--y-shadow-sm); }
+  .cluster-title { font-size: 1.12rem; margin-bottom: 1.1rem; text-align: center; display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; }
+  .cluster-title--sm { font-size: 0.98rem; line-height: 1.4; }
+  .cluster-title small { font-size: 0.7rem; font-weight: 500; color: var(--y-ink-soft); }
+
+  /* メンバーノード（アバター＋名前＋関係ラベル） */
+  .nodes { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.9rem 0.55rem; }
+  .node { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; width: 5.1rem; padding: 0; border: none; background: none; }
+  .node-av { position: relative; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.15rem; color: var(--y-ink);
+    background: var(--gc); box-shadow: var(--y-shadow-sm); }
+  .node-av--plain { background: color-mix(in srgb, var(--gc) 40%, #fff); color: color-mix(in srgb, var(--y-ink) 70%, var(--gc)); }
+  .node-name { font-size: 0.74rem; font-weight: 700; color: var(--y-ink); line-height: 1.3; text-align: center; }
+  .node-rel { font-size: 0.58rem; font-weight: 700; color: color-mix(in srgb, var(--y-ink) 55%, var(--gc)); background: color-mix(in srgb, var(--gc) 18%, #fff);
+    border-radius: 999px; padding: 0.08rem 0.42rem; line-height: 1.35; text-align: center; }
+  .node-badge { position: absolute; right: -3px; bottom: -3px; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--y-peach); font-size: 0.62rem; display: grid; place-items: center; box-shadow: var(--y-shadow-sm); }
+  /* 卒業・卒業予定メンバー（現役と分けて表示） */
+  .cluster-grad-label { font-family: var(--y-font-en); font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--y-muted); text-align: center; margin: 1.1rem 0 0.6rem; }
+  .cluster-grad-label::before, .cluster-grad-label::after { content: "—"; margin: 0 0.45rem; opacity: 0.6; }
+  .nodes--grad { opacity: 0.96; }
+  .node--grad .node-av--grad { filter: grayscale(0.2); opacity: 0.92; }
+  .node-badge--grad { background: var(--y-ink-soft); color: #fff; font-size: 0.5rem; font-weight: 700; }
+  .node-rel--grad { color: var(--y-ink-soft); background: color-mix(in srgb, var(--y-muted) 16%, #fff); }
+  /* クリックできる人＝立体的に・押せる合図 */
+  .node--link { cursor: pointer; transition: transform .25s var(--y-ease); }
+  .node--link .node-av { box-shadow: 0 6px 16px color-mix(in srgb, var(--gc) 50%, transparent); outline: 2px solid #fff; outline-offset: 2px; }
+  .node--link:hover { transform: translateY(-4px); }
+  .node--link:hover .node-name { color: var(--y-peach); }
+  .node--link:focus-visible { outline: 3px solid var(--y-peach); outline-offset: 3px; border-radius: 12px; }
+
+  .rel-foot { text-align: center; color: var(--y-muted); font-size: 0.74rem; margin-top: clamp(2rem, 6vw, 3rem); line-height: 1.7; }
+
+  /* メンバー詳細ポップアップ */
+  .ymem { position: fixed; inset: 0; z-index: 1000; display: none; place-items: center; padding: 1.2rem;
+    background: color-mix(in srgb, var(--y-ink) 45%, transparent); backdrop-filter: blur(4px); }
+  .ymem.open { display: grid; }
+  .ymem-card { position: relative; background: #fff; border-radius: var(--y-radius); padding: 2rem 1.6rem 1.8rem; max-width: 392px; width: 100%; text-align: center;
+    box-shadow: var(--y-shadow); border: 3px solid var(--y-pink); animation: ymem-pop .3s var(--y-ease); }
+  @keyframes ymem-pop { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .ymem-av { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.8rem; color: #fff; margin: 0 auto 0.8rem; box-shadow: var(--y-shadow-sm); }
+  .ymem-name { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .ymem-rel { display: inline-block; font-size: 0.74rem; font-weight: 700; color: #fff; background: var(--y-peach); padding: 0.22rem 0.8rem; border-radius: 999px; margin: 0 0.25rem 0.4rem; }
+  .ymem-rel:empty { display: none; }
+  .ymem-sub { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--y-ink); background: var(--y-cream-2); padding: 0.2rem 0.7rem; border-radius: 999px; }
+  .ymem-sub:empty { display: none; }
+  .ymem-note { margin-top: 1rem; color: var(--y-ink-soft); font-size: 0.92rem; line-height: 1.95; text-align: left; }
+  .ymem-x { position: fixed; top: clamp(1rem, 4vw, 2rem); right: clamp(1rem, 4vw, 2rem); z-index: 1; }
+
+  @media (prefers-reduced-motion: reduce) { .ymem-card { animation: none; } }
+
+  /* ===== スクラップブック化（このページのレイアウト調整のみ。見た目の量産はしない＝共有部品を使う） ===== */
+  .rel-page { border-radius: var(--y-radius); }
+
+  /* 表紙見出し＝ノートの表紙カードに（中央寄せテンプレを“貼った紙”に） */
+  .rel-cover { position: relative; background: #fffdf8; border: 1.5px solid var(--y-line); border-radius: var(--y-radius);
+    padding: clamp(1.8rem, 5vw, 2.8rem) 1.2rem clamp(1.6rem, 4vw, 2.2rem); box-shadow: var(--y-shadow-sm);
+    transform: rotate(-0.6deg); }
+  .rel-cover .y-eyebrow, .rel-cover :is(h1, h2), .rel-cover .rel-intro, .rel-cover .rel-hint { transform: rotate(0.6deg); }
+  .rel-cover-stamp { position: absolute; top: 1rem; right: 1rem; }
+  .rel-doodle { font-size: 1.4rem; }
+  .rel-doodle--a { top: 1.1rem; left: 1.2rem; }
+  .rel-doodle--b { bottom: 1rem; right: 1.6rem; font-size: 1.1rem; }
+  .rel-doodle--c { bottom: 1.2rem; left: 1.7rem; font-size: 1.15rem; }
+
+  /* 軍団＝札／紋章っぽく少しリッチに（レイアウトは維持） */
+  .unit { position: relative; }
+  .unit-crest { position: absolute; top: 0.7rem; left: 0.9rem; font-size: 1.6rem; color: color-mix(in srgb, var(--y-butter) 75%, var(--y-peach)); opacity: 0.7; pointer-events: none; }
+  .unit-stamp { position: absolute; top: 0.9rem; right: 1rem; z-index: 2; }
+  .unit-note { position: absolute; bottom: 0.6rem; right: 1.1rem; z-index: 2; pointer-events: none; }
+  @media (max-width: 640px) { .unit-note { display: none; } }
+
+  /* 章見出し（.sb-head）に優先順位の差を付ける＝全部同じ大きさをやめる */
+  .rel-head { position: relative; margin-top: clamp(2.6rem, 6vw, 3.6rem); padding: 0.4rem 0.2rem 0.6rem; }
+  .rel-head .sb-head-eyebrow { color: color-mix(in srgb, var(--cc) 60%, var(--y-ink-soft)); }
+  .rel-head-h { line-height: 1.35; }
+  .rel-head--1 { transform: rotate(-0.8deg); }                    /* いちばん大きく＝最優先 */
+  .rel-head--1 .sb-head-num { font-size: clamp(2.6rem, 8vw, 4.2rem); }
+  .rel-head--1 .rel-head-h { font-size: clamp(1.5rem, 4vw, 2.1rem); }
+  .rel-head--2 { transform: rotate(0.7deg); justify-content: flex-end; text-align: right; }
+  .rel-head--2 .sb-head-tt { align-items: flex-end; }
+  .rel-head--3 { transform: rotate(-0.5deg); }
+  .rel-head-h--sm { font-size: clamp(1.2rem, 3vw, 1.6rem); }
+  .rel-head-doodle { font-size: 1.3rem; right: 0; top: -0.4rem; }
+  .rel-head--2 .rel-head-doodle { right: auto; left: -0.2rem; }
+  .rel-head-note { margin-top: 0.2rem; }
+  @media (max-width: 560px) {
+    .rel-head--2 { justify-content: flex-start; text-align: left; }
+    .rel-head--2 .sb-head-tt { align-items: flex-start; }
+  }
+
+  /* クラスター（均一な角丸カードの羅列）を“貼ったメモ”に＝微回転で崩す */
+  .cluster--sb { position: relative; }
+  .cl-tilt-0 { transform: rotate(-1deg); }
+  .cl-tilt-1 { transform: rotate(0.9deg); }
+  .cl-tilt-2 { transform: rotate(-0.4deg); }
+  .cluster-doodle { top: -6px; right: 10px; font-size: 1.05rem; color: var(--gc); }
+  .cluster-stamp { position: absolute; top: -10px; right: 12px; z-index: 2; }
+
+  /* 欄外メモ＝footを手書きの一言風に（可読性は維持） */
+  .rel-foot-note { transform: rotate(-0.6deg); max-width: 60ch; }
+
+  /* スクラップブックの微回転は reduced-motion でも見た目の崩しなので残すが、揺れ系は停止（.sb-doodle 側で対応済み） */
+  @media (prefers-reduced-motion: reduce) {
+    .rel-cover, .rel-cover .y-eyebrow, .rel-cover :is(h1, h2), .rel-cover .rel-intro, .rel-cover .rel-hint,
+    .rel-head, .cl-tilt-0, .cl-tilt-1, .cl-tilt-2, .rel-foot-note { transform: none; }
+  }
+
+  /* =========================================================
+     ★ 派手・可愛い強化（2026-06-18）：相関図を“主役”に
+     ========================================================= */
+
+  /* 中心ハブ＝弓木さんを「主役カード」に（回転スペクトラム・王冠・ハロー・キラ） */
+  .cor-hub { position: relative; overflow: visible;
+    background: linear-gradient(165deg, #fff, color-mix(in srgb, var(--y-pink) 15%, #fff));
+    border-color: color-mix(in srgb, var(--y-peach) 72%, #fff); box-shadow: var(--y-shadow); }
+  .cor-hub-photo { position: relative; isolation: isolate; display: inline-grid; place-items: center; }
+  .cor-hub-photo > img { position: relative; z-index: 1; }
+  .cor-hub-ring { position: absolute; inset: -9px; border-radius: 50%; z-index: 0;
+    background: conic-gradient(from 0deg, var(--y-peach), var(--y-butter), var(--y-mint), var(--y-sky), var(--y-lav), var(--y-pink), var(--y-peach));
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 6px), #000 calc(100% - 5px));
+            mask: radial-gradient(farthest-side, #0000 calc(100% - 6px), #000 calc(100% - 5px));
+    animation: cor-spin 11s linear infinite; }
+  @keyframes cor-spin { to { transform: rotate(360deg); } }
+  .cor-hub-halo { position: absolute; inset: -16px; z-index: -1; border-radius: var(--y-radius);
+    background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--y-peach) 50%, transparent), transparent 70%); filter: blur(9px); }
+  .cor-hub-crown { position: absolute; top: -19px; left: 50%; transform: translateX(-50%) rotate(-6deg); z-index: 2;
+    font-size: 1.55rem; color: color-mix(in srgb, var(--y-butter) 82%, var(--y-peach)); text-shadow: 0 2px 4px rgba(120,90,80,.22);
+    animation: wobble 5s ease-in-out infinite; }
+  .cor-hub-tag { position: absolute; bottom: -11px; left: 50%; transform: translateX(-50%) rotate(-2deg); z-index: 2;
+    font-family: var(--y-font-en); font-weight: 700; font-size: .55rem; letter-spacing: .06em; color: #fff;
+    background: var(--y-peach); padding: .18rem .6rem; border-radius: 999px; box-shadow: var(--y-shadow-sm); white-space: nowrap; }
+  .cor-hub-spark { position: absolute; font-size: 1rem; pointer-events: none; z-index: 2;
+    animation: twinkle 2.6s ease-in-out infinite, floaty 7s ease-in-out infinite; }
+  .cor-hub-spark.s1 { top: -4px; right: 0; color: var(--y-sky); }
+  .cor-hub-spark.s2 { bottom: 24px; left: -10px; color: var(--y-peach); animation-delay: .5s, .3s; }
+  .cor-hub-spark.s3 { top: 36%; right: -12px; color: var(--y-lav); animation-delay: 1s, .8s; }
+  @media (prefers-reduced-motion: reduce) { .cor-hub-ring, .cor-hub-crown, .cor-hub-spark { animation: none; } }
+  @media (max-width: 700px) { .cor-hub-tag { bottom: -13px; } .cor-hub-crown { font-size: 1.25rem; top: -14px; } .cor-hub-spark.s2 { bottom: 6px; } }
+
+  /* ノード＝シールっぽく（ぷるん・落ち影） */
+  .cor-node { transition: transform .28s var(--y-ease), box-shadow .28s var(--y-ease); }
+  .cor-node:hover { transform: translateY(-5px) rotate(-1.5deg) scale(1.04); }
+  .cor-av { filter: drop-shadow(0 4px 7px color-mix(in srgb, var(--gc) 50%, transparent)); }
+
+  /* 関係線（SVG）：薄い実線＋♡。ホバー/フォーカスで“その絆だけ”光り、他は沈む */
+  .cor-line { transition: stroke-width .25s ease, opacity .25s ease, filter .25s ease; }
+  .cor-heart { transition: opacity .25s ease; }
+  .cor.focus-on .cor-line:not(.lit) { opacity: .08 !important; }
+  .cor.focus-on .cor-heart:not(.lit) { opacity: .06 !important; }
+  .cor-line.lit { stroke-width: 5.5; opacity: 1 !important; filter: drop-shadow(0 0 7px var(--gc)) drop-shadow(0 0 3px var(--gc)); }
+  .cor-heart.lit { opacity: 1 !important; }
+  /* 点灯時はノード側もきらっと前面に */
+  .cor.focus-on .cor-node:not(:hover):not(:focus-visible) { opacity: .5; transition: opacity .25s ease; }
+
+  /* 凡例＝ノートの隅に貼った“いろの説明”付箋 */
+  .cor-legend-wrap { display: flex; justify-content: center; margin: -.2rem auto 1.4rem; }
+  .cor-legend { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem .9rem;
+    max-width: 560px; transform: rotate(-1.2deg); }
+  .cor-legend-ttl { font-family: var(--y-font-hand); font-weight: 700; font-size: .84rem; color: var(--y-ink); width: 100%; text-align: center; }
+  .cor-legend-hint { width: 100%; text-align: center; font-size: .73rem; color: var(--y-ink-soft); font-family: var(--y-font-hand); line-height: 1.5; }
+  @media (prefers-reduced-motion: reduce) { .cor-legend { transform: none; } }
+
+  /* 世代/グループのクラスター＝シール帳の台紙（ドット）に */
+  .cluster--sb { background-image: radial-gradient(circle, color-mix(in srgb, var(--gc) 28%, transparent) 1.5px, transparent 1.6px);
+    background-size: 15px 15px; background-position: 7px 7px; }
+
+  /* 軍団チップ＝ミニ・トレカ（ぷるん／軍団長はホロのきらめき） */
+  .unit-chip { transition: transform .3s var(--y-ease), box-shadow .3s var(--y-ease); }
+  .unit-chip:hover { transform: translateY(-4px) rotate(-2deg) scale(1.05); box-shadow: var(--y-shadow); z-index: 1; }
+  .unit-chip--leader { position: relative; overflow: hidden; }
+  .unit-chip--leader::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.65) 50%, transparent 65%);
+    transform: translateX(-130%); transition: transform .7s ease; }
+  .unit-chip--leader:hover::after { transform: translateX(130%); }
+  @media (prefers-reduced-motion: reduce) { .unit-chip:hover { transform: none; } .unit-chip--leader::after { display: none; } }
+
+  /* 表紙＝相関図のヒーローに格上げ（外グロー＋内オーラ＋大見出し＋縁の輪） */
+  .rel-cover { box-shadow: var(--y-shadow-sm), 0 22px 55px color-mix(in srgb, var(--y-pink) 26%, transparent); }
+  .rel-cover-glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: var(--y-radius);
+    background: radial-gradient(60% 72% at 50% -4%, color-mix(in srgb, var(--y-pink) 46%, transparent), transparent 70%),
+                radial-gradient(52% 60% at 86% 96%, color-mix(in srgb, var(--y-sky) 40%, transparent), transparent 70%),
+                radial-gradient(52% 60% at 12% 92%, color-mix(in srgb, var(--y-lav) 36%, transparent), transparent 70%);
+    filter: blur(7px); opacity: .7; }
+  .rel-cover h1 { font-size: clamp(1.9rem, 5.6vw, 3rem); margin-top: .5rem; }
+
+  /* ノードをタップしたとき♡が弾けるプチ演出（JSが body に生成） */
+  .rel-burst { position: fixed; z-index: 1200; pointer-events: none; font-size: 1.15rem; transform: translate(-50%, -50%); will-change: transform, opacity; animation: rel-burst .75s ease-out forwards; }
+  @keyframes rel-burst { 0% { opacity: 1; transform: translate(-50%, -50%) scale(.5); } 100% { opacity: 0; transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(1.1) rotate(var(--rot, 0deg)); } }
+
+</style>
+
+<script>
+  // ── メンバー詳細モーダル ──
+  const modal = document.getElementById("ymem");
+  if (modal) {
+    const av = document.getElementById("ymemAv")!;
+    const nm = document.getElementById("ymemName")!;
+    const rel = document.getElementById("ymemRel")!;
+    const sub = document.getElementById("ymemSub")!;
+    const note = document.getElementById("ymemNote")!;
+    let lastFocused: HTMLElement | null = null;
+    const xBtn = modal.querySelector(".ymem-x") as HTMLElement | null;
+    const lockScroll = () => { const b = document.body; const n = (parseInt(b.dataset.scrollLock || "0", 10)) + 1; b.dataset.scrollLock = String(n); b.style.overflow = "hidden"; };
+    const unlockScroll = () => { const b = document.body; const n = Math.max(0, (parseInt(b.dataset.scrollLock || "0", 10)) - 1); b.dataset.scrollLock = String(n); if (n === 0) b.style.overflow = ""; };
+    const focusables = () => Array.from(modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')).filter((el) => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
+    const onTrap = (e: KeyboardEvent) => { if (e.key !== "Tab") return; const f = focusables(); if (!f.length) return; const first = f[0], last = f[f.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } };
+    // ♡が弾けるプチ演出（ノードを開いた瞬間・reduced-motion時は無効）
+    const burstOK = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const burstGlyphs = ["♡", "✦", "♥", "✿"];
+    const burstColors = ["#ff9fb2", "#ffc2d1", "#ffd98a", "#9fe3c5", "#cdbcff", "#a9d8ff"];
+    const heartBurst = (x: number, y: number) => {
+      if (!burstOK) return;
+      for (let k = 0; k < 8; k++) {
+        const s = document.createElement("span");
+        s.className = "rel-burst";
+        s.textContent = burstGlyphs[k % burstGlyphs.length];
+        const ang = (Math.PI * 2 * k) / 8 + Math.random() * 0.5;
+        const dist = 38 + Math.random() * 30;
+        s.style.left = x + "px";
+        s.style.top = y + "px";
+        s.style.color = burstColors[k % burstColors.length];
+        s.style.setProperty("--tx", Math.cos(ang) * dist + "px");
+        s.style.setProperty("--ty", Math.sin(ang) * dist - 22 + "px");
+        s.style.setProperty("--rot", Math.random() * 60 - 30 + "deg");
+        s.style.fontSize = 0.9 + Math.random() * 0.7 + "rem";
+        document.body.appendChild(s);
+        window.setTimeout(() => s.remove(), 800);
+      }
+    };
+    const open = (btn: HTMLElement) => {
+      const name = btn.dataset.name || "";
+      const gc = btn.style.getPropertyValue("--gc") || "var(--y-peach)";
+      av.textContent = name.replace(/[\s　]/g, "").charAt(0);
+      (av as HTMLElement).style.background = gc;
+      nm.textContent = name;
+      rel.textContent = btn.dataset.rel || "";
+      (rel as HTMLElement).style.background = gc;
+      sub.textContent = btn.dataset.sub || "";
+      note.textContent = btn.dataset.note || "";
+      lastFocused = document.activeElement as HTMLElement;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      lockScroll();
+      modal.addEventListener("keydown", onTrap as EventListener);
+      xBtn?.focus();
+    };
+    const close = () => {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      modal.removeEventListener("keydown", onTrap as EventListener);
+      unlockScroll();
+      lastFocused?.focus?.();
+    };
+    document.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest(".node--link") as HTMLElement | null;
+      if (btn) { heartBurst(e.clientX, e.clientY); open(btn); return; }
+      if (e.target === modal || (e.target as HTMLElement).classList.contains("ymem-x")) close();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("open")) close(); });
+  }
+
+  // ── 中心相関図：ハブから各ノードへ“線”をSVGで描く（レスポンシブ再計算） ──
+  const SVGNS = "http://www.w3.org/2000/svg";
+  // 矩形の中心(cx,cy・幅w/高h)から目標(tx,ty)方向に伸ばした時の、矩形の枠との交点
+  function edgePoint(cx: number, cy: number, w: number, h: number, tx: number, ty: number) {
+    const dx = tx - cx, dy = ty - cy;
+    if (!dx && !dy) return { x: cx, y: cy };
+    const sx = dx !== 0 ? (w / 2) / Math.abs(dx) : Infinity;
+    const sy = dy !== 0 ? (h / 2) / Math.abs(dy) : Infinity;
+    const s = Math.min(sx, sy);
+    return { x: cx + dx * s, y: cy + dy * s };
+  }
+  const corReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let corVisible = false, corAnimated = false;
+  function drawCor() {
+    const cor = document.getElementById("cor");
+    const svg = document.getElementById("corSvg");
+    const hub = document.getElementById("corHub");
+    if (!cor || !svg || !hub) return;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    // モバイル（SVG非表示）は描かない
+    if (getComputedStyle(svg).display === "none") return;
+    const cr = cor.getBoundingClientRect();
+    svg.setAttribute("viewBox", `0 0 ${cr.width} ${cr.height}`);
+    const hb = hub.getBoundingClientRect();
+    const hx = hb.left - cr.left + hb.width / 2;
+    const hy = hb.top - cr.top + hb.height / 2;
+    // 初回かつ表示領域に入った時だけ“描き込み”アニメ（resize等の再描画は静的）
+    const animate = corVisible && !corAnimated && !corReduce;
+    cor.querySelectorAll<HTMLElement>(".cor-node").forEach((node, i) => {
+      const nb = node.getBoundingClientRect();
+      const nx = nb.left - cr.left + nb.width / 2;
+      const ny = nb.top - cr.top + nb.height / 2;
+      const gc = node.style.getPropertyValue("--gc") || "var(--y-peach)";
+      node.dataset.corIdx = String(i);
+      // ハブの枠 → ノードの枠 を結ぶ（カードの間の隙間にだけ線が出るのではっきり見える）
+      const p1 = edgePoint(hx, hy, hb.width, hb.height, nx, ny);
+      const p2 = edgePoint(nx, ny, nb.width, nb.height, hx, hy);
+      // ゆるく弧を描く“毛糸”のような線（直線より可愛い・隣り合う線は逆向きに反らす）
+      const mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
+      const dx = p2.x - p1.x, dy = p2.y - p1.y;
+      const nlen = Math.hypot(dx, dy) || 1;
+      const amp = Math.min(24, nlen * 0.13) * (i % 2 === 0 ? 1 : -1);
+      const cxp = mx + (-dy / nlen) * amp, cyp = my + (dx / nlen) * amp;
+      const line = document.createElementNS(SVGNS, "path");
+      line.setAttribute("d", `M ${p1.x} ${p1.y} Q ${cxp} ${cyp} ${p2.x} ${p2.y}`);
+      line.setAttribute("fill", "none");
+      line.setAttribute("class", "cor-line");
+      line.setAttribute("stroke-width", "2.6");
+      line.setAttribute("stroke-linecap", "round");
+      line.setAttribute("opacity", "0.6");
+      line.dataset.corIdx = String(i);
+      line.style.stroke = gc;
+      line.style.setProperty("--gc", gc);
+      svg.appendChild(line);
+      const len = line.getTotalLength();
+      // 線の上に♡を3つ散らす（中央を大きく）＝“つながり”を可愛く
+      const hearts: SVGTextElement[] = [];
+      [0.3, 0.5, 0.7].forEach((tt, hi) => {
+        const pt = line.getPointAtLength(len * tt);
+        const heart = document.createElementNS(SVGNS, "text");
+        heart.setAttribute("x", String(pt.x));
+        heart.setAttribute("y", String(pt.y));
+        heart.setAttribute("text-anchor", "middle");
+        heart.setAttribute("dominant-baseline", "central");
+        heart.setAttribute("font-size", hi === 1 ? "15" : "10");
+        heart.setAttribute("class", "cor-heart");
+        heart.dataset.corIdx = String(i);
+        heart.style.fill = gc;
+        heart.style.setProperty("--gc", gc);
+        heart.textContent = "♡";
+        svg.appendChild(heart);
+        hearts.push(heart);
+      });
+      if (animate) {
+        line.style.strokeDasharray = String(len);
+        line.style.strokeDashoffset = String(len);
+        line.style.transition = `stroke-dashoffset .85s cubic-bezier(.4,0,.2,1) ${(0.1 + i * 0.07).toFixed(2)}s`;
+        hearts.forEach((h, hi) => { h.style.opacity = "0"; h.style.transition = `opacity .4s ease ${(0.45 + i * 0.07 + hi * 0.06).toFixed(2)}s`; });
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          line.style.strokeDashoffset = "0";
+          hearts.forEach((h) => { h.style.opacity = "0.9"; });
+        }));
+      }
+    });
+    if (animate) corAnimated = true;
+  }
+  // ホバー/フォーカスで“その人との絆だけ”を光らせ、他を沈める
+  const corEl = document.getElementById("cor");
+  if (corEl) {
+    const svgEl = document.getElementById("corSvg");
+    const light = (idx: string, on: boolean) => {
+      if (!svgEl) return;
+      corEl.classList.toggle("focus-on", on);
+      svgEl.querySelectorAll(`[data-cor-idx="${idx}"]`).forEach((el) => el.classList.toggle("lit", on));
+    };
+    const onEnter = (e: Event) => { const n = (e.target as HTMLElement).closest(".cor-node") as HTMLElement | null; if (n && n.dataset.corIdx != null) light(n.dataset.corIdx, true); };
+    const onLeave = (e: Event) => { const n = (e.target as HTMLElement).closest(".cor-node") as HTMLElement | null; if (n && n.dataset.corIdx != null) light(n.dataset.corIdx, false); };
+    corEl.addEventListener("mouseover", onEnter);
+    corEl.addEventListener("mouseout", onLeave);
+    corEl.addEventListener("focusin", onEnter);
+    corEl.addEventListener("focusout", onLeave);
+    // 相関図が画面に入ったら線アニメを発火（一度だけ）
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { corVisible = true; drawCor(); io.disconnect(); } }), { threshold: 0.15 });
+      io.observe(corEl);
+    } else { corVisible = true; }
+  }
+  let t: number | undefined;
+  const schedule = () => { window.clearTimeout(t); t = window.setTimeout(drawCor, 120); };
+  window.addEventListener("load", () => { drawCor(); window.setTimeout(drawCor, 350); });
+  window.addEventListener("resize", schedule);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawCor);
+  drawCor();
+</script>
+</content>

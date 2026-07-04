@@ -1,0 +1,670 @@
+---
+import Yumiki from "../../layouts/Yumiki.astro";
+import Lightbox from "../../components/Lightbox.astro";
+import { profile, timeline, shows, sns, singles, photobook, img } from "../../data/yumiki.ts";
+import fs from "node:fs";
+
+// 各シングルの画像（public/assets/yumiki/singles/{no}-{cover|photo|mv}.jpg）が
+// 存在すれば解決、無ければ空文字。号番号で対応するので、素材を足すだけで自動反映される。
+const sImg = (no: number, kind: "cover" | "photo" | "mv") =>
+  fs.existsSync(`public/assets/yumiki/singles/${no}-${kind}.jpg`) ? img(`singles/${no}-${kind}.jpg`) : "";
+
+// 弓木さんのアー写の変遷（研修生〜現在）。public/assets/yumiki/arsha/ に配置（本人提供）。
+// 1つのLightboxギャラリーにして「ずらっと」一覧＋拡大で前後にめくれる。
+const naoPhotos = [
+  { f: "trainee.jpg", short: "研修生", t: "坂道研修生", y: "2019" },
+  { f: "join.jpg", short: "加入時", t: "新4期生 加入時", y: "2020" },
+  { f: "25.jpg", short: "25th", t: "25th しあわせの保護色", y: "2020" },
+  { f: "26.jpg", short: "26th", t: "26th 僕は僕を好きになる", y: "2021" },
+  { f: "27.jpg", short: "27th", t: "27th ごめんねFingers crossed", y: "2021" },
+  { f: "28.jpg", short: "28th", t: "28th 君に叱られた", y: "2021" },
+  { f: "31.jpg", short: "31st", t: "31st ここにはないもの", y: "2022" },
+  { f: "34.jpg", short: "34th", t: "34th Monopoly", y: "2023" },
+  { f: "35.jpg", short: "35th", t: "35th チャンスは平等", y: "2024" },
+  { f: "36.jpg", short: "36th", t: "36th チートデイ", y: "2024" },
+  { f: "37.jpg", short: "37th", t: "37th 歩道橋", y: "2024" },
+  { f: "38.jpg", short: "38th", t: "38th ネーブルオレンジ", y: "2025" },
+  { f: "39.jpg", short: "39th", t: "39th Same numbers", y: "2025" },
+  { f: "40.jpg", short: "40th", t: "40th ビリヤニ", y: "2025" },
+  { f: "41.jpg", short: "41st", t: "41st 最後に階段を駆け上がったのは？", y: "2026" },
+  { f: "42.jpg", short: "42nd", t: "42nd 是非に及ばず", y: "2026" },
+];
+const naoPhotoSrcs = naoPhotos.map((p) => img(`arsha/${p.f}`));
+
+// 付箋に回す差し色（順番に巡回）
+const stickyColors = [
+  "var(--y-peach)", "var(--y-sky)", "var(--y-mint)",
+  "var(--y-butter)", "var(--y-lav)", "var(--y-pink)",
+];
+// プロフィール帳らしい「質問」ラベルへの読み替え（事実・値は data のまま）
+const factQ: Record<string, string> = {
+  "生年月日": "うまれた日は？",
+  "出身地": "どこ出身？",
+  "所属": "どこにいる人？",
+  "ニックネーム": "なんて呼ぶ？",
+  "血液型": "血液型は？",
+  "星座": "星座は？",
+  "身長": "身長は？",
+  "サイリウムカラー": "サイリウムは？",
+  "趣味": "趣味は？",
+  "特技": "特技は？",
+  "家族構成": "家族は？",
+};
+// 趣味・特技には小さな落書きを添える
+const doodleKeys = new Set(["趣味", "特技"]);
+const factDoodle: Record<string, string> = { "趣味": "✿", "特技": "✦" };
+// 年表の節目（大きめに見せる）。data の date と一致するものを強調
+const milestoneDates = new Set(["2022.7", "2024.4", "2024.7", "2025.1"]);
+// レコード棚プレースホルダの背表紙色（6色を巡回）
+const spineColors = [
+  "var(--y-peach)", "var(--y-pink)", "var(--y-butter)",
+  "var(--y-mint)", "var(--y-lav)", "var(--y-sky)",
+];
+---
+<Yumiki title="プロフィール — YUMIKI WORLD">
+  <!-- ===== 観察ノートの表紙的セクション：基本情報（プロフィール帳） ===== -->
+  <section class="y-section pf-sheet sb-grid">
+    <div class="y-container">
+      <div class="sb-head y-reveal">
+        <span class="sb-head-num sb-num" style="--cc:var(--y-sky)" aria-hidden="true">01</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Profile Note</span>
+          <h1>📖 <span class="sb-mark" style="--cc:var(--y-butter)">弓木奈於</span>って、こんな人</h1>
+        </span>
+        <span class="sb-stamp" style="--cc:var(--y-peach)" aria-hidden="true">♡ MY OSHI</span>
+      </div>
+
+      <div class="pf-top">
+        <div class="pf-left">
+        <!-- 観察写真（チェキ） -->
+        <figure class="sb-cheki pf-photo pf-tcard y-reveal sb-taped" style="--tape:var(--y-pink)">
+          <span class="sb-tape l" aria-hidden="true"></span>
+          <span class="pf-foil" aria-hidden="true">♡ OSHI CARD</span>
+          <img src={img("arsha/42.jpg")} alt="弓木奈於さん（42ndシングル アー写）" onerror="this.src='/assets/yumiki/arsha/42.jpg'" />
+          <figcaption class="pf-tcard-cap">
+            <span class="pf-tcard-name">弓木 奈於 <small>YUMIKI NAO ・ 乃木坂46 4期生</small></span>
+            <span class="pf-tcard-pen"><i class="pf-pen" style="background:#ff3b3b" aria-hidden="true"></i><i class="pf-pen" style="background:#9acd32" aria-hidden="true"></i> 赤 × 黄緑</span>
+          </figcaption>
+          <span class="sb-doodle pf-photo-d1" style="--cc:var(--y-butter)" aria-hidden="true">✦</span>
+          <span class="sb-doodle pf-photo-d2" style="--cc:var(--y-peach)" aria-hidden="true">♡</span>
+        </figure>
+
+        <!-- 弓木さんのおもしろポイント（左カラムの空白を埋める・すべて事実ベース） -->
+        <aside class="pf-fun sb-sticky sb-taped y-reveal" style="--cc:var(--y-peach); --tape:var(--y-butter)" data-delay="2">
+          <span class="sb-tape r" aria-hidden="true"></span>
+          <h3 class="pf-fun-t">ここが<span class="sb-mark" style="--cc:var(--y-pink)">おもしろい</span> ♡</h3>
+          <p class="pf-fun-lead"><b>ドンストップエナジー（ドンエネ）</b><br />ラジオ『沈黙の金曜日』でおなじみ、公式動画にもなった伝説の即興パフォーマンス。</p>
+          <a class="pf-fun-link" href="https://www.instagram.com/reel/DJRKfD9TgSm/" target="_blank" rel="noopener noreferrer">▶ ドンエネを見る</a>
+          <p class="pf-fun-sub sb-note">弓木語、まだまだあります →</p>
+          <div class="pf-fun-tags">
+            <span class="sb-stamp" style="--cc:var(--y-sky)">はんなりすっとこどっこい</span>
+            <span class="sb-stamp" style="--cc:var(--y-mint)">Alligator🐊</span>
+            <span class="sb-stamp" style="--cc:var(--y-lav)">架空の歌</span>
+            <span class="sb-stamp" style="--cc:var(--y-butter)">暴れん坊パンダの歌</span>
+            <span class="sb-stamp" style="--cc:var(--y-peach)">テネット弓木</span>
+          </div>
+        </aside>
+        </div>
+
+        <!-- プロフィール帳（質問→答えの付箋） -->
+        <div class="pf-card y-reveal" data-delay="1">
+          <h3 class="pf-name">{profile.name} <small>（{profile.kana}）</small></h3>
+          <p class="sb-note pf-note">基本データ、ぜんぶメモしました</p>
+
+          <div class="pf-facts">
+            {profile.facts.map((f, i) => (
+              <div
+                class:list={["pf-fact", { "is-wide": f.k === "趣味" || f.k === "特技" || f.k === "家族構成" || f.k === "サイリウムカラー" }]}
+                style={`--cc:${stickyColors[i % stickyColors.length]}; transform: rotate(${(i % 2 === 0 ? -1 : 1) * (1 + (i % 3) * 0.4)}deg)`}
+              >
+                <dl class="sb-sticky pf-sticky">
+                  <dt class="pf-q">{factQ[f.k] ?? f.k}</dt>
+                  <dd class="pf-a">
+                    {f.k === "サイリウムカラー" ? (
+                      <span class="pf-penlight">
+                        <span class="pf-swatch" style="background:#ff3b3b" aria-hidden="true"></span>
+                        <span class="pf-swatch" style="background:#9acd32" aria-hidden="true"></span>
+                        <span>{f.v}</span>
+                      </span>
+                    ) : f.v}
+                    {doodleKeys.has(f.k) && (
+                      <span class="sb-doodle pf-fact-d" style={`--cc:${stickyColors[i % stickyColors.length]}`} aria-hidden="true">{factDoodle[f.k]}</span>
+                    )}
+                  </dd>
+                </dl>
+              </div>
+            ))}
+          </div>
+
+          <div class="pf-sns">
+            {sns.map((s) => (<a href={s.href} target="_blank" rel="noopener noreferrer" class="y-tag" style="background:var(--y-pink)"><img src={img(s.icon)} alt="" width="18" height="18" />{s.label}</a>))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 活動年表：点線レールを♡ノードが進むロードマップ ===== -->
+  <section class="y-section pf-sheet-ruled sb-ruled" style="padding-top:0">
+    <div class="y-container y-narrow">
+      <div class="sb-head y-reveal">
+        <span class="sb-head-num sb-num" style="--cc:var(--y-mint)" aria-hidden="true">02</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">History</span>
+          <h2>🕰️ 活動<span class="sb-mark" style="--cc:var(--y-mint)">年表</span></h2>
+        </span>
+      </div>
+      <p class="sb-note pf-road-note">スタートからここまで、ぜんぶ追いかけた道のり ♡</p>
+
+      <ol class="pf-road">
+        {timeline.map((t, i) => (
+          <li class:list={["pf-stop", "y-reveal", { "is-mile": milestoneDates.has(t.date) }]} data-delay={(i % 3) + 1}>
+            <span class="pf-stop-node" aria-hidden="true">{milestoneDates.has(t.date) ? "★" : "♡"}</span>
+            <span class="pf-stop-date">{t.date}</span>
+            <span class="pf-stop-text">{t.text}</span>
+          </li>
+        ))}
+        <li class="pf-stop pf-stop--goal y-reveal" aria-hidden="true">
+          <span class="pf-stop-node">✦</span>
+          <span class="pf-stop-text">これからも、ずっと応援！</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== ディスコグラフィー：レコード棚（ジャケ画像は出さずプレースホルダ） ===== -->
+  <section class="y-section pf-sheet sb-grid" style="padding-top:0">
+    <div class="y-container">
+      <div class="sb-head y-reveal">
+        <span class="sb-head-num sb-num" style="--cc:var(--y-peach)" aria-hidden="true">03</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">Discography</span>
+          <h2>💿 参加<span class="sb-mark" style="--cc:var(--y-pink)">シングル</span></h2>
+        </span>
+      </div>
+      <p class="pf-disco-note y-reveal">2020年に乃木坂46へ配属。アンダー期を経て <b>30thで初選抜</b>、<b>35thで初福神</b>。以降もずっと選抜入りを続けています。</p>
+
+      <div class="pf-shelf">
+        {singles.map((s, i) => (
+          <article
+            class:list={["pf-rec", "y-reveal", { "is-fukujin": s.pos === "初福神", "is-debut": s.pos === "初選抜" }]}
+            data-delay={(i % 3) + 1}
+            style={`--cc:${spineColors[i % spineColors.length]}; transform: rotate(${(i % 2 === 0 ? -1 : 1.2)}deg)`}
+            role="button"
+            tabindex="0"
+            aria-label={`${s.no}th「${s.title}」の詳細を見る`}
+            data-no={String(s.no)}
+            data-title={s.title}
+            data-date={s.date}
+            data-pos={s.pos}
+            data-desc={s.desc ?? ""}
+            data-cover={sImg(s.no, "cover")}
+            data-photo={sImg(s.no, "photo")}
+            data-mv={sImg(s.no, "mv")}
+          >
+            <div class:list={["pf-rec-cover", { "has-img": !!sImg(s.no, "cover") }]}>
+              {sImg(s.no, "cover") ? (
+                <img class="pf-rec-img" src={sImg(s.no, "cover")} alt={`${s.title}（ジャケット）`} loading="lazy" />
+              ) : (
+                <>
+                  <span class="pf-rec-disc" aria-hidden="true"></span>
+                  <span class="pf-rec-no sb-num" style={`--cc:${spineColors[i % spineColors.length]}`} aria-hidden="true">{s.no}<small>th</small></span>
+                </>
+              )}
+              {s.pos === "初福神" && <span class="pf-rec-heart" aria-hidden="true">♡</span>}
+            </div>
+            <div class="pf-rec-info">
+              <h3>{s.title}</h3>
+              <span class="pf-rec-date">{s.date}</span>
+              {s.pos !== "選抜" && (
+                <span class:list={["sb-stamp", "pf-rec-pos", { "is-fukujin": s.pos === "初福神" }]} style={`--cc:${s.pos === "初福神" ? "var(--y-peach)" : "var(--y-sky)"}`}>{s.pos}</span>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="sb-note pf-shelf-note">ジャケットを押すと詳細（ジャケット・弓木さんのアー写・MVカット）。※一部の号はアー写が未掲載です。</p>
+
+      <!-- アー写の変遷：研修生〜現在の弓木さんのアー写をずらっと（押すと拡大＋◀▶で前後めくり） -->
+      <div class="pf-arsha">
+        <h3 class="pf-arsha-head y-reveal">📸 弓木さんの<span class="sb-mark" style="--cc:var(--y-sky)">アー写</span>の変遷</h3>
+        <p class="sb-note pf-arsha-note y-reveal">坂道研修生から最新シングルまで、弓木さんのアー写の移り変わり。押すと大きく見られます（◀▶で次々めくれます）。</p>
+        <div class="pf-arsha-strip">
+          {naoPhotos.map((p, i) => (
+            <figure
+              class="pf-arsha-card sb-cheki sb-taped y-reveal"
+              data-delay={(i % 3) + 1}
+              style={`--tape:${spineColors[i % spineColors.length]}; transform: rotate(${[-2.2, 1.6, -1.2, 2, -1.6, 1.2][i % 6]}deg)`}
+              data-gallery={JSON.stringify(naoPhotoSrcs)}
+              data-index={i}
+              data-caption={`${p.t}（${p.y}）`}
+              role="button"
+              tabindex="0"
+              aria-label={`${p.t} のアー写を拡大`}
+            >
+              <span class={`sb-tape ${i % 2 === 0 ? "l" : "r"}`} aria-hidden="true"></span>
+              <img src={img(`arsha/${p.f}`)} alt={`弓木奈於さん アー写（${p.t}）`} loading="lazy" />
+              <figcaption>{p.short} <small>{p.y}</small></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- シングル詳細モーダル（クリックで開く：思い出＋ジャケ写＋MVカットの2枚） -->
+    <div class="sgl-modal" id="sglModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="シングルの詳細">
+      <div class="sgl-panel">
+        <button class="y-x sgl-close" id="sglClose" type="button" aria-label="閉じる">✕</button>
+        <span class="sgl-tape sb-tape" aria-hidden="true"></span>
+        <p class="sgl-meta"><span class="sgl-no sb-num" id="sglNo"></span><small>th SINGLE</small></p>
+        <h3 class="sgl-title" id="sglTitle"></h3>
+        <p class="sgl-sub"><span class="sgl-date" id="sglDate"></span><span class="sgl-pos sb-stamp" id="sglPos"></span></p>
+        <p class="sgl-desc" id="sglDesc"></p>
+        <div class="sgl-imgs">
+          <figure class="sgl-shot" id="sglCoverFig">
+            <figcaption class="sgl-shot-label">📀 ジャケット</figcaption>
+            <div class="sgl-shot-box" id="sglCover"></div>
+          </figure>
+          <figure class="sgl-shot" id="sglPhotoFig">
+            <figcaption class="sgl-shot-label">📸 弓木さんのアー写</figcaption>
+            <div class="sgl-shot-box" id="sglPhoto"></div>
+          </figure>
+          <figure class="sgl-shot" id="sglMvFig">
+            <figcaption class="sgl-shot-label">🎬 MVカット</figcaption>
+            <div class="sgl-shot-box" id="sglMv"></div>
+          </figure>
+        </div>
+        <p class="sgl-allsoon" id="sglAllSoon">この号の画像は準備中です。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 1st写真集『天使だったのか』 ===== -->
+  <section class="y-section pf-sheet sb-grid" style="padding-top:0">
+    <div class="y-container">
+      <div class="sb-head y-reveal">
+        <span class="sb-head-num sb-num" style="--cc:var(--y-peach)" aria-hidden="true">04</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">1st Photobook</span>
+          <h2>📸 1st<span class="sb-mark" style="--cc:var(--y-peach)">写真集</span></h2>
+        </span>
+      </div>
+      <div class="pf-pb y-reveal">
+        <figure class="sb-cheki sb-taped pf-pb-cover" style="--tape:var(--y-peach)"
+          data-gallery={JSON.stringify([img(photobook.cover)])} data-index="0" data-caption={`1st写真集『${photobook.title}』`}
+          role="button" tabindex="0" aria-label="写真集の表紙を拡大">
+          <span class="sb-tape l" aria-hidden="true"></span>
+          <img src={img(photobook.cover)} alt={`弓木奈於 1st写真集『${photobook.title}』表紙`} loading="lazy" />
+          <figcaption>📸 1st PHOTOBOOK</figcaption>
+        </figure>
+        <div class="pf-pb-info">
+          <span class="sb-stamp" style="--cc:var(--y-peach)">♡ 夢が叶った一冊</span>
+          <h3 class="pf-pb-title">『<span class="sb-mark" style="--cc:var(--y-butter)">{photobook.title}</span>』</h3>
+          <p class="pf-pb-desc">{photobook.desc}</p>
+          <blockquote class="pf-pb-quote">「{photobook.quote}」<cite>— 弓木奈於（本人コメント）</cite></blockquote>
+          <dl class="pf-pb-facts">
+            <div><dt>発売</dt><dd>{photobook.release}</dd></div>
+            <div><dt>撮影地</dt><dd>{photobook.location}</dd></div>
+            <div><dt>撮影</dt><dd>{photobook.photographer}</dd></div>
+            <div><dt>仕様</dt><dd>{photobook.spec}</dd></div>
+            <div><dt>価格</dt><dd>{photobook.price}</dd></div>
+          </dl>
+          <p class="pf-pb-note">表紙は{photobook.covers}。発行＝{photobook.publisher}。</p>
+          <a class="pf-show-link pf-pb-link" href={photobook.link} target="_blank" rel="noopener noreferrer">公式サイトで見る <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 主な出演番組：付箋メモのコルクボード ===== -->
+  <section class="y-section pf-sheet-ruled sb-ruled" style="padding-top:0">
+    <div class="y-container">
+      <div class="sb-head y-reveal">
+        <span class="sb-head-num sb-num" style="--cc:var(--y-butter)" aria-hidden="true">05</span>
+        <span class="sb-head-tt">
+          <span class="sb-head-eyebrow">On TV</span>
+          <h2>📺 主な<span class="sb-mark" style="--cc:var(--y-butter)">出演番組</span></h2>
+        </span>
+      </div>
+
+      <!-- 初主演ドラマ『未恋』ハイライト -->
+      <div class="pf-drama y-reveal" data-gallery={JSON.stringify([img("drama-miren.jpg")])} data-index="0" data-caption="ドラマ『未恋』初主演" role="button" tabindex="0" aria-label="ドラマ『未恋』の写真を拡大">
+        <figure class="sb-cheki sb-taped pf-drama-cheki" style="--tape:var(--y-pink)">
+          <span class="sb-tape l" aria-hidden="true"></span>
+          <img src={img("drama-miren.jpg")} alt="ドラマ『未恋』の台本を持つ弓木奈於さん" loading="lazy" />
+          <figcaption>📖 台本オフショット</figcaption>
+        </figure>
+        <div class="pf-drama-text">
+          <span class="sb-stamp" style="--cc:var(--y-peach)">🎬 初主演ドラマ</span>
+          <h3 class="pf-drama-t">ドラマ『<span class="sb-mark" style="--cc:var(--y-pink)">未恋</span>』</h3>
+          <p class="pf-drama-d">2025年放送。弓木さんが念願の“初主演”を果たしたドラマ。撮影前、台本を手にしたオフショットです。</p>
+        </div>
+      </div>
+
+      <div class="pf-shows">
+        {shows.map((s, i) => (
+          <div
+            class="pf-show y-reveal"
+            data-delay={(i % 3) + 1}
+            style={`--cc:${stickyColors[(i + 2) % stickyColors.length]}; transform: rotate(${(i % 2 === 0 ? -1.4 : 1.2)}deg)`}
+          >
+            <div class="sb-sticky pf-show-sticky sb-taped" style={`--tape:${stickyColors[(i + 2) % stickyColors.length]}`}>
+              <span class="sb-tape" aria-hidden="true"></span>
+              <h3>{s.name}</h3>
+              <p>{s.desc}</p>
+              {s.link && <a class="pf-show-link" href={s.link} target="_blank" rel="noopener noreferrer">公式サイト <span aria-hidden="true">↗</span></a>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* 紙地のセクションを少し縁取り、ノートの“ページ”らしく */
+    .pf-sheet, .pf-sheet-ruled { position: relative; }
+
+    /* ── 01 基本情報（プロフィール帳） ── */
+    .pf-top { display: grid; gap: 2rem; grid-template-columns: 1fr; align-items: start; }
+    @media (min-width: 860px) { .pf-top { grid-template-columns: 0.82fr 1.18fr; } }
+    /* 左カラム：写真＋おもしろカードを縦に積んで空白を埋める */
+    .pf-left { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .pf-photo { width: 100%; padding: .6rem .6rem 1.5rem; transform: rotate(-2.5deg); position: relative; }
+    .pf-photo img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center top; border-radius: 3px; }
+    .pf-photo figcaption { letter-spacing: .14em; color: var(--y-rose); }
+    .pf-photo-d1 { top: -14px; right: -10px; font-size: 1.5rem; }
+    .pf-photo-d2 { bottom: 34px; left: -14px; font-size: 1.4rem; }
+
+    /* 左カラムの空白を埋める「おもしろポイント」カード（ドンエネ） */
+    .pf-fun { position: relative; transform: rotate(-1deg); }
+    .pf-fun-t { font-size: 1.12rem; margin: .15rem 0 .55rem; }
+    .pf-fun-lead { font-size: .88rem; color: var(--y-ink-soft); line-height: 1.7; margin: 0 0 .8rem; }
+    .pf-fun-lead b { color: var(--y-ink); }
+    .pf-fun-link { display: inline-flex; align-items: center; gap: .3rem; font-family: var(--y-font-en); font-weight: 700; font-size: .82rem; color: var(--y-ink); background: var(--y-peach); padding: .42rem .95rem; border-radius: 999px; box-shadow: var(--y-shadow-sm); transition: transform .3s var(--y-ease), box-shadow .3s var(--y-ease); }
+    .pf-fun-link:hover { transform: translateY(-2px) scale(1.03); box-shadow: var(--y-shadow); }
+    .pf-fun-sub { display: block; margin: .95rem 0 .6rem; }
+    .pf-fun-tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .pf-fun-tags .sb-stamp { background: #fff; }
+
+    .pf-card { position: relative; }
+    .pf-name { font-size: 1.8rem; }
+    .pf-name small { font-size: 1rem; color: var(--y-muted); font-weight: 500; }
+    .pf-note { margin: .2rem 0 1.4rem; }
+
+    .pf-facts { display: grid; gap: .9rem; grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 520px) { .pf-facts { grid-template-columns: 1fr; } }
+    .pf-fact { position: relative; }
+    .pf-fact.is-wide { grid-column: 1 / -1; }
+    .pf-fact .pf-sticky { position: relative; height: 100%; margin: 0; }
+    .pf-fact:hover { transform: rotate(0) translateY(-3px) !important; transition: transform .3s var(--y-ease); z-index: 4; }
+    .pf-q { font-family: var(--y-font-en); font-weight: 700; font-size: .72rem; color: var(--y-ink-soft); letter-spacing: .02em; margin-bottom: .25rem; }
+    .pf-q::before { content: "Q. "; color: color-mix(in srgb, var(--cc, var(--y-peach)) 80%, var(--y-ink-soft)); }
+    .pf-a { color: var(--y-ink); font-size: .95rem; font-weight: 700; line-height: 1.55; position: relative; }
+    .pf-fact-d { right: 2px; top: -10px; font-size: 1.1rem; }
+
+    /* サイリウムカラーのスウォッチ（赤×黄緑） */
+    .pf-penlight { display: inline-flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+    .pf-swatch { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #fff; box-shadow: var(--y-shadow-sm); display: inline-block; }
+
+    .pf-sns { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1.6rem; }
+    .pf-sns .y-tag { gap: .4rem; transform: rotate(-1.5deg); }
+    .pf-sns .y-tag:nth-child(2) { transform: rotate(1.5deg); }
+    .pf-sns .y-tag:nth-child(3) { transform: rotate(-1deg); }
+
+    /* ── 02 活動年表（点線レール×♡ノード） ── */
+    .pf-road-note { margin: -.4rem 0 1.6rem; }
+    .pf-road { position: relative; list-style: none; margin: 0; padding: .4rem 0 .4rem 2.2rem; }
+    /* 縦の点線レール */
+    .pf-road::before {
+      content: ""; position: absolute; left: 7px; top: .8rem; bottom: 1.4rem; width: 3px;
+      background-image: linear-gradient(var(--y-peach) 60%, transparent 0);
+      background-size: 3px 11px; background-repeat: repeat-y; border-radius: 3px;
+    }
+    .pf-stop { position: relative; display: grid; grid-template-columns: auto 1fr; gap: .2rem .9rem; align-items: baseline;
+      padding: .55rem 0; }
+    .pf-stop-node {
+      position: absolute; left: -2.2rem; top: .5rem; width: 18px; height: 18px; display: grid; place-items: center;
+      font-size: .68rem; color: var(--y-peach); background: #fff; border-radius: 50%;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--y-pink) 55%, #fff); z-index: 2;
+    }
+    .pf-stop-date { font-family: var(--y-font-en); font-weight: 700; color: var(--y-rose); font-size: .82rem; grid-column: 1 / -1; }
+    .pf-stop-text { color: var(--y-ink); font-size: .95rem; grid-column: 1 / -1; }
+
+    /* 節目は大きめ＆カード化 */
+    .pf-stop.is-mile { background: color-mix(in srgb, var(--y-butter) 14%, #fff); border: 1.5px solid color-mix(in srgb, var(--y-butter) 34%, #fff);
+      border-radius: 4px 14px 10px 12px; padding: .8rem 1rem; box-shadow: var(--y-shadow-sm); transform: rotate(-.6deg); margin: .3rem 0; }
+    .pf-stop.is-mile .pf-stop-node { left: calc(-2.2rem - .8px); top: .85rem; width: 24px; height: 24px; font-size: .85rem; color: var(--y-butter);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--y-butter) 60%, #fff); }
+    .pf-stop.is-mile .pf-stop-date { color: color-mix(in srgb, var(--y-rose) 80%, var(--y-ink)); font-size: .9rem; }
+    .pf-stop.is-mile .pf-stop-text { font-weight: 700; font-size: 1.02rem; }
+
+    /* ゴール */
+    .pf-stop--goal { margin-top: .6rem; }
+    .pf-stop--goal .pf-stop-node { color: var(--y-mint); box-shadow: 0 0 0 3px color-mix(in srgb, var(--y-mint) 55%, #fff); }
+    .pf-stop--goal .pf-stop-text { font-weight: 700; color: var(--y-ink-soft); }
+
+    /* ── 03 ディスコグラフィー（レコード棚） ── */
+    .pf-disco-note { text-align: center; color: var(--y-ink-soft); font-size: .92rem; max-width: 52ch; margin: 0 auto 2rem; line-height: 1.8; }
+    .pf-disco-note b { color: var(--y-peach); }
+    .pf-shelf { display: grid; gap: 1.4rem 1.1rem; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 620px) { .pf-shelf { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 920px) { .pf-shelf { grid-template-columns: repeat(4, 1fr); } }
+
+    .pf-rec { text-align: center; transition: transform .3s var(--y-ease); position: relative; }
+    .pf-rec:hover { transform: rotate(0) translateY(-5px) !important; z-index: 3; }
+
+    /* それっぽいジャケット（6色パステル）＋レコード盤 */
+    .pf-rec-cover {
+      position: relative; aspect-ratio: 1; border-radius: 6px 14px 6px 14px; overflow: hidden;
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--cc, var(--y-pink)) 34%, #fff),
+        color-mix(in srgb, var(--cc, var(--y-pink)) 14%, #fff));
+      border: 4px solid #fff; box-shadow: var(--y-shadow-sm); display: grid; place-items: center;
+    }
+    .pf-rec-cover.has-img { background: none; }
+    .pf-rec-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pf-rec-disc {
+      position: absolute; width: 64%; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle, #fff 16%, transparent 17%),
+        repeating-radial-gradient(circle, color-mix(in srgb, var(--cc, var(--y-pink)) 50%, #fff) 0 2px, color-mix(in srgb, var(--cc, var(--y-pink)) 30%, #fff) 2px 5px);
+      right: -22%; opacity: .9;
+    }
+    .pf-rec-no { position: relative; font-size: clamp(1.8rem, 7vw, 2.6rem); z-index: 1;
+      -webkit-text-stroke-width: 3px; }
+    .pf-rec-no small { font-size: .42em; }
+
+    /* 初選抜 / 初福神は前面に大きく */
+    .pf-rec.is-debut .pf-rec-cover { border-color: color-mix(in srgb, var(--y-sky) 50%, #fff); }
+    .pf-rec.is-fukujin { transform: rotate(-1deg) scale(1.06) !important; z-index: 2; }
+    .pf-rec.is-fukujin .pf-rec-cover { border: 5px solid var(--y-peach); box-shadow: 0 14px 30px rgba(255, 120, 150, .28); }
+    /* 35th(初福神)ジャケットで“左下にいる弓木さん”をピックアップする位置・大きさ */
+    .pf-rec-heart { position: absolute; left: 30%; top: 60%; transform: translate(-50%, -50%); font-size: clamp(1.4rem, 5.5vw, 2rem);
+      color: var(--y-peach); z-index: 2; pointer-events: none; filter: drop-shadow(0 2px 5px rgba(255,120,150,.5)); animation: floaty 6s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .pf-rec-heart { animation: none; } }
+
+    .pf-rec-info { margin-top: .65rem; }
+    .pf-rec-info h3 { font-size: .9rem; line-height: 1.45; margin-bottom: .15rem; }
+    .pf-rec-date { font-family: var(--y-font-en); font-weight: 700; font-size: .72rem; color: var(--y-muted); }
+    .pf-rec-pos { margin-top: .45rem; font-size: .68rem; color: var(--y-ink-soft); }
+    .pf-rec-pos.is-fukujin { color: color-mix(in srgb, var(--y-peach) 80%, var(--y-ink)); border-style: solid; }
+
+    .pf-shelf-note { display: block; text-align: center; margin-top: 1.6rem; }
+
+    /* ── アー写コレクション（弓木さんのアー写をずらっと一覧） ── */
+    .pf-arsha { margin-top: 2.8rem; }
+    .pf-arsha-head { font-size: clamp(1.2rem, 3.4vw, 1.6rem); text-align: center; margin: 0 0 .35rem; }
+    .pf-arsha-note { display: block; text-align: center; margin: 0 auto 1.4rem; }
+    .pf-arsha-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.3rem 1rem; }
+    .pf-arsha-card { flex: 0 1 calc(50% - .6rem); margin: 0; padding: .45rem .45rem 1rem; cursor: zoom-in;
+      transition: transform .35s var(--y-ease), box-shadow .35s var(--y-ease); }
+    @media (min-width: 560px) { .pf-arsha-card { flex-basis: calc(33.333% - .7rem); } }
+    @media (min-width: 880px) { .pf-arsha-card { flex-basis: calc(20% - .85rem); } }
+    .pf-arsha-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; border-radius: 3px; }
+    .pf-arsha-card figcaption { font-family: var(--y-font-en); font-weight: 700; text-align: center; margin-top: .4rem; color: var(--y-rose); font-size: .82rem; }
+    .pf-arsha-card figcaption small { font-size: .7em; }
+    .pf-arsha-card:hover { transform: rotate(0deg) scale(1.04) !important; box-shadow: var(--y-shadow); position: relative; z-index: 2; }
+
+    /* ── 04 出演番組（付箋のコルクボード） ── */
+    .pf-drama { display: grid; gap: 1.3rem; grid-template-columns: 1fr; align-items: center; margin-bottom: 2rem; cursor: zoom-in; }
+    @media (min-width: 640px) { .pf-drama { grid-template-columns: 0.92fr 1.08fr; } }
+    .pf-drama-cheki { margin: 0; padding: .5rem .5rem 1rem; transform: rotate(-1.6deg); width: 100%; max-width: 380px; justify-self: center; transition: transform .35s var(--y-ease), box-shadow .35s var(--y-ease); }
+    .pf-drama:hover .pf-drama-cheki { transform: rotate(0deg) scale(1.02); box-shadow: var(--y-shadow); }
+    .pf-drama-cheki img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+    .pf-drama-cheki figcaption { font-family: var(--y-font-en); font-weight: 700; text-align: center; margin-top: .4rem; color: var(--y-ink-soft); font-size: .8rem; }
+    .pf-drama-t { font-size: clamp(1.15rem, 3.2vw, 1.5rem); margin: .55rem 0; }
+    .pf-drama-d { color: var(--y-ink-soft); font-size: .9rem; line-height: 1.85; margin: 0; }
+    .pf-shows { display: grid; gap: 1.6rem 1.2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .pf-show { transition: transform .3s var(--y-ease); position: relative; }
+    .pf-show:hover { transform: rotate(0) translateY(-4px) !important; z-index: 3; }
+    .pf-show-sticky { padding-top: 1.3rem; height: 100%; }
+    .pf-show-sticky h3 { font-size: 1.15rem; margin-bottom: .35rem; }
+    .pf-show-sticky p { color: var(--y-ink-soft); font-size: .88rem; }
+    .pf-show-link { display: inline-flex; align-items: center; gap: .25rem; margin-top: .6rem; font-family: var(--y-font-en); font-weight: 700; font-size: .76rem;
+      color: color-mix(in srgb, var(--y-ink) 45%, var(--y-peach)); background: color-mix(in srgb, var(--y-peach) 18%, #fff);
+      padding: .3rem .75rem; border-radius: 999px; transition: transform .25s var(--y-ease), background .25s var(--y-ease); }
+    .pf-show-link:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--y-peach) 34%, #fff); }
+
+    /* ── 1st写真集カード ── */
+    .pf-pb { display: grid; gap: 1.6rem; grid-template-columns: 1fr; align-items: center; }
+    @media (min-width: 640px) { .pf-pb { grid-template-columns: minmax(200px, 270px) 1fr; gap: 2.2rem; } }
+    .pf-pb-cover { margin: 0; padding: .5rem .5rem 1rem; transform: rotate(-1.8deg); width: 100%; max-width: 290px; justify-self: center; cursor: zoom-in;
+      transition: transform .35s var(--y-ease), box-shadow .35s var(--y-ease); }
+    .pf-pb-cover:hover { transform: rotate(0) scale(1.02); box-shadow: var(--y-shadow); }
+    .pf-pb-cover img { width: 100%; aspect-ratio: 848 / 1200; object-fit: cover; border-radius: 3px; }
+    .pf-pb-cover figcaption { font-family: var(--y-font-en); font-weight: 700; text-align: center; margin-top: .45rem; color: var(--y-rose); font-size: .76rem; letter-spacing: .1em; }
+    .pf-pb-title { font-size: clamp(1.3rem, 3.6vw, 1.8rem); margin: .55rem 0 .8rem; }
+    .pf-pb-desc { color: var(--y-ink-soft); font-size: .92rem; line-height: 1.9; margin: 0 0 .9rem; }
+    .pf-pb-quote { margin: 0 0 1.1rem; padding: .75rem 1rem; background: color-mix(in srgb, var(--y-peach) 12%, #fff);
+      border-left: 3px solid color-mix(in srgb, var(--y-peach) 55%, #fff); border-radius: 4px 13px 13px 4px;
+      font-family: var(--y-font-hand); color: var(--y-ink); font-size: .9rem; line-height: 1.85; }
+    .pf-pb-quote cite { display: block; margin-top: .35rem; font-style: normal; font-family: var(--y-font-en); font-weight: 700; font-size: .72rem; color: var(--y-peach); }
+    .pf-pb-facts { display: grid; grid-template-columns: repeat(2, auto); gap: .55rem 1.6rem; justify-content: start; margin: 0 0 1rem; }
+    .pf-pb-facts > div { display: flex; flex-direction: column; }
+    .pf-pb-facts dt { font-family: var(--y-font-en); font-weight: 700; font-size: .66rem; color: var(--y-peach); letter-spacing: .04em; }
+    .pf-pb-facts dd { margin: 0; font-size: .92rem; font-weight: 700; color: var(--y-ink); }
+    .pf-pb-note { color: var(--y-ink-soft); font-size: .86rem; line-height: 1.85; margin: 0 0 1rem; }
+    .pf-pb-link { margin-top: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pf-rec, .pf-show, .pf-fact { transform: none !important; }
+    }
+    /* ── シングル詳細モーダル（押すと開く：思い出＋ジャケ写＋MVカット） ── */
+    .pf-rec { cursor: pointer; }
+    .pf-rec:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--cc, var(--y-peach)) 60%, #fff); border-radius: 10px; }
+    .sgl-modal { position: fixed; inset: 0; z-index: 900; display: none; place-items: center; padding: clamp(1rem, 4vw, 2.5rem);
+      background: color-mix(in srgb, var(--y-ink) 40%, transparent); backdrop-filter: blur(6px); opacity: 0; transition: opacity .3s var(--y-ease); }
+    .sgl-modal.open { display: grid; opacity: 1; }
+    .sgl-panel { position: relative; width: min(620px, 100%); max-height: 90vh; overflow-y: auto; background: #fffdf8;
+      border-radius: 18px; border: 2px solid var(--y-line); box-shadow: var(--y-shadow); padding: clamp(1.5rem, 4vw, 2.2rem); }
+    .sgl-tape { top: -13px; left: 50%; --tape: var(--y-pink); }
+    .sgl-close { position: absolute; top: 12px; right: 12px; z-index: 2; }
+    .sgl-meta { margin: 0; line-height: 1; }
+    .sgl-no { font-size: 2.4rem; }
+    .sgl-meta small { font-family: var(--y-font-en); font-weight: 700; color: var(--y-muted); letter-spacing: .1em; margin-left: .35rem; }
+    .sgl-title { font-size: clamp(1.3rem, 4vw, 1.7rem); margin: .25rem 0 .4rem; }
+    .sgl-sub { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; margin: 0 0 1rem; }
+    .sgl-date { font-family: var(--y-font-en); font-weight: 700; color: var(--y-ink-soft); }
+    .sgl-desc { color: var(--y-ink-soft); line-height: 1.85; margin: 0 0 1.3rem; white-space: pre-wrap; }
+    .sgl-desc.is-soon { color: var(--y-muted); }
+    .sgl-imgs { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-start; justify-content: center; }
+    .sgl-shot { margin: 0; flex: 1 1 150px; min-width: 0; }
+    .sgl-allsoon { color: var(--y-muted); font-family: var(--y-font-en); font-weight: 700; font-size: .85rem; text-align: center; padding: .6rem 0 .2rem; }
+    .sgl-shot-label { font-family: var(--y-font-en); font-weight: 700; font-size: .8rem; color: var(--y-ink-soft); margin-bottom: .4rem; }
+    /* 画像はトリミングせず自然な比率で全体表示（縦長アー写の見切れ防止） */
+    .sgl-shot-box { border-radius: 12px; overflow: hidden; background: color-mix(in srgb, var(--y-line) 28%, #fff); }
+    .sgl-shot-img { display: block; width: 100%; cursor: zoom-in; }
+    .sgl-shot-img img { display: block; width: 100%; height: auto; }
+    .sgl-soon { font-family: var(--y-font-en); font-weight: 700; font-size: .82rem; color: var(--y-muted); }
+    @media (prefers-reduced-motion: reduce) { .sgl-modal { transition: none; } }
+
+    /* ── 主役写真＝ファントレカ（ホロの推しカード） ── */
+    .pf-tcard { padding: .6rem .6rem 3.4rem; transition: transform .35s var(--y-ease), box-shadow .35s var(--y-ease); }
+    .pf-tcard:hover { transform: rotate(0deg) translateY(-4px) scale(1.01); box-shadow: var(--y-shadow); }
+    @media (prefers-reduced-motion: reduce) { .pf-tcard:hover { transform: rotate(-2.5deg); } }
+    .pf-foil { position: absolute; top: 12px; right: -6px; z-index: 4; font-family: var(--y-font-en); font-weight: 700; font-size: .6rem; letter-spacing: .08em;
+      color: #fff; background: linear-gradient(120deg, var(--y-peach), var(--y-lav)); padding: .25rem .62rem; border-radius: 999px; transform: rotate(4deg); box-shadow: var(--y-shadow-sm); }
+    .pf-tcard-cap { text-align: center; }
+    .pf-tcard-name { display: block; font-weight: 700; font-size: 1.04rem; color: var(--y-ink); }
+    .pf-tcard-name small { display: block; font-family: var(--y-font-en); font-weight: 700; font-size: .64rem; letter-spacing: .05em; color: var(--y-muted); margin-top: 3px; }
+    .pf-tcard-pen { display: inline-flex; align-items: center; gap: .3rem; margin-top: .4rem; font-family: var(--y-font-hand); font-size: .78rem; color: var(--y-ink-soft); }
+    .pf-tcard-pen .pf-pen { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; box-shadow: var(--y-shadow-sm); display: inline-block; }
+  </style>
+
+  <Lightbox />
+
+  <script>
+    (function () {
+      const modal = document.getElementById("sglModal");
+      if (!modal) return;
+      const byId = (id) => document.getElementById(id);
+      let lastFocused = null;
+      const lockScroll = () => { const b = document.body; const n = (parseInt(b.dataset.scrollLock || "0", 10)) + 1; b.dataset.scrollLock = String(n); b.style.overflow = "hidden"; };
+      const unlockScroll = () => { const b = document.body; const n = Math.max(0, (parseInt(b.dataset.scrollLock || "0", 10)) - 1); b.dataset.scrollLock = String(n); if (n === 0) b.style.overflow = ""; };
+      const focusables = () => Array.from(modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')).filter((el) => el.offsetParent !== null);
+      const onTrap = (e) => { if (e.key !== "Tab") return; const f = focusables(); if (!f.length) return; const first = f[0], last = f[f.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } };
+      // 画像がある枠だけ表示し、無い枠は figure ごと隠す。ある画像で1つのLightboxギャラリーを構成。
+      const setShot = (figId, boxId, gal, src, cap) => {
+        const fig = byId(figId), box = byId(boxId);
+        if (!fig || !box) return;
+        if (src) {
+          fig.style.display = "";
+          const w = document.createElement("div");
+          w.className = "sgl-shot-img";
+          w.setAttribute("data-gallery", JSON.stringify(gal));
+          w.setAttribute("data-index", String(Math.max(0, gal.indexOf(src))));
+          w.setAttribute("data-caption", cap);
+          w.setAttribute("role", "button");
+          w.setAttribute("tabindex", "0");
+          w.setAttribute("aria-label", cap + "を拡大");
+          const im = document.createElement("img");
+          im.src = src; im.alt = cap; im.loading = "lazy";
+          w.appendChild(im);
+          box.replaceChildren(w);
+        } else {
+          fig.style.display = "none";
+          box.replaceChildren();
+        }
+      };
+      const open = (el) => {
+        const d = el.dataset;
+        byId("sglNo").textContent = d.no || "";
+        byId("sglTitle").textContent = "『" + (d.title || "") + "』";
+        byId("sglDate").textContent = d.date || "";
+        const pos = byId("sglPos");
+        pos.textContent = d.pos || ""; pos.style.display = d.pos ? "" : "none";
+        const desc = byId("sglDesc");
+        if (d.desc) { desc.textContent = d.desc; desc.classList.remove("is-soon"); }
+        else { desc.textContent = "このシングルの思い出・特徴は準備中です。素材ができ次第ここに載せます。"; desc.classList.add("is-soon"); }
+        const no = d.no || "";
+        const gal = [d.cover, d.photo, d.mv].filter(Boolean);
+        setShot("sglCoverFig", "sglCover", gal, d.cover, no + "th ジャケット");
+        setShot("sglPhotoFig", "sglPhoto", gal, d.photo, no + "th 弓木さんのアー写");
+        setShot("sglMvFig", "sglMv", gal, d.mv, no + "th MVカット");
+        byId("sglAllSoon").style.display = gal.length ? "none" : "";
+        lastFocused = document.activeElement;
+        modal.classList.add("open"); modal.setAttribute("aria-hidden", "false");
+        lockScroll();
+        modal.addEventListener("keydown", onTrap);
+        const cb = byId("sglClose"); if (cb) cb.focus();
+      };
+      const close = () => {
+        // フォーカスがモーダル内に残っていると aria-hidden が無効になる→先に外す
+        const fa = document.activeElement;
+        if (fa && modal.contains(fa) && fa.blur) fa.blur();
+        modal.classList.remove("open");
+        modal.removeEventListener("keydown", onTrap);
+        modal.setAttribute("aria-hidden", "true");
+        unlockScroll();
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+      };
+      document.querySelectorAll(".pf-rec").forEach((el) => {
+        el.addEventListener("click", () => open(el));
+        el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(el); } });
+      });
+      byId("sglClose").addEventListener("click", close);
+      modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("open")) close(); });
+    })();
+  </script>
+</Yumiki>

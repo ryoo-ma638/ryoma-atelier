@@ -35,6 +35,10 @@ img, video, canvas { max-width: 100%; display: block; }
 /* 手書きマーカーの文字 */
 .hand { font-family: var(--f-hand); }
 
+/* クリックで跳ねる（scaleなのでtransform系アニメと併用可） */
+.jump { animation: jumpy .55s var(--spring); }
+@keyframes jumpy { 0%, 100% { scale: 1; } 35% { scale: 1.14; } 65% { scale: .96; } }
+
 /* マスキングテープ（紙もの装飾） */
 .tape {
   position: absolute; width: 92px; height: 26px; top: -13px; left: 50%;

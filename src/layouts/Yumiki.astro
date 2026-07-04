@@ -1,0 +1,228 @@
+---
+import "../styles/yumiki.css";
+import { nav, sns, img } from "../data/yumiki.ts";
+
+interface Props { title?: string; description?: string; }
+const {
+  title = "YUMIKI WORLD — 弓木奈於 非公式ファンサイト",
+  description = "乃木坂46・弓木奈於さんの魅力をまとめた非公式ファンサイト『YUMIKI WORLD』。",
+} = Astro.props;
+const { pathname } = Astro.url;
+const isActive = (href: string) => href === "/yumiki/" ? pathname === "/yumiki/" || pathname === "/yumiki" : pathname.startsWith(href);
+// 回遊：今のページの次（最後のページは先頭へループ）＝“ノートをめくる”導線
+const curIdx = nav.findIndex((n) => isActive(n.href));
+const nextNav = nav[((curIdx < 0 ? 0 : curIdx) + 1) % nav.length];
+const curHref = nav[curIdx < 0 ? 0 : curIdx].href;
+// 隠しハート集め：ページごとに違う隅に小さな♡を置く（全ページ分＝nav.length枚集めるとご褒美。ページ増減に自動追従）
+const eggPos = ["top:34%;left:10px", "bottom:21%;right:12px", "top:47%;right:9px", "bottom:33%;left:13px", "top:59%;left:16px", "bottom:27%;right:18px", "top:41%;left:20px"];
+const eggStyle = eggPos[(curIdx < 0 ? 0 : curIdx) % eggPos.length];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <!-- 非公式ファンサイトのため検索エンジンには載せない -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Yomogi&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <!-- JS有効時のみリビールを隠す＝JS無効/失敗でも本文が必ず見える（空白防止） -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      // 初回のみ（このセッション）＋motion許可時だけ、軽いイントロを出す
+      try {
+        if (!sessionStorage.getItem("y-intro-seen") && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document.documentElement.classList.add("y-intro-on");
+          sessionStorage.setItem("y-intro-seen", "1");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="yumiki">
+    <div class="yumiki-bg" aria-hidden="true"></div>
+    <div class="y-grain" aria-hidden="true"></div>
+
+    <!-- 初回イントロ（ノートをひらく・軽め／JS無効・reduced-motion・2回目以降は出さない） -->
+    <div class="y-intro" id="yIntro" aria-hidden="true">
+      <div class="y-intro-inner">
+        <span class="y-intro-logo">YUMIKI <span class="heart" aria-hidden="true">♡</span> WORLD</span>
+        <span class="y-intro-sub">推し活スクラップブック、ひらきます ♡</span>
+      </div>
+    </div>
+
+    <header class="y-header">
+      <div class="y-container y-header-inner">
+        <a href="/yumiki/" class="y-logo">YUMIKI<span class="heart" aria-hidden="true">♡</span>WORLD</a>
+        <nav class="y-nav" id="yNav" aria-label="弓木サイト ナビ">
+          {nav.map((n) => (
+            <a href={n.href} class:list={[{ active: isActive(n.href) }]}>{n.emoji} {n.label}</a>
+          ))}
+          <a href="/works" class="y-back">← ポートフォリオへ</a>
+        </nav>
+        <button class="y-burger" id="yBurger" aria-label="メニュー" aria-controls="yNav" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </header>
+
+    <main><slot /></main>
+
+    <!-- 隠しハート（ページごとに違う隅／全7枚集めるとご褒美） -->
+    <button class="y-egg" id="yEgg" data-page={curHref} data-total={nav.length} style={eggStyle} aria-label="かくれハートを集める">♡</button>
+
+    <!-- 回遊：ノートをめくる（次のページへ） -->
+    <nav class="y-next-wrap" aria-label="次のページ">
+      <a class="y-next" href={nextNav.href}>
+        <span class="y-next-tape" aria-hidden="true"></span>
+        <span class="y-next-eyebrow">Next page <i>✎</i></span>
+        <span class="y-next-title">{nextNav.emoji} {nextNav.label}</span>
+        <span class="y-next-arrow">ページをめくる →</span>
+      </a>
+    </nav>
+
+    <footer class="y-footer">
+      <div class="y-container">
+        <a href="/yumiki/" class="y-logo">YUMIKI<span class="heart" aria-hidden="true">♡</span>WORLD</a>
+        <div class="y-sns">
+          {sns.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}><img src={img(s.icon)} alt={s.label} /></a>
+          ))}
+        </div>
+        <p class="y-egg-count" id="yEggCount" hidden>かくれ♡ <b>0</b>/{nav.length}</p>
+        <p class="y-disclaimer">
+          © 2026 YUMIKI WORLD ／ 本ページは弓木奈於さんを応援する非公式ファン制作サイトです。<br />
+          掲載している画像・情報の著作権は各権利者に帰属します。問題がある場合は速やかに対応します。
+        </p>
+        <p style="margin-top:1rem"><a href="/works" class="y-btn y-btn--soft">← 制作者のポートフォリオに戻る</a></p>
+      </div>
+    </footer>
+
+    <script>
+      // 初回イントロの後始末：表示中ならクリック/1.6秒で閉じる。非表示条件なら即除去。
+      const yIntro = document.getElementById("yIntro");
+      if (yIntro) {
+        if (document.documentElement.classList.contains("y-intro-on")) {
+          const closeIntro = () => yIntro.classList.add("done");
+          yIntro.addEventListener("click", closeIntro);
+          window.setTimeout(closeIntro, 1600);
+        } else { yIntro.remove(); }
+      }
+
+      const nav = document.getElementById("yNav");
+      const burger = document.getElementById("yBurger");
+      const setMenu = (open: boolean) => {
+        nav?.classList.toggle("open", open);
+        burger?.setAttribute("aria-expanded", String(open));
+        // メニュー展開中は背景(body)のスクロールを固定して操作の競合を防ぐ
+        document.body.style.overflow = open ? "hidden" : "";
+      };
+      burger?.addEventListener("click", () => setMenu(!nav?.classList.contains("open")));
+      nav?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+
+      const els = document.querySelectorAll(".y-reveal");
+      if ("IntersectionObserver" in window && els.length) {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); } }), { threshold: 0.12 });
+        els.forEach((el) => io.observe(el));
+      } else { els.forEach((el) => el.classList.add("is-visible")); }
+
+      // カーソル追従キラキラ（遊び心）。fine pointer かつ motion 許可時のみ・間引き＆自動破棄で軽量。
+      const fine = window.matchMedia("(pointer: fine)").matches;
+      const okMotion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (fine && okMotion) {
+        const glyphs = ["✦", "♡", "✿", "⭐️", "♪"];
+        const colors = ["#ff9fb2", "#ffc2d1", "#ffd98a", "#9fe3c5", "#cdbcff", "#a9d8ff"];
+        let i = 0, last = 0;
+        window.addEventListener("pointermove", (e) => {
+          const now = e.timeStamp;
+          if (now - last < 70) return;            // 時間間引き（DOM肥大防止）
+          last = now;
+          const s = document.createElement("span");
+          s.className = "y-trail";
+          s.textContent = glyphs[i % glyphs.length];
+          s.style.left = e.clientX + "px";
+          s.style.top = e.clientY + "px";
+          s.style.color = colors[i % colors.length];
+          i++;
+          document.body.appendChild(s);
+          window.setTimeout(() => s.remove(), 700);
+        }, { passive: true });
+      }
+
+      // ── ご褒美演出：紙吹雪 / 隠しハート集め / 誕生日 / 時間帯背景 ──
+      const yReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const yColors = ["#ff9fb2", "#ffc2d1", "#ffd98a", "#9fe3c5", "#cdbcff", "#a9d8ff"];
+      const yGlyphs = ["♡", "✦", "✿", "♥"];
+      function confettiBurst(x, y) {
+        if (yReduce) return;
+        const cx = typeof x === "number" ? x : window.innerWidth / 2;
+        const cy = typeof y === "number" ? y : window.innerHeight * 0.32;
+        for (let k = 0; k < 30; k++) {
+          const s = document.createElement("span");
+          s.className = "y-confetti";
+          s.textContent = yGlyphs[k % yGlyphs.length];
+          s.style.left = cx + "px"; s.style.top = cy + "px";
+          s.style.color = yColors[k % yColors.length];
+          s.style.setProperty("--dx", (Math.random() * 2 - 1) * 240 + "px");
+          s.style.setProperty("--dy", 140 + Math.random() * 360 + "px");
+          s.style.setProperty("--rot", Math.random() * 720 - 360 + "deg");
+          s.style.fontSize = 0.8 + Math.random() * 1.2 + "rem";
+          s.style.animationDelay = Math.random() * 0.15 + "s";
+          document.body.appendChild(s);
+          window.setTimeout(() => s.remove(), 2300);
+        }
+      }
+      // 時間帯で背景の表情を少しだけ変える
+      try { document.documentElement.dataset.tod = (function () { const h = new Date().getHours(); return h < 5 ? "night" : h < 10 ? "morning" : h < 17 ? "day" : h < 20 ? "evening" : "night"; })(); } catch (e) {}
+      // 誕生日(2/3)に来たら、お祝いモード＋紙吹雪
+      try { const bd = new Date(); if (bd.getMonth() === 1 && bd.getDate() === 3) { document.documentElement.classList.add("y-bday-mode"); window.setTimeout(function () { confettiBurst(); }, 700); } } catch (e) {}
+      // 隠しハート集め（各ページ1枚・全7枚でご褒美）
+      function showEggReward() {
+        if (document.getElementById("yEggReward")) return;
+        const d = document.createElement("div");
+        d.id = "yEggReward"; d.className = "y-egg-reward";
+        d.innerHTML = '<div class="y-egg-reward-card" role="dialog" aria-modal="true"><span class="y-egg-reward-stamp">♡ THANK YOU ♡</span><p class="y-egg-reward-msg">かくれハートを ぜんぶ見つけてくれて ありがとう！<br>これからも一緒に、弓木さんを応援しようね ♡</p><button class="y-btn y-btn--peach" type="button">とじる</button></div>';
+        document.body.appendChild(d);
+        confettiBurst();
+        const close = function () { d.remove(); };
+        const btn = d.querySelector("button"); if (btn) btn.addEventListener("click", close);
+        d.addEventListener("click", function (e) { if (e.target === d) close(); });
+      }
+      const EGG_TOTAL = Number(document.getElementById("yEgg")?.dataset.total) || 6, eggKey = "y-hearts";
+      const getHearts = function () { try { return JSON.parse(localStorage.getItem(eggKey) || "[]"); } catch (e) { return []; } };
+      const eggCount = document.getElementById("yEggCount");
+      const renderCount = function () { const n = getHearts().length; if (eggCount) { const b = eggCount.querySelector("b"); if (b) b.textContent = String(Math.min(n, EGG_TOTAL)); eggCount.hidden = n <= 0; } };
+      renderCount();
+      function showEggHint() {
+        if (document.getElementById("yEggHint")) return;
+        const t = document.createElement("div"); t.id = "yEggHint"; t.className = "y-egg-hint";
+        t.innerHTML = '<span class="y-egg-hint-i" aria-hidden="true">♡</span><span>かくれハート、見つけた！<br>ぜんぶで <b>' + EGG_TOTAL + 'つ</b>、集めてみてね ✎</span>';
+        document.body.appendChild(t);
+        window.requestAnimationFrame(function () { t.classList.add("show"); });
+        window.setTimeout(function () { t.classList.remove("show"); window.setTimeout(function () { t.remove(); }, 400); }, 4200);
+      }
+      const egg = document.getElementById("yEgg");
+      if (egg) {
+        const page = egg.dataset.page || location.pathname;
+        if (getHearts().includes(page)) egg.classList.add("found");
+        egg.addEventListener("click", function (e) {
+          const hs = getHearts();
+          const fresh = !hs.includes(page);
+          egg.classList.remove("pop"); void egg.offsetWidth; egg.classList.add("found", "pop");
+          if (fresh) {
+            hs.push(page);
+            try { localStorage.setItem(eggKey, JSON.stringify(hs)); } catch (er) {}
+            confettiBurst(e.clientX, e.clientY);
+            renderCount();
+            if (hs.length === 1) showEggHint();
+            else if (hs.length >= EGG_TOTAL) window.setTimeout(showEggReward, 400);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
