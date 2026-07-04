@@ -25,11 +25,24 @@ img, video, canvas { max-width: 100%; display: block; }
 .wrap { width: min(1180px, 100% - var(--gutter) * 2); margin-inline: auto; }
 .section { padding-block: var(--stack); }
 .eyebrow {
-  font-family: var(--f-mono); font-size: .72rem; font-weight: 500;
-  letter-spacing: .22em; color: var(--mut); text-transform: uppercase;
+  font-family: var(--f-hand); font-size: 1.02rem;
+  color: var(--scarlet-d); letter-spacing: .04em;
   display: inline-flex; align-items: center; gap: .5rem;
+  transform: rotate(-1.2deg);
 }
-.eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
+.eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--scarlet); }
+
+/* 手書きマーカーの文字 */
+.hand { font-family: var(--f-hand); }
+
+/* マスキングテープ（紙もの装飾） */
+.tape {
+  position: absolute; width: 92px; height: 26px; top: -13px; left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  background: color-mix(in oklab, var(--amber) 42%, #fff 30%);
+  opacity: .85; border-left: 2px dashed rgba(255,255,255,.6); border-right: 2px dashed rgba(255,255,255,.6);
+  box-shadow: 0 2px 4px rgba(27,42,74,.12); pointer-events: none;
+}
 
 h1, h2, h3 { font-weight: 900; line-height: 1.08; letter-spacing: -.01em; }
 h2.big { font-size: clamp(1.9rem, 5vw, 3.4rem); }

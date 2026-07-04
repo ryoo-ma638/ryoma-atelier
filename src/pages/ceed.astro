@@ -2,25 +2,188 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+
+// 活動の3本柱（works.ts・aboutの事実と一致する範囲だけ書く）
+const pillars = [
+  {
+    ic: '🎤',
+    t: '発表・スライド',
+    d: '新入生説明会やワークショップの資料を一からつくって、みんなの前で発表しています。',
+  },
+  {
+    ic: '🎉',
+    t: 'イベント企画',
+    d: '新歓BBQやビンゴ大会など、「誰も置いてけぼりにしない」交流イベントを企画・運営。',
+  },
+  {
+    ic: '💻',
+    t: 'WEB班',
+    d: '企業の採用サイトのリデザインや、CEED公式サイトづくりをチームで進めています。',
+  },
+];
 ---
 <Base title="CEED ― 稜馬のアトリエ" description="学生団体CEED（副部長）での活動。準備中。">
   <Nav />
   <main id="main">
-    <header class="chero wrap">
-      <p class="eyebrow"><span class="dot"></span>CLUB · CEED</p>
-      <h1 class="ctitle">CEED<span class="sub">（副部長）</span></h1>
-      <p class="lead">発表・スライド制作、イベント企画、WEB班 ―― 「誰も置いてけぼりにしない」を大切に。</p>
-      <div class="soon"><span class="hanko-mini" aria-hidden="true">馬</span>このページは準備中です。<br /><a class="btn ghost" href="/works">先に作品を見る →</a></div>
-    </header>
+    <section class="chero">
+      <div class="wrap grid">
+        <!-- 左：ことば -->
+        <div class="txt">
+          <p class="eyebrow"><span class="dot"></span>CLUB · CEED</p>
+          <h1 class="ctitle">CEED<span class="sub">（副部長）</span>
+            <svg class="draw-line under" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true" style="--len:320">
+              <path d="M6,12 C60,4 120,15 180,8 C230,3 270,13 294,7" />
+            </svg>
+          </h1>
+          <p class="lead">発表・スライド制作、イベント企画、WEB班 ―― 「誰も置いてけぼりにしない」を大切に。</p>
+
+          <div class="soon-row">
+            <span class="stamp" aria-hidden="true">準備中</span>
+            <p class="soon-note hand">このページ、いまじっくり書いてます。<br />もうちょっと待っててね！</p>
+          </div>
+
+          <div class="cta">
+            <a class="btn" href="/works">先に作品を見る<span class="ar">→</span></a>
+            <a class="btn ghost" href="/about">ぼくのこと →</a>
+          </div>
+        </div>
+
+        <!-- 右：うまくん乾杯 -->
+        <div class="art" aria-hidden="true">
+          <span class="blob"></span>
+          <span class="uma"><img src="/assets/mascot/cheers.png" alt="" /></span>
+          <span class="bubble hand">サークルも全力！</span>
+          <span class="cf a1"></span><span class="cf a2"></span><span class="cf a3"></span><span class="cf a4"></span>
+        </div>
+      </div>
+
+      <!-- 画鋲メモ：活動の3本柱 -->
+      <div class="wrap notes-area">
+        <p class="notes-label hand">活動の3本柱！
+          <svg class="n-arrow" viewBox="0 0 46 30" aria-hidden="true"><path d="M6,4 C16,18 26,24 40,26 M40,26 l-9,-3 M40,26 l-1,-9" /></svg>
+        </p>
+        <div class="notes">
+          {pillars.map((p, i) => (
+            <article class={`memo reveal d${i + 1}`}>
+              <span class="pin" aria-hidden="true"></span>
+              <span class="m-ic" aria-hidden="true">{p.ic}</span>
+              <h2 class="m-t">{p.t}</h2>
+              <p class="m-d hand">{p.d}</p>
+            </article>
+          ))}
+        </div>
+        <p class="notes-foot hand">くわしい活動記録は、ただいま執筆中…✍️ <span class="hanko-mini" aria-hidden="true">馬</span></p>
+      </div>
+    </section>
   </main>
   <Footer />
 </Base>
+
 <style>
-  .chero { padding: clamp(3rem, 8vw, 6rem) 0; }
-  .ctitle { font-size: clamp(3rem, 10vw, 6rem); }
-  .ctitle .sub { font-size: .32em; color: var(--mut); font-weight: 700; }
-  .lead { margin-top: 1rem; max-width: 40ch; }
-  .soon { position: relative; margin-top: 2.5rem; background: var(--card); border: 2px dashed var(--ink); border-radius: var(--r-lg); padding: 2rem; font-family: var(--f-round); font-weight: 700; box-shadow: var(--sh-1); }
-  .soon .btn { margin-top: 1rem; }
-  .hanko-mini { position: absolute; right: 1rem; top: 1rem; width: 34px; height: 34px; display: grid; place-items: center; color: #fff; background: var(--scarlet); border-radius: 24% 26% 22% 28%; transform: rotate(-8deg); font-size: .8rem; }
+  .chero { padding: clamp(2.6rem, 7vw, 5rem) 0 clamp(1.5rem, 4vw, 2.5rem); overflow: clip; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(1rem, 4vw, 3rem); align-items: center; }
+
+  /* ---- 左：ことば ---- */
+  .ctitle { position: relative; width: fit-content; font-size: clamp(3rem, 10vw, 6rem); line-height: 1.05; }
+  .ctitle .sub { font-size: .3em; color: var(--mut); font-weight: 700; }
+  .draw-line.under { position: absolute; left: 0; bottom: -.08em; width: 74%; height: .16em; overflow: visible; }
+  .draw-line.under path { fill: none; stroke: var(--amber); stroke-width: 8; stroke-linecap: round; }
+  .lead { margin-top: 1.2rem; max-width: 44ch; }
+
+  .soon-row { display: flex; align-items: center; gap: 1.2rem; margin-top: 2.2rem; }
+  /* 朱のゴム印「準備中」 */
+  .stamp {
+    flex: 0 0 auto;
+    font-weight: 900; font-size: clamp(1.3rem, 3vw, 1.7rem); letter-spacing: .14em;
+    color: var(--scarlet); padding: .35em .7em;
+    border: 3.5px solid var(--scarlet); border-radius: 8px;
+    transform: rotate(-7deg);
+    box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--scarlet) 40%, transparent);
+    mask-image: radial-gradient(circle at 30% 40%, #000 96%, transparent 100%);
+    background: color-mix(in oklab, var(--scarlet) 6%, transparent);
+  }
+  .soon-note { color: var(--scarlet-d); font-size: 1.02rem; line-height: 1.75; transform: rotate(-1deg); }
+
+  .cta { display: flex; gap: 1.1rem; flex-wrap: wrap; margin-top: 2.2rem; }
+  .cta .ar { transition: transform .2s var(--spring); margin-left: .15rem; }
+  .btn:hover .ar { transform: translateX(4px); }
+
+  /* ---- 右：うまくん ---- */
+  .art { position: relative; min-height: clamp(280px, 30vw, 400px); }
+  .blob {
+    position: absolute; inset: 6% 4% 4% 6%;
+    background: var(--amber); opacity: .9;
+    border-radius: 52% 48% 44% 56% / 52% 46% 54% 48%;
+  }
+  .uma {
+    position: absolute; left: 50%; bottom: 8%; transform: translateX(-50%);
+    width: clamp(180px, 20vw, 260px); z-index: 2;
+    animation: bob 3s ease-in-out infinite; transform-origin: 50% 90%;
+  }
+  .uma img { width: 100%; height: auto; display: block; filter: drop-shadow(3px 5px 5px rgba(27,42,74,.2)); }
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(-8px); }
+  }
+  .bubble {
+    position: absolute; top: 13%; right: 9%; z-index: 3;
+    background: var(--card); border: 2.5px solid var(--ink); border-radius: 16px 16px 4px 16px;
+    padding: .4rem .85rem; font-size: 1rem; color: var(--ink);
+    box-shadow: var(--sh-2); transform: rotate(2deg); white-space: nowrap;
+  }
+  .bubble::after { content: ''; position: absolute; left: 22px; bottom: -11px; border: 6px solid transparent; border-top: 8px solid var(--ink); }
+
+  .cf { position: absolute; width: 12px; height: 12px; border-radius: 2px; z-index: 1; }
+  .cf.a1 { top: 2%; left: 12%; background: var(--scarlet); transform: rotate(20deg); }
+  .cf.a2 { top: 18%; right: 0; background: var(--ink); transform: rotate(-14deg); width: 9px; height: 9px; }
+  .cf.a3 { bottom: 4%; left: 4%; background: var(--amber-d); transform: rotate(34deg); width: 10px; height: 10px; }
+  .cf.a4 { bottom: 12%; right: 8%; background: var(--scarlet); transform: rotate(-28deg); width: 9px; height: 9px; }
+
+  /* ---- 画鋲メモ ---- */
+  .notes-area { margin-top: clamp(2.5rem, 6vw, 4.5rem); }
+  .notes-label { position: relative; display: inline-block; color: var(--scarlet-d); font-size: 1.15rem; transform: rotate(-2deg); padding-right: 2.6rem; margin-bottom: 1.4rem; }
+  .n-arrow { position: absolute; right: 0; top: .5rem; width: 34px; height: 24px; }
+  .n-arrow path { fill: none; stroke: var(--scarlet-d); stroke-width: 2.2; stroke-linecap: round; }
+
+  .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 3vw, 2rem); }
+  .memo {
+    position: relative; background: #FFFDF6; border-radius: 4px;
+    box-shadow: 3px 5px 12px rgba(27,42,74,.16);
+    padding: 1.6rem 1.3rem 1.3rem;
+    transition: transform .2s var(--spring), box-shadow .2s ease;
+  }
+  .memo:nth-child(1) { transform: rotate(-2deg); }
+  .memo:nth-child(2) { transform: rotate(1.6deg); }
+  .memo:nth-child(3) { transform: rotate(-1.2deg); }
+  .memo:hover { transform: translateY(-6px) rotate(0deg); box-shadow: 6px 10px 20px rgba(27,42,74,.2); }
+  .pin {
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    width: 17px; height: 17px; border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, #ff8f70, var(--scarlet) 60%, var(--scarlet-d));
+    box-shadow: 0 4px 6px rgba(0,0,0,.28);
+  }
+  .m-ic { font-size: 1.7rem; display: block; }
+  .m-t { font-size: 1.28rem; margin: .4rem 0 .5rem; }
+  .m-t::after { content: ''; display: block; width: 2.4em; height: 4px; border-radius: 2px; margin-top: .3rem; background: var(--amber); }
+  .m-d { color: var(--ink-2); font-size: 1rem; line-height: 1.8; }
+
+  .notes-foot { display: inline-flex; align-items: center; gap: .7rem; margin-top: 2rem; color: var(--mut); font-size: 1rem; transform: rotate(-1deg); }
+  .hanko-mini {
+    width: 30px; height: 30px; display: grid; place-items: center;
+    font-family: var(--f-round); font-weight: 700; font-size: .8rem; color: #fff;
+    background: var(--scarlet); border-radius: 50%; transform: rotate(-10deg);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.4);
+  }
+
+  /* ---- レスポンシブ ---- */
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; }
+    .art { order: 2; min-height: 280px; margin-top: 1rem; }
+    .notes { grid-template-columns: 1fr; max-width: 460px; }
+    .memo:nth-child(2) { transform: rotate(1.2deg); }
+  }
+  @media (max-width: 460px) {
+    .soon-row { flex-direction: column; align-items: flex-start; gap: .9rem; }
+    .uma { width: 180px; }
+  }
 </style>

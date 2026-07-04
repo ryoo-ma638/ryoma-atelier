@@ -3,9 +3,21 @@ const year = 2026;
 ---
 <footer class="foot" id="contact">
   <div class="wrap inner">
-    <span class="pony2" data-horse aria-hidden="true"></span>
+    <!-- 余白の紙吹雪（夜にしない・お祭りの紺） -->
+    <span class="cf k1" aria-hidden="true"></span>
+    <span class="cf k2" aria-hidden="true"></span>
+    <span class="cf k3" aria-hidden="true"></span>
+    <span class="cf k4" aria-hidden="true"></span>
+    <span class="cf k5" aria-hidden="true"></span>
+    <span class="cf k6" aria-hidden="true"></span>
+    <span class="cf k7" aria-hidden="true"></span>
+
     <p class="eyebrow reveal"><span class="dot"></span>まだ、作ってる。</p>
-    <h2 class="cta-head reveal d1">声、かけてください。</h2>
+    <h2 class="cta-head reveal d1"><span class="rel">声、かけてください。
+      <svg class="draw-line under" viewBox="0 0 460 20" preserveAspectRatio="none" aria-hidden="true" style="--len:480">
+        <path d="M8,13 C90,5 180,17 260,9 C330,3 410,14 452,8" />
+      </svg>
+    </span></h2>
     <p class="sub reveal d2">現場でも、ここでも。まずは雑談からでも、うれしいです。</p>
 
     <div class="btns reveal d3">
@@ -14,18 +26,29 @@ const year = 2026;
       <a class="btn ghost" href="https://github.com/ryoo-ma638" target="_blank" rel="noopener">GitHub →</a>
     </div>
 
-    <p class="mark" aria-hidden="true">RYOMA</p>
+    <div class="mark-row" aria-hidden="true">
+      <p class="mark">RYOMA</p>
+      <span class="uma">
+        <span class="uma-note hand">きてくれて、ありがとう！</span>
+        <img src="/assets/mascot/wave.png" alt="" loading="lazy" />
+      </span>
+    </div>
     <p class="copy">© {year} 大崎稜馬 — つくって、手渡す。</p>
   </div>
 
   <style>
     .foot { position: relative; margin-top: var(--stack); padding: var(--stack) 0 3rem; background: var(--ink); color: var(--paper); overflow: hidden; }
-    .foot::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, var(--amber), var(--scarlet)); }
+    /* 上辺＝琥珀→朱のライン（夜にならないための灯） */
+    .foot::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: linear-gradient(90deg, var(--amber), var(--scarlet)); }
     .inner { position: relative; z-index: 2; text-align: center; }
 
     .foot .eyebrow { color: var(--amber-l); justify-content: center; }
     .foot .eyebrow .dot { background: var(--amber); }
-    .cta-head { font-size: clamp(2.4rem, 8vw, 5.5rem); margin: .6rem 0 .8rem; }
+
+    .cta-head { font-size: clamp(1.7rem, 8vw, 5.5rem); margin: .6rem 0 .8rem; white-space: nowrap; }
+    .cta-head .rel { position: relative; display: inline-block; }
+    .cta-head .draw-line.under { position: absolute; left: 2%; bottom: -.1em; width: 96%; height: .18em; overflow: visible; }
+    .cta-head .draw-line.under path { fill: none; stroke: var(--amber); stroke-width: 8; stroke-linecap: round; opacity: .95; }
     .sub { color: color-mix(in oklab, var(--paper) 78%, transparent); font-weight: 500; }
 
     .btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
@@ -33,18 +56,51 @@ const year = 2026;
     .foot .btn.ghost { color: var(--paper); border-color: var(--paper); }
     .foot .btn.ghost:hover { color: var(--amber-l); border-color: var(--amber-l); }
 
+    /* ---- 透かし文字＋うまくん ---- */
+    .mark-row { position: relative; margin-top: 1.5rem; }
     .mark {
-      font-weight: 900; font-size: clamp(4rem, 20vw, 15rem); line-height: .8; margin-top: 1.5rem;
-      color: transparent; -webkit-text-stroke: 2px color-mix(in oklab, var(--paper) 22%, transparent);
+      font-weight: 900; font-size: clamp(4rem, 20vw, 15rem); line-height: .8;
+      color: transparent; -webkit-text-stroke: 2px color-mix(in oklab, var(--paper) 26%, transparent);
       letter-spacing: .02em; user-select: none; pointer-events: none;
     }
-    .copy { font-family: var(--f-mono); font-size: .72rem; color: color-mix(in oklab, var(--paper) 55%, transparent); margin-top: -.6rem; }
+    .uma {
+      position: absolute; right: clamp(.2rem, 4vw, 4rem); bottom: -.4rem;
+      width: clamp(86px, 12vw, 150px); z-index: 3;
+      animation: umaWave 2.8s ease-in-out infinite; transform-origin: 50% 92%;
+    }
+    .uma img { width: 100%; height: auto; display: block; filter: drop-shadow(3px 5px 5px rgba(0,0,0,.35)); }
+    @keyframes umaWave {
+      0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+      50%      { transform: translateY(-7px) rotate(1.5deg); }
+    }
+    .uma-note {
+      position: absolute; right: 92%; bottom: 74%;
+      background: var(--card); color: var(--ink);
+      border: 2px solid var(--ink); border-radius: 14px 14px 4px 14px;
+      padding: .32rem .7rem; font-size: .92rem; white-space: nowrap;
+      box-shadow: 0 3px 8px rgba(0,0,0,.3); transform: rotate(-2deg);
+    }
+    .uma-note::after { content: ''; position: absolute; right: -9px; bottom: 8px; border: 5px solid transparent; border-left: 8px solid var(--ink); }
 
-    .pony2 {
-      position: absolute; bottom: 12%; right: 6%; width: 150px; height: 120px; opacity: .16;
-      background: var(--amber);
-      -webkit-mask: url('/assets/horse-wire.png') center/contain no-repeat;
-      mask: url('/assets/horse-wire.png') center/contain no-repeat;
+    .copy { font-family: var(--f-mono); font-size: .72rem; color: color-mix(in oklab, var(--paper) 55%, transparent); margin-top: -.4rem; }
+
+    /* ---- 紙吹雪（紺の面をお祭りに） ---- */
+    .cf { position: absolute; width: 12px; height: 12px; border-radius: 2px; z-index: 1; }
+    .cf.k1 { top: 8%; left: 7%; background: var(--amber); transform: rotate(18deg); }
+    .cf.k2 { top: 22%; left: 14%; background: var(--scarlet); transform: rotate(-24deg); width: 9px; height: 9px; }
+    .cf.k3 { top: 10%; right: 10%; background: var(--amber-l); transform: rotate(38deg); }
+    .cf.k4 { top: 30%; right: 5%; background: var(--paper); transform: rotate(-10deg); width: 9px; height: 9px; opacity: .8; }
+    .cf.k5 { top: 46%; left: 4%; background: var(--amber-l); transform: rotate(-32deg); width: 10px; height: 10px; }
+    .cf.k6 { top: 55%; right: 16%; background: var(--scarlet); transform: rotate(12deg); width: 10px; height: 10px; }
+    .cf.k7 { top: 62%; left: 18%; background: var(--paper); transform: rotate(30deg); width: 8px; height: 8px; opacity: .7; }
+
+    @media (max-width: 720px) {
+      .uma { bottom: -.2rem; }
+      .uma-note { font-size: .8rem; right: 76%; }
+      .cf.k2, .cf.k7 { display: none; }
+    }
+    @media (max-width: 460px) {
+      .uma-note { display: none; }
     }
   </style>
 </footer>

@@ -1,38 +1,43 @@
 ---
 import { works, categoryLabels } from '../data/works.ts';
 
-// 下部「つくってるもの」ストリップ用：分野ごとの代表サムネを1枚ずつ。
+// 下部「つくってるもの」ストリップ：分野ごとの代表サムネ＋短いENラベル
 const stripOrder = ['cg', 'imaging', 'web', 'video', 'planning', 'graphic'] as const;
+const SHORT_EN: Record<string, string> = {
+  cg: 'CG', imaging: 'IMAGE', web: 'APP', video: 'MOVIE', planning: 'PLAN', graphic: 'DESIGN',
+};
 const strip = stripOrder
   .map((c) => {
     const rep = works.find((w) => w.category === c && w.thumb);
-    return rep ? { cat: c, label: categoryLabels[c], thumb: rep.thumb } : null;
+    return rep ? { cat: c, en: SHORT_EN[c], color: categoryLabels[c].color, thumb: rep.thumb } : null;
   })
-  .filter(Boolean) as { cat: string; label: { ja: string; en: string; color: string }; thumb: string }[];
+  .filter(Boolean) as { cat: string; en: string; color: string; thumb: string }[];
 ---
 <section class="hero" id="top">
   <div class="wrap grid">
     <!-- ===== 左：ことば ===== -->
     <div class="lead-col">
       <h1 class="title">
-        <span class="nm">稜馬<span class="hanko" data-stamp aria-hidden="true">馬</span></span><span class="of">の</span><br />
-        <span class="pf">ポートフォリオ
-          <svg class="draw-line under" viewBox="0 0 340 20" preserveAspectRatio="none" aria-hidden="true" style="--len:360">
-            <path d="M6,13 C70,4 130,18 190,10 C240,3 300,15 334,8" />
+        <span class="l1">稜馬<span class="of">の</span><span class="hanko" data-stamp aria-hidden="true">馬</span></span>
+        <span class="l2">ポートフォリオ
+          <svg class="draw-line under" viewBox="0 0 340 18" preserveAspectRatio="none" aria-hidden="true" style="--len:360">
+            <path d="M6,12 C70,4 130,16 190,9 C240,3 300,14 334,7" />
           </svg>
         </span>
       </h1>
 
-      <p class="hand">つくるって、たのしい！</p>
+      <p class="hand catch">つくるって、たのしい！
+        <svg class="swoosh" viewBox="0 0 220 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4,10 C60,4 150,12 216,5" /></svg>
+      </p>
 
       <p class="chips-line">
-        <span class="kw">ゲーム</span><span class="sl">/</span><span class="kw">CG</span><span class="sl">/</span><span class="kw">アプリ</span><span class="sl">/</span><span class="kw">画像処理</span><span class="dots">…</span><br />
+        <span class="kw">ゲーム</span><span class="sl">/</span><span class="kw">CG</span><span class="sl">/</span><span class="kw">アプリ</span><span class="sl">/</span><span class="kw">画像処理</span><span class="dots"> …</span><br />
         <b>ワクワクするものを、まっすぐつくる！</b>
       </p>
 
       <p class="intro">
-        愛知工業大学で <b>CGと画像処理</b> を学ぶ3年生。<br />
-        <b>つくる人</b>で、バンテリンドームの <b>ビール売り子</b> です。<br />
+        愛知工業大学で<b>CGと画像処理</b>を学ぶ3年生。<br />
+        <b>つくる人</b>で、バンテリンドームの<b>ビール売り子</b>です。<br />
         <span class="warm">まっすぐ、たのしく、あたたかい作品を届けます！</span>
       </p>
 
@@ -47,169 +52,235 @@ const strip = stripOrder
       </div>
     </div>
 
-    <!-- ===== 右：ビジュアル（本人写真ゾーン＋マスコット） ===== -->
+    <!-- ===== 右：躍動コラージュ（モック再現） ===== -->
     <div class="art-col" aria-hidden="true">
-      <span class="brush b1"></span>
-      <span class="brush b2"></span>
+      <!-- ブラシのスプラッシュ（琥珀＋紺） -->
+      <svg class="splash amber" viewBox="0 0 640 560" preserveAspectRatio="none">
+        <path d="M120,540 C40,470 60,380 140,330 C90,260 130,160 230,130 C250,60 350,20 440,50 C520,10 610,60 620,150 C660,240 600,330 520,360 C520,440 440,510 340,500 C270,560 170,580 120,540 Z" />
+      </svg>
+      <svg class="splash navy" viewBox="0 0 600 500" preserveAspectRatio="none">
+        <path d="M30,470 L200,300 C280,215 380,120 470,60 L575,8 C592,0 604,16 592,30 L470,170 C380,270 260,380 140,465 L55,498 C36,506 16,486 30,470 Z" />
+      </svg>
+      <!-- スピード線 -->
+      <svg class="lines" viewBox="0 0 300 120" preserveAspectRatio="none">
+        <path d="M8,18 L210,10" /><path d="M30,52 L290,40" /><path d="M14,90 L180,84" />
+      </svg>
+      <!-- 紙吹雪 -->
+      <span class="cf c1"></span><span class="cf c2"></span><span class="cf c3"></span>
+      <span class="cf c4"></span><span class="cf c5"></span><span class="cf c6"></span><span class="cf c7"></span>
 
-      <!-- 本人写真（イメージ・後日実写へ差し替え可） -->
+      <!-- 本人写真（イメージ・実写差し替え可） -->
       <div class="photo">
-        <img src="/assets/photo/hero.jpg" alt="バンテリンドームのビール売り子（イメージ）" />
+        <img src="/assets/photo/hero.jpg" alt="" />
       </div>
 
-      <!-- 落書きラベル -->
-      <span class="doodle d-game">🎮 GAME</span>
-      <span class="doodle d-cg">✦ CG</span>
-      <span class="doodle d-ip">IMAGE<br />PROCESSING</span>
-
-      <!-- 案内役のうまくん（2枚のフレームを交互に＝疾走） -->
-      <span class="pony" data-horse>
-        <img class="f1" src="/assets/mascot/run.png" alt="案内役のうまくん" />
-        <img class="f2" src="/assets/mascot/run2.png" alt="" aria-hidden="true" />
+      <!-- 手書き落書きラベル -->
+      <span class="doodle d-game hand">🎮 GAME
+        <svg viewBox="0 0 60 24" class="d-arrow"><path d="M4,20 C20,16 34,10 54,4 M54,4 l-10,0 M54,4 l-2,9" /></svg>
       </span>
-      <span class="hello">うまくん、よろしく！</span>
+      <span class="doodle d-cg hand">✦ CG →</span>
+      <span class="doodle d-ip hand">IMAGE<br />PROCESSING</span>
+
+      <!-- うまくん（本物の2コマでギャロップ） -->
+      <span class="pony" data-horse>
+        <img class="f1" src="/assets/mascot/run.png" alt="" />
+        <img class="f2" src="/assets/mascot/run2.png" alt="" />
+      </span>
+      <span class="hello hand">うまくん、よろしく！</span>
     </div>
   </div>
 
   <!-- ===== 下部：つくってるもの ストリップ ＋ 画鋲メモ ===== -->
   <div class="wrap belt">
-    <span class="belt-label">つくってるもの <span class="bulb">💡</span></span>
+    <span class="belt-label hand">つくってるもの <span class="bulb">💡</span>
+      <svg class="b-arrow" viewBox="0 0 46 30" aria-hidden="true"><path d="M6,4 C16,18 26,24 40,26 M40,26 l-9,-3 M40,26 l-1,-9" /></svg>
+    </span>
     <div class="strip">
       {strip.map((s) => (
-        <a class="fcard" href={`/works#cat-${s.cat}`} style={`--tag:${s.label.color}`}>
+        <a class="fcard" href={`/works#cat-${s.cat}`} style={`--tag:${s.color}`}>
+          <span class="flabel">{s.en}</span>
           <span class="fthumb"><img src={s.thumb} alt="" loading="lazy" /></span>
-          <span class="flabel">{s.label.en}<span class="ar">→</span></span>
+          <span class="fgo">→</span>
         </a>
       ))}
     </div>
 
     <aside class="pin-note">
       <span class="pin" aria-hidden="true"></span>
+      <p class="hand">まっすぐに、<br />つくって、<br />手渡す！</p>
       <span class="hanko-mini" aria-hidden="true">馬</span>
-      <p>まっすぐに、<br />つくって、<br />手渡す！</p>
     </aside>
   </div>
 </section>
 
 <style>
-  .hero { position: relative; padding-top: clamp(1.5rem, 4vw, 3rem); overflow: hidden; }
-  .grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(1rem, 3vw, 2.5rem); align-items: center; }
+  .hero { position: relative; padding-top: clamp(1.2rem, 3vw, 2.4rem); overflow: clip; }
+  .grid { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(.5rem, 2vw, 1.5rem); align-items: center; }
 
   /* ---- 左：ことば ---- */
-  .title { font-size: clamp(2.8rem, 8.5vw, 6.4rem); line-height: .95; }
-  .title .nm { position: relative; color: var(--ink); }
-  .title .of { color: var(--mut); font-weight: 700; font-size: .5em; }
-  .title .pf { position: relative; display: inline-block; color: var(--ink); }
-  .draw-line.under { position: absolute; left: 0; right: 0; bottom: -.05em; width: 100%; height: .22em; overflow: visible; }
-  .draw-line.under path { fill: none; stroke: var(--amber); stroke-width: 9; stroke-linecap: round; }
+  .title { font-size: clamp(2.6rem, 6.4vw, 5.6rem); line-height: 1.04; letter-spacing: .01em; }
+  .title .l1, .title .l2 { display: block; white-space: nowrap; }
+  .title .l1 { position: relative; width: fit-content; }
+  .title .of { color: var(--mut); font-weight: 700; font-size: .52em; margin-left: .06em; }
+  .title .l2 { position: relative; width: fit-content; color: var(--ink); transform: rotate(-.6deg); }
+  .draw-line.under { position: absolute; left: -1%; bottom: -.12em; width: 102%; height: .22em; overflow: visible; }
+  .draw-line.under path { fill: none; stroke: var(--amber); stroke-width: 8; stroke-linecap: round; }
+
   .hanko {
-    position: absolute; top: -.1em; right: -.7em; width: 1em; height: 1em; display: grid; place-items: center;
-    font-family: var(--f-round); font-weight: 700; font-size: .34em; color: #fff;
-    background: var(--scarlet); border-radius: 24% 26% 22% 28%; box-shadow: inset 0 0 0 3px rgba(255,255,255,.35);
+    position: absolute; top: -.12em; right: -1.5em;
+    width: 1em; height: 1em; display: grid; place-items: center;
+    font-family: var(--f-round); font-weight: 700; font-size: .42em; color: #fff;
+    background: var(--scarlet); border-radius: 50%;
+    box-shadow: inset 0 0 0 2.5px rgba(255,255,255,.4), 1px 2px 4px rgba(27,42,74,.18);
     opacity: 0; transform: scale(1.8) rotate(-18deg);
   }
   .hanko.stamped { animation: stamp .5s var(--spring) forwards; }
-  @keyframes stamp { 0% { opacity: 0; transform: scale(1.8) rotate(-18deg); } 55% { opacity: 1; transform: scale(.9) rotate(6deg); } 100% { opacity: 1; transform: scale(1) rotate(-7deg); } }
+  @keyframes stamp {
+    0% { opacity: 0; transform: scale(1.8) rotate(-18deg); }
+    55% { opacity: 1; transform: scale(.9) rotate(6deg); }
+    100% { opacity: 1; transform: scale(1) rotate(-8deg); }
+  }
 
-  .hand { font-family: var(--f-round); font-weight: 700; color: var(--amber-d); font-size: clamp(1.1rem, 3vw, 1.6rem); margin-top: 1.1rem; transform: rotate(-2deg); display: inline-block; }
+  .catch { position: relative; width: fit-content; color: var(--scarlet); font-size: clamp(1.2rem, 2.6vw, 1.7rem); margin-top: 1.2rem; transform: rotate(-1.6deg); }
+  .swoosh { position: absolute; left: 2%; bottom: -.45em; width: 96%; height: .5em; overflow: visible; }
+  .swoosh path { fill: none; stroke: var(--scarlet); stroke-width: 2.5; stroke-linecap: round; opacity: .85; }
 
-  .chips-line { margin-top: .9rem; font-weight: 700; }
-  .chips-line .kw { display: inline-block; background: var(--ink); color: var(--paper); padding: .1rem .5rem; border-radius: 7px; margin: 0 .1rem .35rem; font-size: .95rem; }
-  .chips-line .sl { color: var(--amber-d); font-weight: 900; margin: 0 .15rem; }
+  .chips-line { margin-top: 1.15rem; font-weight: 700; line-height: 2; }
+  .chips-line .kw { display: inline-block; background: var(--ink); color: var(--paper); padding: .12rem .55rem; border-radius: 8px; margin-right: .1rem; font-size: .92rem; }
+  .chips-line .sl { color: var(--amber-d); font-weight: 900; margin: 0 .22rem; }
   .chips-line .dots { color: var(--mut); }
-  .chips-line b { color: var(--ink); font-size: clamp(1rem, 2.4vw, 1.25rem); }
+  .chips-line b { color: var(--ink); font-size: clamp(1rem, 2.2vw, 1.22rem); }
 
-  .intro { margin-top: 1.1rem; font-weight: 700; font-size: clamp(.95rem, 1.8vw, 1.1rem); max-width: 34ch; }
-  .intro b { color: var(--ink); border-bottom: 3px solid var(--amber); }
+  .intro { margin-top: 1rem; font-weight: 700; font-size: clamp(.96rem, 1.75vw, 1.12rem); line-height: 2; }
+  .intro b { color: var(--ink); border-bottom: 3px solid var(--amber); white-space: nowrap; }
   .intro .warm { color: var(--scarlet-d); }
 
   .two-tags { display: flex; gap: .5rem; margin-top: 1.1rem; }
-  .chip { font-family: var(--f-round); font-size: .8rem; padding: .3rem .8rem; border-radius: var(--r-pill); font-weight: 700; }
-  .chip.c1 { background: color-mix(in oklab, var(--ink) 12%, var(--paper)); color: var(--ink); }
-  .chip.c1::before { content: '● '; color: var(--amber-d); }
-  .chip.c2 { background: color-mix(in oklab, var(--scarlet) 16%, var(--paper)); color: var(--scarlet-d); }
-  .chip.c2::before { content: '● '; color: var(--scarlet); }
+  .chip { font-family: var(--f-round); font-size: .82rem; padding: .32rem .85rem; border-radius: var(--r-pill); font-weight: 700; box-shadow: var(--sh-1); }
+  .chip.c1 { background: color-mix(in oklab, var(--amber) 24%, var(--paper)); color: #7a5410; }
+  .chip.c1::before { content: '● '; color: var(--amber-d); font-size: .72em; }
+  .chip.c2 { background: color-mix(in oklab, var(--scarlet) 15%, var(--paper)); color: var(--scarlet-d); }
+  .chip.c2::before { content: '● '; color: var(--scarlet); font-size: .72em; }
 
-  .cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.6rem; }
-  .cta .ar { transition: transform .2s var(--spring); }
+  .cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .cta .ar { transition: transform .2s var(--spring); margin-left: .15rem; }
   .btn:hover .ar { transform: translateX(4px); }
 
-  /* ---- 右：ビジュアル ---- */
-  .art-col { position: relative; min-height: 460px; }
-  .brush { position: absolute; border-radius: 46% 54% 40% 60% / 55% 45% 55% 45%; filter: blur(2px); z-index: 0; }
-  .brush.b1 { inset: 6% 2% 18% 10%; background: color-mix(in oklab, var(--amber) 60%, transparent); transform: rotate(-6deg); }
-  .brush.b2 { inset: 20% 14% 8% 2%; background: color-mix(in oklab, var(--ink) 26%, transparent); transform: rotate(5deg); }
+  /* ---- 右：コラージュ ---- */
+  .art-col { position: relative; min-height: clamp(420px, 40vw, 590px); margin-right: calc(50% - 50vw); }
+
+  .splash { position: absolute; z-index: 0; }
+  .splash path { stroke: none; }
+  .splash.amber { inset: -2% -8% 0% 4%; width: 104%; height: 102%; }
+  .splash.amber path { fill: var(--amber); opacity: .92; }
+  .splash.navy { inset: -4% -10% auto 34%; width: 72%; height: 52%; transform: rotate(6deg); }
+  .splash.navy path { fill: var(--ink); opacity: .2; }
+
+  .lines { position: absolute; top: 1.5%; right: 12%; width: 230px; height: 92px; z-index: 3; }
+  .lines path { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; opacity: .55; }
+
+  .cf { position: absolute; width: 13px; height: 13px; z-index: 4; border-radius: 2px; }
+  .cf.c1 { top: 5%; left: 18%; background: var(--scarlet); transform: rotate(20deg); }
+  .cf.c2 { top: 13%; left: 30%; background: var(--amber); transform: rotate(-14deg); width: 10px; height: 10px; }
+  .cf.c3 { top: 3%; right: 26%; background: var(--ink); transform: rotate(40deg); width: 9px; height: 9px; }
+  .cf.c4 { top: 34%; left: 8%; background: var(--amber-l); transform: rotate(10deg); }
+  .cf.c5 { bottom: 26%; right: 6%; background: var(--scarlet); transform: rotate(-28deg); width: 10px; height: 10px; }
+  .cf.c6 { bottom: 8%; left: 34%; background: var(--amber); transform: rotate(32deg); }
+  .cf.c7 { top: 48%; right: 2%; background: var(--ink); transform: rotate(-8deg); width: 8px; height: 8px; }
 
   .photo {
-    position: absolute; inset: 6% 4% 14% 18%; z-index: 1;
-    border-radius: 50% 46% 52% 48% / 52% 50% 50% 48%;
-    border: 4px solid var(--ink); overflow: hidden; background: var(--paper-3);
-    box-shadow: var(--sh-3);
+    position: absolute; inset: 7% 9% 13% 24%; z-index: 2;
+    border-radius: 48% 52% 44% 56% / 54% 46% 54% 46%;
+    overflow: hidden; background: var(--paper-3);
+    box-shadow: 0 18px 40px rgba(27,42,74,.22);
   }
   .photo img { width: 100%; height: 100%; object-fit: cover; }
 
-  .doodle { position: absolute; z-index: 2; font-family: var(--f-round); font-weight: 700; color: var(--ink); font-size: .85rem; }
-  .doodle.d-game { top: 6%; right: 4%; color: var(--amber-d); transform: rotate(4deg); }
-  .doodle.d-cg { top: 30%; left: -2%; color: var(--ink); transform: rotate(-6deg); }
-  .doodle.d-ip { bottom: 12%; right: 2%; color: var(--scarlet-d); font-size: .78rem; line-height: 1.1; text-align: right; }
+  .doodle { position: absolute; z-index: 3; color: var(--ink); font-size: 1.05rem; }
+  .doodle.d-game { top: 0; right: 28%; color: var(--scarlet-d); transform: rotate(3deg); }
+  .doodle .d-arrow { display: block; width: 46px; height: 20px; margin: 2px auto 0; }
+  .doodle .d-arrow path { fill: none; stroke: var(--scarlet-d); stroke-width: 2.2; stroke-linecap: round; }
+  .doodle.d-cg { top: 40%; left: 11%; transform: rotate(-8deg); font-size: 1.15rem; }
+  .doodle.d-ip { bottom: 4%; right: 5%; color: var(--ink); font-size: .98rem; line-height: 1.3; text-align: right; transform: rotate(2deg); }
 
   .pony {
-    position: absolute; bottom: 1%; left: 2%; width: 240px; z-index: 3;
-    transform-origin: 60% 90%;
-    animation: hoof .28s ease-in-out infinite;
-    filter: drop-shadow(3px 5px 4px rgba(27,42,74,.18));
+    position: absolute; bottom: 0; left: 1%; width: clamp(200px, 23vw, 320px); z-index: 5;
+    transform-origin: 55% 88%;
+    animation: gallop .48s ease-in-out infinite;
+    filter: drop-shadow(4px 7px 6px rgba(27,42,74,.24));
   }
   .pony img { width: 100%; height: auto; display: block; }
-  .pony .f2 { position: absolute; inset: 0; opacity: 0; }
-  /* 2枚を交互に切り替え＝ギャロップ */
-  .pony .f1 { animation: flipA .28s steps(1) infinite; }
-  .pony .f2 { animation: flipB .28s steps(1) infinite; }
+  /* 本物の2コマ（脚のばし↔脚たたみ）を交互に表示＝ギャロップ */
+  .pony .f2 { position: absolute; inset: 0; }
+  .pony .f1 { animation: flipA .48s steps(1) infinite; }
+  .pony .f2 { animation: flipB .48s steps(1) infinite; }
   @keyframes flipA { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
   @keyframes flipB { 0%, 49.9% { opacity: 0; } 50%, 100% { opacity: 1; } }
-  .pony::after { content: ''; position: absolute; left: -12px; bottom: 6px; width: 26px; height: 12px; border-radius: 50%; background: radial-gradient(circle, color-mix(in oklab, var(--amber) 45%, var(--paper)), transparent 70%); animation: dust .28s ease-out infinite; z-index: 2; }
-  @keyframes hoof { 0%,100% { transform: translateY(0) rotate(var(--lean, 0deg)); } 50% { transform: translateY(-5px) rotate(var(--lean, 0deg)); } }
-  @keyframes dust { 0% { opacity: .6; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.6) translateX(-10px); } }
+  @keyframes gallop {
+    0%, 100% { transform: translateY(0) rotate(calc(var(--lean, 0deg) - 1deg)); }
+    50%      { transform: translateY(-7px) rotate(calc(var(--lean, 0deg) + 1deg)); }
+  }
+  .pony::before, .pony::after {
+    content: ''; position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,252,244,.9), rgba(232,161,58,.35) 60%, transparent 72%);
+  }
+  .pony::before { left: -6%; bottom: 5%; width: 13%; height: 9%; animation: dust .62s ease-out infinite; }
+  .pony::after  { left: -11%; bottom: 11%; width: 9%; height: 6%; animation: dust .62s ease-out .2s infinite; }
+  @keyframes dust { 0% { opacity: .6; transform: scale(.5); } 100% { opacity: 0; transform: scale(1.5) translateX(-12px); } }
+
   .hello {
-    position: absolute; bottom: 40%; left: 4%; z-index: 4;
-    background: var(--card); border: 2px solid var(--ink); border-radius: 14px 14px 14px 3px;
-    padding: .35rem .8rem; font-family: var(--f-round); font-weight: 700; font-size: .95rem; box-shadow: var(--sh-2);
+    position: absolute; bottom: 34%; left: 6%; z-index: 6;
+    background: var(--card); border: 2.5px solid var(--ink); border-radius: 16px 16px 16px 4px;
+    padding: .4rem .85rem; font-size: 1rem; box-shadow: var(--sh-2);
     animation: floaty 3s ease-in-out infinite;
   }
-  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .hello::after { content: ''; position: absolute; left: 22px; bottom: -11px; border: 6px solid transparent; border-top: 8px solid var(--ink); }
+  @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(-2deg); } }
 
   /* ---- 下部ストリップ ---- */
-  .belt { margin-top: 2.2rem; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; }
-  .belt-label { font-family: var(--f-round); font-weight: 700; color: var(--scarlet-d); white-space: nowrap; }
-  .belt-label .bulb { filter: saturate(1.2); }
-  .strip { display: flex; gap: .7rem; overflow-x: auto; padding-bottom: .3rem; scrollbar-width: thin; }
+  .belt { margin-top: clamp(1.6rem, 4vw, 3rem); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(.8rem, 2vw, 1.4rem); }
+  .belt-label { position: relative; color: var(--scarlet-d); font-size: 1.08rem; white-space: nowrap; transform: rotate(-2deg); padding-right: 2.4rem; }
+  .b-arrow { position: absolute; right: 0; top: .4rem; width: 34px; height: 24px; }
+  .b-arrow path { fill: none; stroke: var(--scarlet-d); stroke-width: 2.2; stroke-linecap: round; }
+
+  .strip { display: flex; gap: .8rem; overflow-x: auto; padding: .3rem .1rem .5rem; scrollbar-width: thin; }
   .fcard {
-    flex: 0 0 auto; width: 150px; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md);
-    overflow: hidden; box-shadow: var(--sh-1); transition: transform .2s var(--spring), box-shadow .2s ease;
+    position: relative; flex: 0 0 auto; width: 168px;
+    background: var(--ink); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 6px 14px rgba(27,42,74,.24);
+    transition: transform .2s var(--spring), box-shadow .2s ease;
   }
-  .fcard:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: var(--sh-2); }
-  .fthumb { display: block; aspect-ratio: 16/10; background: var(--paper-3); }
-  .fthumb img { width: 100%; height: 100%; object-fit: cover; }
-  .flabel { display: flex; align-items: center; justify-content: space-between; font-family: var(--f-mono); font-size: .62rem; font-weight: 700; padding: .4rem .5rem; border-top: 3px solid var(--tag); }
+  .fcard:hover { transform: translateY(-7px) rotate(-1.2deg); box-shadow: 0 12px 22px rgba(27,42,74,.3); }
+  .flabel { display: block; font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em; color: #fff; padding: .5rem .7rem .35rem; }
+  .fthumb { display: block; aspect-ratio: 16/9; }
+  .fthumb img { width: 100%; height: 100%; object-fit: cover; opacity: .92; transition: transform .35s var(--ease); }
+  .fcard:hover .fthumb img { transform: scale(1.07); }
+  .fgo { position: absolute; right: .55rem; top: .38rem; color: var(--amber); font-weight: 900; font-size: .95rem; transition: transform .2s var(--spring); }
+  .fcard:hover .fgo { transform: translateX(3px); }
+  .fcard::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--tag); }
 
   .pin-note {
-    position: relative; flex: 0 0 auto; width: 150px; align-self: stretch;
-    background: var(--card); border: 1px solid var(--paper-3); border-radius: 4px; box-shadow: var(--sh-2);
-    padding: 1rem .8rem; transform: rotate(3deg); display: grid; place-items: center;
+    position: relative; flex: 0 0 auto; width: 176px; min-height: 128px; align-self: stretch;
+    background: #FFFDF6; border-radius: 4px; box-shadow: 3px 5px 12px rgba(27,42,74,.16);
+    padding: 1.1rem 1rem .9rem; transform: rotate(2.5deg);
   }
-  .pin-note p { font-family: var(--f-round); font-weight: 700; color: var(--ink); line-height: 1.5; }
-  .pin { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 16px; height: 16px; border-radius: 50%; background: var(--scarlet); box-shadow: 0 3px 5px rgba(0,0,0,.25), inset -2px -2px 3px var(--scarlet-d); }
-  .hanko-mini { position: absolute; right: 6px; bottom: 6px; width: 26px; height: 26px; display: grid; place-items: center; font-family: var(--f-round); font-weight: 700; font-size: .7rem; color: #fff; background: var(--scarlet); border-radius: 24% 26% 22% 28%; opacity: .9; }
+  .pin-note p { font-size: 1.08rem; color: var(--ink); line-height: 1.55; }
+  .pin { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); width: 17px; height: 17px; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #ff8f70, var(--scarlet) 60%, var(--scarlet-d)); box-shadow: 0 4px 6px rgba(0,0,0,.28); }
+  .hanko-mini { position: absolute; right: 10px; bottom: 10px; width: 30px; height: 30px; display: grid; place-items: center; font-family: var(--f-round); font-weight: 700; font-size: .82rem; color: #fff; background: var(--scarlet); border-radius: 50%; transform: rotate(-10deg); box-shadow: inset 0 0 0 2px rgba(255,255,255,.4); }
 
   /* ---- レスポンシブ ---- */
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     .grid { grid-template-columns: 1fr; }
-    .art-col { min-height: 380px; order: 2; }
+    .art-col { order: 2; min-height: 400px; margin-right: calc(0px - var(--gutter)); margin-left: calc(0px - var(--gutter)); }
+    .photo { inset: 4% 4% 12% 16%; }
     .belt { grid-template-columns: 1fr; }
-    .pin-note { justify-self: end; width: 160px; }
+    .pin-note { justify-self: end; }
   }
-  @media (max-width: 520px) {
-    .art-col { min-height: 320px; }
-    .pony { width: 165px; }
-    .hello { display: none; }
+  @media (max-width: 560px) {
+    .title { font-size: clamp(2.35rem, 11.5vw, 3rem); }
+    .art-col { min-height: 330px; }
+    .pony { width: 170px; }
+    .doodle.d-cg { display: none; }
+    .lines { width: 150px; }
   }
 </style>

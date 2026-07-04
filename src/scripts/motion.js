@@ -126,7 +126,7 @@ function initStamp() {
   const go = () => {
     stamp.classList.add('stamped');
     const c = centerOf(stamp);
-    burst(c.x, c.y, 24);
+    burst(c.x, c.y, 14);
   };
   setTimeout(go, 650);
 }

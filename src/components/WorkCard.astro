@@ -13,48 +13,113 @@ const external = href.startsWith('http');
   style={`--tag:${cat.color}`}
   {...(external ? { target: '_blank', rel: 'noopener' } : {})}
 >
-  <div class="media">
+  <div class={`media${work.thumb ? '' : ' empty'}`}>
     {work.thumb
       ? <img src={work.thumb} alt={work.title} loading="lazy" />
-      : <span class="noimg">🖼️ 準備中</span>}
+      : (
+        <span class="noimg" aria-hidden="true">
+          <img class="uma" src="/assets/mascot/logo3d.png" alt="" loading="lazy" />
+          <span class="note hand">いま準備中！</span>
+        </span>
+      )}
     {work.status && <span class="badge">{work.status}</span>}
-    {work.link?.startsWith('http') && <span class="ext">↗</span>}
+    {external && <span class="ext" aria-hidden="true">↗</span>}
   </div>
   <div class="body">
     <span class="tag">{cat.ja}</span>
     <h3>{work.title}</h3>
     <p>{work.summary}</p>
-    {work.tools && <span class="tools">{work.tools.slice(0, 3).join(' · ')}</span>}
+    {work.tools && (
+      <span class="tools"><i class="chip" aria-hidden="true"></i>{work.tools.slice(0, 3).join(' · ')}</span>
+    )}
   </div>
   <span class="peel" aria-hidden="true"></span>
 </a>
 
 <style>
+  /* v2 */
+  /* ---- 白カード＝紙が浮く（やわらかい影が基本・hoverで持ち上がる） ---- */
   .card {
-    position: relative; background: var(--card); border: 2px solid var(--ink);
-    border-radius: var(--r-md); overflow: hidden; box-shadow: var(--sh-2);
-    transition: transform .22s var(--spring), box-shadow .22s ease; display: flex; flex-direction: column;
+    position: relative; display: flex; flex-direction: column;
+    background: var(--card);
+    border: 1.5px solid color-mix(in oklab, var(--ink) 15%, transparent);
+    border-radius: var(--r-md); overflow: hidden;
+    box-shadow: 0 2px 5px rgba(27,42,74,.07), 0 8px 18px rgba(27,42,74,.06);
+    transition: transform .24s var(--spring), box-shadow .24s ease, border-color .2s ease;
   }
-  .card:hover { transform: translateY(-8px) rotate(-.8deg); box-shadow: var(--sh-3); }
-  .card:hover .peel { transform: scale(1); opacity: 1; }
-  .card::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--tag); z-index: 2; }
+  .card:hover {
+    transform: translateY(-8px) rotate(-1deg);
+    border-color: color-mix(in oklab, var(--ink) 38%, transparent);
+    box-shadow: 8px 14px 26px rgba(27,42,74,.16), 0 3px 6px rgba(27,42,74,.08);
+  }
+  /* 上辺＝分野色のライン */
+  .card::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--tag); z-index: 2; }
 
+  /* ---- メディア ---- */
   .media { position: relative; aspect-ratio: 16 / 10; background: var(--paper-3); overflow: hidden; display: grid; place-items: center; }
   .media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease); }
-  .card:hover .media img { transform: scale(1.06); }
-  .noimg { font-family: var(--f-round); font-weight: 700; color: var(--mut); }
-  .badge { position: absolute; left: .6rem; top: .6rem; font-family: var(--f-mono); font-size: .58rem; font-weight: 700; background: var(--ink); color: var(--paper); padding: .25rem .5rem; border-radius: var(--r-sm); }
-  .ext { position: absolute; right: .5rem; top: .5rem; width: 24px; height: 24px; display: grid; place-items: center; background: var(--amber); color: #3a2606; border-radius: 50%; font-weight: 900; font-size: .8rem; }
+  .card:hover .media > img { transform: scale(1.06); }
 
-  .body { padding: 1rem 1.1rem 1.2rem; flex: 1; }
-  .body h3 { font-size: 1.14rem; margin: .5rem 0 .4rem; line-height: 1.25; }
-  .body p { color: var(--mut); font-weight: 500; font-size: .9rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .tools { display: block; margin-top: .7rem; font-family: var(--f-mono); font-size: .62rem; color: var(--amber-d); }
-
-  .peel {
-    position: absolute; top: 0; right: 0; width: 34px; height: 34px; opacity: 0; transform: scale(.4);
-    background: linear-gradient(135deg, transparent 50%, color-mix(in oklab, var(--tag) 30%, var(--paper)) 50%);
-    border-bottom-left-radius: 8px; box-shadow: -3px 3px 6px rgba(27,42,74,.18);
-    transition: transform .22s var(--spring), opacity .2s ease; transform-origin: top right;
+  /* 準備中＝生成りの斜線＋うまくんの顔 */
+  .media.empty {
+    background: repeating-linear-gradient(-45deg, var(--paper-2) 0 12px, var(--paper-3) 12px 24px);
   }
+  .noimg { display: grid; place-items: center; gap: .15rem; padding: .6rem; }
+  .noimg .uma {
+    width: 58px; height: 58px; object-fit: contain;
+    filter: drop-shadow(3px 5px 5px rgba(27,42,74,.2));
+    transform-origin: 50% 90%;
+    transition: transform .3s var(--spring);
+  }
+  .card:hover .noimg .uma { transform: translateY(-5px) rotate(-6deg); }
+  .noimg .note { font-size: .92rem; color: var(--mut); transform: rotate(-2deg); }
+
+  /* ステータス＝シール風バッジ */
+  .badge {
+    position: absolute; left: .6rem; top: .8rem; z-index: 2;
+    font-family: var(--f-round); font-weight: 700; font-size: .68rem; line-height: 1;
+    background: var(--card); color: var(--ink);
+    border: 1.5px solid var(--ink); border-radius: var(--r-pill);
+    padding: .28rem .6rem; transform: rotate(-2deg);
+    box-shadow: 1px 2px 4px rgba(27,42,74,.18);
+  }
+  .badge::before { content: '● '; color: var(--scarlet); font-size: .74em; }
+
+  .ext {
+    position: absolute; right: .55rem; top: .75rem; z-index: 2;
+    width: 26px; height: 26px; display: grid; place-items: center;
+    background: var(--amber); color: #3a2606; border-radius: 50%;
+    font-weight: 900; font-size: .82rem;
+    box-shadow: 0 2px 0 var(--amber-d);
+    transition: transform .2s var(--spring);
+  }
+  .card:hover .ext { transform: translate(2px, -2px) scale(1.08); }
+
+  /* ---- 本文（タグ → 題 → 説明 → ツールの順で階層をはっきり） ---- */
+  .body { display: flex; flex-direction: column; flex: 1; padding: .95rem 1.1rem 1.05rem; }
+  .body .tag { align-self: flex-start; }
+  .body h3 { font-size: 1.13rem; margin: .55rem 0 .35rem; line-height: 1.3; }
+  .body p {
+    color: var(--mut); font-weight: 500; font-size: .9rem; line-height: 1.65;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    margin-bottom: .8rem;
+  }
+  .tools {
+    margin-top: auto; padding-top: .6rem;
+    border-top: 1.5px dashed color-mix(in oklab, var(--ink) 16%, transparent);
+    display: flex; align-items: center; gap: .45rem;
+    font-family: var(--f-mono); font-size: .64rem; font-weight: 500;
+    color: var(--amber-d); letter-spacing: .02em;
+  }
+  .tools .chip { flex: 0 0 auto; width: 7px; height: 7px; border-radius: 2px; background: var(--amber); transform: rotate(18deg); }
+
+  /* ---- hoverで現れるシール角（分野色） ---- */
+  .peel {
+    position: absolute; top: 0; right: 0; z-index: 3; width: 36px; height: 36px;
+    opacity: 0; transform: scale(.4); transform-origin: top right;
+    background: linear-gradient(135deg, transparent 50%, color-mix(in oklab, var(--tag) 32%, var(--paper)) 50%);
+    border-bottom-left-radius: 9px; box-shadow: -3px 3px 6px rgba(27,42,74,.18);
+    transition: transform .22s var(--spring), opacity .2s ease;
+  }
+  .card:hover .peel { transform: scale(1); opacity: 1; }
 </style>
