@@ -50,7 +50,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
 
   /* --- ブランド（馬＋名前） --- */
-  .brand { display: flex; align-items: center; gap: .6rem; }
+  .brand { display: flex; align-items: center; gap: .6rem; position: relative; z-index: 2; }
   .horse {
     width: 48px; height: 48px; flex: 0 0 auto; object-fit: contain;
     transform-origin: 70% 80%;
@@ -72,7 +72,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
 
   /* --- リンク --- */
-  .links { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
+  .links { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; position: relative; z-index: 2; }
   .lk { position: relative; padding: .2rem .15rem .35rem; font-weight: 700; }
   .lk .ja { font-size: 1.04rem; }
   .lk .en { display: block; font-family: var(--f-mono); font-size: .54rem; font-weight: 500; letter-spacing: .14em; color: var(--mut); }
@@ -93,8 +93,8 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .call .wave { display: inline-block; transform-origin: 70% 80%; animation: wave 2.6s ease-in-out infinite; }
   @keyframes wave { 0%,88%,100% { transform: rotate(0); } 92% { transform: rotate(18deg); } 96% { transform: rotate(-8deg); } }
 
-  /* --- 芯ライン（ビール充填） --- */
-  .spine { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: color-mix(in oklab, var(--amber) 24%, var(--paper)); }
+  /* --- 芯ライン（ビール充填）。うまくんはロゴ/ボタンの背後を走る --- */
+  .spine { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: color-mix(in oklab, var(--amber) 24%, var(--paper)); z-index: 1; }
   .spine .fill {
     position: absolute; inset: 0; transform-origin: left; transform: scaleX(var(--p, 0));
     background: linear-gradient(90deg, var(--amber-d), var(--amber));
@@ -121,6 +121,9 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     .links { gap: 1rem; }
     .name small { display: none; }
     .horse { width: 38px; height: 38px; }
+  }
+  @media (max-width: 720px) {
+    .spine-uma { width: 24px; }               /* モバイルはさらに小さく＝重なり回避 */
   }
   @media (max-width: 520px) {
     .bar { gap: .6rem; padding-inline: .8rem; }
