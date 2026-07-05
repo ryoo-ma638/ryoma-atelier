@@ -4,5 +4,3 @@ dist/
 .DS_Store
 .playwright-mcp/
 
-# 開発用スクショ補助（デプロイ対象外）
-shot.mjs
