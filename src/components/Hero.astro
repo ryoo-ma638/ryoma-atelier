@@ -1,17 +1,18 @@
 ---
 import { works, categoryLabels } from '../data/works.ts';
 
-// 下部「つくってるもの」ストリップ：分野ごとの代表サムネ＋短いENラベル
-const stripOrder = ['cg', 'imaging', 'web', 'video', 'planning', 'graphic'] as const;
+// 下部「つくってるもの」ストリップ：7分野すべて（日本語＋件数＝分野の横断を一目で）
+const stripOrder = ['web', 'imaging', 'cg', 'video', 'planning', 'graphic', 'sound'] as const;
 const SHORT_EN: Record<string, string> = {
-  cg: 'CG', imaging: 'IMAGE', web: 'APP', video: 'MOVIE', planning: 'PLAN', graphic: 'DESIGN',
+  web: 'APP', imaging: 'IMAGE', cg: 'CG', video: 'MOVIE', planning: 'PLAN', graphic: 'DESIGN', sound: 'SOUND',
 };
 const strip = stripOrder
   .map((c) => {
     const rep = works.find((w) => w.category === c && w.thumb);
-    return rep ? { cat: c, en: SHORT_EN[c], color: categoryLabels[c].color, thumb: rep.thumb } : null;
+    const n = works.filter((w) => w.category === c).length;
+    return rep ? { cat: c, en: SHORT_EN[c], ja: categoryLabels[c].ja, n, color: categoryLabels[c].color, thumb: rep.thumb } : null;
   })
-  .filter(Boolean) as { cat: string; en: string; color: string; thumb: string }[];
+  .filter(Boolean) as { cat: string; en: string; ja: string; n: number; color: string; thumb: string }[];
 ---
 <section class="hero" id="top">
   <div class="wrap grid">
@@ -69,9 +70,9 @@ const strip = stripOrder
       <span class="cf c1"></span><span class="cf c2"></span><span class="cf c3"></span>
       <span class="cf c4"></span><span class="cf c5"></span><span class="cf c6"></span><span class="cf c7"></span>
 
-      <!-- 本人写真（イメージ・実写差し替え可） -->
+      <!-- 本人写真（実写） -->
       <div class="photo" data-px="7">
-        <img src="/assets/photo/hero.jpg" alt="" />
+        <img src="/assets/about/portrait.jpg" alt="大崎稜馬のポートレート" />
       </div>
 
       <!-- 手書き落書きラベル -->
@@ -100,6 +101,7 @@ const strip = stripOrder
         <a class="fcard" href={`/works#cat-${s.cat}`} style={`--tag:${s.color}`}>
           <span class="flabel">{s.en}</span>
           <span class="fthumb"><img src={s.thumb} alt="" loading="lazy" /></span>
+          <span class="fja">{s.ja}<b>{s.n}</b></span>
           <span class="fgo">→</span>
         </a>
       ))}
@@ -194,7 +196,7 @@ const strip = stripOrder
     overflow: hidden; background: var(--paper-3);
     box-shadow: 0 18px 40px rgba(27,42,74,.22);
   }
-  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
 
   .doodle { position: absolute; z-index: 3; color: var(--ink); font-size: 1.05rem; }
   .doodle.d-game { top: 0; right: 28%; color: var(--scarlet-d); transform: rotate(3deg); }
@@ -254,6 +256,8 @@ const strip = stripOrder
   .flabel { display: block; font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em; color: #fff; padding: .5rem .7rem .35rem; }
   .fthumb { display: block; aspect-ratio: 16/9; }
   .fthumb img { width: 100%; height: 100%; object-fit: cover; opacity: .92; transition: transform .35s var(--ease); }
+  .fja { display: flex; align-items: center; justify-content: space-between; gap: .4rem; color: var(--paper); font-size: .68rem; font-weight: 700; padding: .35rem .7rem .45rem; }
+  .fja b { font-family: var(--f-mono); font-size: .72rem; color: var(--amber-l); }
   .fcard:hover .fthumb img { transform: scale(1.07); }
   .fgo { position: absolute; right: .55rem; top: .38rem; color: var(--amber); font-weight: 900; font-size: .95rem; transition: transform .2s var(--spring); }
   .fcard:hover .fgo { transform: translateX(3px); }

@@ -2,16 +2,125 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import MakerStrip from '../components/MakerStrip.astro';
 import WorksPreview from '../components/WorksPreview.astro';
 import Footer from '../components/Footer.astro';
+import { works, categoryLabels } from '../data/works.ts';
+
+// 「活動と挑戦」＝つくる以外の幅（すべて実績ベース）。Vol.1の内容を継承。
+const activities = [
+  { c: 'var(--c-violet)', k: '課外', t: 'ビール売り子', d: 'バンテリンドームナゴヤで、ビールの売り子として活動。球場の時間を、もっと楽しく。', link: '/works/uriko-site', linkLabel: '応援サイトの話' },
+  { c: 'var(--c-blue)', k: '役割', t: '学生団体 CEED 副部長', d: '60名規模の運営・新歓・イベント企画。「誰も置いてけぼりにしない」を大切に。', link: '/ceed', linkLabel: 'CEEDの活動へ' },
+  { c: 'var(--c-green)', k: '出展', t: '東京ゲームショウ ほか', d: '『虫歯アニマルズ』でTGS・ゲームマーケット・安城Eフェスに出展。', link: '/works/mushiba-animals', linkLabel: '作品を見る' },
+  { c: 'var(--c-yellow)', k: 'ハッカソン', t: 'ハッカソンで企業賞', d: 'シスハックで割り勘アプリ『Settlo』を開発し、企業賞を受賞した。', link: '/works/settlo', linkLabel: '作品を見る' },
+  { c: 'var(--c-orange)', k: '研究', t: '学会発表に挑戦', d: '水野慎士研究室での研究を、外の場へ。いま挑戦の途中。' },
+  { c: 'var(--c-red)', k: '進学', t: '大学院 進学を準備', d: 'CG・画像処理・インタラクションを、もっと深くへ。' },
+];
+const fieldCount = Object.keys(categoryLabels).length;
 ---
 <Base>
   <Nav />
   <main id="main">
     <Hero />
-    <MakerStrip />
+
+    <!-- ===== 代表作 ===== -->
     <WorksPreview />
+
+    <!-- ===== 活動と挑戦 ===== -->
+    <section class="acts-sec section" id="activity">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>02 — 活動と挑戦</p>
+        <h2 class="big reveal d1">色々なことに、<span class="am">手を出してきた。</span></h2>
+        <p class="lead reveal d2">つくることの外側でも動いてきた。売り場、運営、出展、ハッカソン、そして研究へ。</p>
+
+        <div class="acts">
+          {activities.map((a, i) => {
+            const Tag = a.link ? 'a' : 'div';
+            return (
+              <Tag class={`act reveal d${(i % 3) + 1}${a.link ? ' link' : ''}`} style={`--c:${a.c}`} href={a.link ?? undefined}>
+                <span class="no">{String(i + 1).padStart(2, '0')}</span>
+                <span class="k">{a.k}</span>
+                <h3>{a.t}</h3>
+                <p>{a.d}</p>
+                {a.link && <span class="go">{a.linkLabel} →</span>}
+              </Tag>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== About ティザー ===== -->
+    <section class="teaser section" id="about">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>03 — ぼくのこと</p>
+        <h2 class="big reveal d1">手を動かして、<span class="am">学ぶ。
+          <svg class="draw-line t-under" viewBox="0 0 240 18" preserveAspectRatio="none" aria-hidden="true" style="--len:260">
+            <path d="M6,12 C55,4 110,15 160,8 C200,3 224,12 234,7" />
+          </svg>
+        </span></h2>
+        <p class="lead reveal d2">
+          水野慎士研究室での CG・画像処理を軸に、グラフィック・映像・Web・企画まで——
+          興味の向くままに手を出しながら、表現の幅を広げています。<br />
+          作品も、ビールも、<b>自分の手で人に手渡す</b>のが好き。次は、学会発表と大学院へ。
+        </p>
+
+        <ul class="stats reveal d2" aria-label="数字で見る">
+          <li><b>{fieldCount}</b><span>領域</span></li>
+          <li><b>{works.length}</b><span>作品</span></li>
+          <li><b>3</b><span>出展イベント</span></li>
+          <li><b>60<small>名</small></b><span>CEEDのなかま</span></li>
+        </ul>
+
+        <div class="t-foot reveal d3">
+          <ul class="facts">
+            <li>愛知工業大学 情報科学部 情報科学科 メディア情報専攻・3年</li>
+            <li>水野慎士研究室（CG・画像処理・インタラクション）</li>
+            <li>学生団体 CEED 副部長／バンテリンドームのビール売り子</li>
+          </ul>
+          <div class="t-cta">
+            <img class="uma" src="/assets/mascot/handoff.png" alt="" loading="lazy" />
+            <a class="btn" href="/about">プロフィールを見る →</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <Footer />
 </Base>
+
+<style>
+  .big .am { color: var(--amber-d); position: relative; display: inline-block; }
+
+  /* ---- 活動と挑戦 ---- */
+  .acts { margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+  .act {
+    position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md);
+    padding: 1.2rem 1.3rem 1.1rem; box-shadow: var(--sh-1); overflow: hidden;
+    transition: transform .2s var(--spring), box-shadow .2s ease;
+  }
+  .act::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--c); }
+  .act.link:hover { transform: translateY(-6px) rotate(-.5deg); box-shadow: var(--sh-2); }
+  .act .no { position: absolute; right: .9rem; top: .6rem; font-family: var(--f-mono); font-weight: 700; font-size: 1.2rem; color: color-mix(in oklab, var(--c) 34%, transparent); }
+  .act .k { display: inline-block; font-family: var(--f-mono); font-size: .6rem; font-weight: 700; letter-spacing: .12em; color: color-mix(in oklab, var(--c) 75%, var(--ink)); background: color-mix(in oklab, var(--c) 14%, var(--paper)); padding: .2rem .5rem; border-radius: var(--r-sm); }
+  .act h3 { font-size: 1.18rem; margin: .55rem 0 .35rem; }
+  .act p { color: var(--mut); font-weight: 500; font-size: .9rem; line-height: 1.8; }
+  .act .go { display: inline-block; margin-top: .6rem; font-family: var(--f-round); font-weight: 700; font-size: .82rem; color: var(--scarlet-d); }
+
+  /* ---- About ティザー ---- */
+  .teaser { background: color-mix(in oklab, var(--amber) 7%, var(--paper)); border-block: 2px solid color-mix(in oklab, var(--amber) 26%, var(--paper)); }
+  .t-under { position: absolute; left: 0; bottom: -.14em; width: 100%; height: .2em; overflow: visible; }
+  .t-under path { fill: none; stroke: var(--amber); stroke-width: 7; stroke-linecap: round; opacity: .9; }
+  .teaser .lead b { color: var(--ink); border-bottom: 3px solid var(--amber); font-weight: 700; }
+
+  .stats { list-style: none; display: flex; gap: clamp(1.2rem, 4vw, 3rem); flex-wrap: wrap; margin-top: 1.8rem; }
+  .stats b { display: block; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 900; color: var(--ink); line-height: 1; }
+  .stats b small { font-size: .45em; }
+  .stats span { font-family: var(--f-mono); font-size: .66rem; font-weight: 700; color: var(--amber-d); letter-spacing: .1em; }
+
+  .t-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.8rem; }
+  .facts { list-style: none; display: grid; gap: .3rem; }
+  .facts li { font-weight: 700; font-size: .92rem; }
+  .facts li::before { content: '● '; color: var(--amber); font-size: .7em; vertical-align: 2px; }
+  .t-cta { display: flex; align-items: center; gap: .8rem; }
+  .t-cta .uma { width: 74px; filter: drop-shadow(2px 4px 4px rgba(27,42,74,.2)); }
+</style>

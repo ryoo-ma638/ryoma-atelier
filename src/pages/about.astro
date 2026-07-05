@@ -18,7 +18,60 @@ const facts = [
 const skills = [
   { g: 'つくる（CG・画像処理）', icon: '🖥️', color: 'var(--c-violet)', items: ['C++ / OpenGL', 'OpenCV', 'Maya', 'LiDAR / センサー'] },
   { g: 'つくる（Web・アプリ）', icon: '📱', color: 'var(--c-blue)', items: ['Astro / TypeScript', 'HTML / CSS / JS', 'Firebase', 'Vercel'] },
-  { g: 'つたえる（企画・発表）', icon: '📣', color: 'var(--c-green)', items: ['スライド制作', 'イベント企画', 'グラフィック / ロゴ'] },
+  { g: 'えがく・うつす', icon: '🎨', color: 'var(--c-red)', items: ['Illustrator', 'Photoshop', 'Premiere Pro', 'ロゴ・ポスター'] },
+  { g: 'つたえる（企画・発表）', icon: '📣', color: 'var(--c-green)', items: ['スライド制作', 'イベント企画', '発表・プレゼン'] },
+];
+
+// これまでの話（2006→これから）。ドットの色＝出せる色が増えていく。※Vol.1から継承（事実）
+const timeline = [
+  { num: '2006', tag: '誕生', title: '名古屋に生まれる', text: '1月1日、名古屋市で生まれる。', c: 'var(--c-violet)' },
+  { num: '2012', tag: '小学校時代', title: 'ムードメーカー、そして児童会長', text: 'クラスを明るくする盛り上げ役。児童会長を務め、人をまとめ、場をつくる楽しさを知る。', c: 'var(--c-blue)' },
+  { num: '2018', tag: '中学校時代', title: '野球と、生徒会長', text: '野球チームに所属。生徒会長として学校を盛り上げ、リーダーとしての土台をつくる。', c: 'var(--c-cyan)' },
+  { num: '2021', tag: '高校時代', title: '学業に励んだ3年間', text: '進路を見据えながら、3年間しっかりと学業に打ち込む。', c: 'var(--c-green)' },
+  { num: '2024', tag: '大学入学', title: '愛知工業大学 情報科学部へ', text: '情報科学部に入学（コンピュータシステム専攻）。', c: 'var(--c-yellow)' },
+  { num: '2025', tag: '転機', title: '転専攻、そしてCEED', text: 'ものづくりへの興味から、メディア情報専攻へ転専攻。マルチクリエイティブサークルCEEDに所属する。', c: 'var(--c-orange)' },
+  { num: '2026', tag: '現在', title: '研究室と、副部長', text: '水野慎士研究室（CGメディア）でCG・画像処理を専門に。CEED副部長として60名規模のサークル運営を支えている。', c: 'var(--c-red)' },
+  { num: 'これから', tag: 'FUTURE', title: 'つくって、手渡す。', text: 'いろんなことに挑戦したい。人生は一度きりだから、後悔のないよう、たくさんの壁を越えていく。', c: 'var(--amber-d)', future: true },
+];
+
+// 信条（座右の銘・尊敬する人・原点・流儀）— すべて本人の言葉
+const motto = { word: '「謙虚」', reason: '中学の野球部時代に、繰り返し言われてきた言葉。尊敬する大先輩・栗林良吏選手（広島東洋カープ）が大切にしている言葉でもある。' };
+const credo = [
+  { tag: '尊敬する人', title: '戸塚優斗選手（スノーボード）', text: '2026年の冬季オリンピック金メダリスト。怪我を乗り越えて挑み続けるその姿に、勇気をもらった。自分も頑張ろう、と思える存在。' },
+  { tag: 'ものづくりの原点', title: '「やりたい」に、突き進む', text: '「自分がやりたい」という気持ちに、ただ突き進んできた。その積み重ねが、今の自分をつくっている。' },
+  { tag: '制作の流儀', title: '満足するまで、諦めない', text: '自分を、作品を客観視する。厳しい評価を受け止めてから、納得のいくものに仕上がるまで徹底的に。最後は根気と、根性。' },
+];
+
+// 一問一答（人となり）
+const qa = [
+  { q: '一言で言うと', a: '真面目バカ。' },
+  { q: '好きな映画', a: '『スター・ウォーズ』『バック・トゥ・ザ・フューチャー』。感性に、新しい気づきとひらめきをくれた。' },
+  { q: '好きなドラマ', a: '『ROOKIES（ルーキーズ）』。' },
+  { q: '中日の推し', a: '捕手・加藤匠馬選手。かつては堂上直倫選手。' },
+  { q: '推しのきっかけ', a: 'TBS『ラヴィット！』で弓木奈於さんの面白さと可愛らしさに惹かれ、乃木坂46の虜に。' },
+  { q: '休日', a: '寝る。推し活。新しいことに挑戦する。つくりたいものをつくる。' },
+  { q: '好きな食べ物', a: '餃子・お寿司・焼肉。' },
+  { q: '落ち着く場所', a: '家。' },
+];
+
+// 取扱説明書（友人の評価より）
+const traits = [
+  { t: '好きなものに一直線', d: '「好き」と決めたものに、最上級の熱を注ぐ。', c: 'var(--c-violet)' },
+  { t: '行動力のかたまり', d: '飛び込む勇気が強い。転専攻でも、友達をつくってやり切る。', c: 'var(--c-blue)' },
+  { t: 'こだわりが強い', d: '納得いくまで加筆・修正。自分のセンスと価値観で、ものをつくる。', c: 'var(--c-cyan)' },
+  { t: '“見せるもの”で輝く', d: '人に見せる制作になると、本気のギアが入る。実際、選ばれることも多い。', c: 'var(--c-green)' },
+  { t: '裏表がない', d: '喜怒哀楽が全部、顔に出る。リアクションが大きくて面白い。', c: 'var(--c-yellow)' },
+  { t: '猪突猛進', d: '関わることに全力。一生懸命で、元気いっぱい。', c: 'var(--c-orange)' },
+  { t: '基本、やさしい', d: '頼まれごとは、大抵引き受ける。', c: 'var(--c-red)' },
+  { t: '人懐っこい', d: 'すぐ人に近づいて話しかける。元気な犬みたい。', c: 'var(--c-violet)' },
+];
+
+// 主な実績（すべて事実・ガクチカ準拠）
+const highlights = [
+  { n: '60名', l: '規模のサークル', d: 'CEED副部長として「誰も置いてけぼりにしない」運営を支え、サークルは60名規模のコミュニティに成長。', href: '/ceed' },
+  { n: '企業賞', l: 'ハッカソン', d: 'シスハックで割り勘アプリ「Settlo」を開発し、企業賞を受賞。', href: '/works/settlo' },
+  { n: '出展', l: 'TGS ほか', d: '体感型ゲーム「虫歯アニマルズ」をデザイン・造形で担当。東京ゲームショウ・ゲームマーケット・安城Eフェスで出展。', href: '/works/mushiba-animals' },
+  { n: '接客', l: 'ビール売り子', d: 'バンテリンドームナゴヤで、ビールの売り子として活動。「応援したくなる接客」を工夫している。', href: '/works/uriko-site' },
 ];
 ---
 <Base title="ぼく ― 稜馬のアトリエ" description="大崎稜馬について。つくる人で、バンテリンドームのビール売り子。諦めずに、あたたかい作品をつくります。">
@@ -34,25 +87,31 @@ const skills = [
               <path d="M6,12 C70,4 130,16 190,9 C240,3 300,14 334,7" />
             </svg>
           </span></h1>
+          <p class="arole">
+            大崎稜馬（おおさき りょうま）。<br />
+            愛知工業大学 情報科学部 情報科学科 メディア情報専攻／<b>水野慎士研究室</b>。<br />
+            CG・画像処理・Web・映像・グラフィック・企画を横断してつくっています。
+          </p>
           <p class="alead">
-            大崎稜馬です。愛知工業大学でCGと画像処理をつくってる3年生。<br />
-            「これだ」と思ったら、動くまで諦めません。<br />
-            <b>作品も、ビールも、自分の手で人に手渡す</b>のが好きです。
+            ひとつの専門に絞らず、面白いと思ったものに片っ端から手を出してきました。
+            <b>手を広げるほど、出せる色が増えていく</b>——そう信じて、つくり続けています。<br />
+            「これだ」と思ったら、動くまで諦めません。
+            <span class="warm">作品も、ビールも、自分の手で人に手渡すのが好きです。</span>
           </p>
         </div>
 
-        <!-- 案内役うまくん（琥珀スプラッシュ＋紙吹雪） -->
-        <div class="portrait" aria-hidden="false">
+        <!-- 本人の実写＋うまくん -->
+        <div class="portrait">
           <svg class="p-splash" viewBox="0 0 640 560" preserveAspectRatio="none" aria-hidden="true">
             <path d="M120,540 C40,470 60,380 140,330 C90,260 130,160 230,130 C250,60 350,20 440,50 C520,10 610,60 620,150 C660,240 600,330 520,360 C520,440 440,510 340,500 C270,560 170,580 120,540 Z" />
-          </svg>
-          <svg class="p-swoosh" viewBox="0 0 600 500" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M30,470 L200,300 C280,215 380,120 470,60 L575,8 C592,0 604,16 592,30 L470,170 C380,270 260,380 140,465 L55,498 C36,506 16,486 30,470 Z" />
           </svg>
           <span class="cf c1" aria-hidden="true"></span><span class="cf c2" aria-hidden="true"></span>
           <span class="cf c3" aria-hidden="true"></span><span class="cf c4" aria-hidden="true"></span>
           <span class="cf c5" aria-hidden="true"></span>
-          <img class="avatar" src="/assets/mascot/wave.png" alt="手を振る案内役のうまくん" data-confetti-click="30" />
+          <figure class="p-photo">
+            <img src="/assets/about/portrait.jpg" alt="大崎稜馬のポートレート" data-gallery='["/assets/about/portrait.jpg"]' data-caption="大崎 稜馬 — Osaki Ryoma" />
+          </figure>
+          <img class="avatar-mini" src="/assets/mascot/wave.png" alt="" aria-hidden="true" data-confetti-click="30" />
           <span class="p-hello hand">ようこそ！</span>
           <span class="hanko-mini" aria-hidden="true">馬</span>
         </div>
@@ -96,10 +155,54 @@ const skills = [
       </div>
     </section>
 
+    <!-- ===== これまでの、話。（年表） ===== -->
+    <section class="section tl-sec">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>02 — これまでの、話。</p>
+        <h2 class="big reveal d1">名古屋のムードメーカーから、<span class="am">つくる人へ。</span></h2>
+        <p class="lead reveal d2">出せる色は、すこしずつ増えてきた。</p>
+        <ol class="tl">
+          {timeline.map((t, i) => (
+            <li class={`tl-item reveal d${(i % 3) + 1}${t.future ? ' future' : ''}`} style={`--c:${t.c}`}>
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-num">{t.num}</span>
+              <div class="tl-body">
+                <span class="tl-tag">{t.tag}</span>
+                <h3>{t.title}</h3>
+                <p>{t.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== 信条 ===== -->
+    <section class="section credo-sec">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>03 — 信条</p>
+        <div class="motto reveal d1">
+          <span class="tape" aria-hidden="true"></span>
+          <span class="m-label hand">座右の銘</span>
+          <p class="m-word">{motto.word}</p>
+          <p class="m-reason">{motto.reason}</p>
+        </div>
+        <div class="credo-grid">
+          {credo.map((c, i) => (
+            <article class={`credo reveal d${i + 1}`}>
+              <span class="c-tag">{c.tag}</span>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- ===== 諦めなかった一本（鎌ゲーム） ===== -->
     <section class="section story">
       <div class="wrap">
-        <p class="eyebrow reveal"><span class="dot"></span>02 — 諦めなかった一本</p>
+        <p class="eyebrow reveal"><span class="dot"></span>04 — 諦めなかった一本</p>
         <h2 class="big reveal d1">動かなかった。<span class="am">だから、作り直した。
           <svg class="draw-line s-under" viewBox="0 0 340 18" preserveAspectRatio="none" aria-hidden="true" style="--len:360">
             <path d="M6,12 C70,5 130,15 190,8 C240,4 300,13 334,6" />
@@ -140,6 +243,23 @@ const skills = [
       </div>
     </section>
 
+    <!-- ===== 主な実績 ===== -->
+    <section class="section hl-sec">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>05 — 主な実績</p>
+        <div class="hls">
+          {highlights.map((h, i) => (
+            <a class={`hl reveal d${(i % 4) + 1}`} href={h.href}>
+              <span class="hl-n">{h.n}</span>
+              <span class="hl-l">{h.l}</span>
+              <p>{h.d}</p>
+              <span class="hl-go">くわしく →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- ===== 売り子 ===== -->
     <section class="section uriko">
       <div class="wrap uriko-grid">
@@ -153,7 +273,7 @@ const skills = [
           <img class="cheers" src="/assets/mascot/cheers.png" alt="" aria-hidden="true" />
         </div>
         <div>
-          <p class="eyebrow reveal"><span class="dot"></span>03 — もう一つの現場</p>
+          <p class="eyebrow reveal"><span class="dot"></span>06 — もう一つの現場</p>
           <h2 class="big reveal d1">ドームで、<span class="am">まっすぐ売る。</span></h2>
           <p class="lead reveal d2">バンテリンドームのビール売り子。ただ売るんじゃなくて、自分をプロデュースして、笑顔と一緒に手渡す。人に届けることの楽しさは、ものづくりと地続きです。</p>
           <p class="u-chips reveal d3">
@@ -168,10 +288,73 @@ const skills = [
     <!-- ===== 売り子カレンダー ===== -->
     <Calendar />
 
+    <!-- ===== つくる以外の、わたし。 ===== -->
+    <section class="section beyond">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>07 — つくる以外の、わたし。</p>
+        <h2 class="big reveal d1">つくる原動力は、<span class="am">夢中になれる「好き」。</span></h2>
+        <p class="lead reveal d2">盛り上げ役の血は、現場でも変わりません。</p>
+
+        <div class="pcards">
+          <figure class="pcard reveal d1">
+            <span class="tape" aria-hidden="true"></span>
+            <button class="pc-media" type="button" data-gallery='["/assets/about/baseball.jpg"]' data-caption="バンテリンドームナゴヤにて — 中日ドラゴンズを応援。">
+              <img src="/assets/about/baseball.jpg" alt="バンテリンドームで中日ドラゴンズを応援する大崎稜馬" loading="lazy" />
+              <span class="pc-chip">⚾ 野球観戦</span>
+            </button>
+            <figcaption>
+              <h3>中日ドラゴンズと、バンテリンドーム</h3>
+              <p>生まれも育ちも名古屋。中日ドラゴンズのファンとして球場へ。推しは捕手の加藤匠馬選手（かつては堂上直倫選手）。スタンドで浴びる熱気が、明日への活力です。</p>
+            </figcaption>
+          </figure>
+
+          <figure class="pcard reveal d2">
+            <span class="tape t2" aria-hidden="true"></span>
+            <button class="pc-media" type="button" data-gallery='["/assets/about/oshikatsu.jpg"]' data-caption="14th YEAR BIRTHDAY LIVE — 弓木奈於さんを応援。">
+              <img src="/assets/about/oshikatsu.jpg" alt="ライブ会場でタオルを掲げて推し活をする大崎稜馬" loading="lazy" />
+              <span class="pc-chip">💜 推し活</span>
+            </button>
+            <figcaption>
+              <h3>乃木坂46・弓木奈於さんの応援</h3>
+              <p>『ラヴィット！』をきっかけに乃木坂46の虜に。応援する熱が高じて、ファンサイト「YUMIKI WORLD」を自作するほど。“好き”が、そのまま制作の原動力になりました。</p>
+              <a class="pc-link" href="/works/yumiki-world">YUMIKI WORLD の話 →</a>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== もっと、知る。（一問一答＋取扱説明書） ===== -->
+    <section class="section more">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>08 — もっと、知る。</p>
+
+        <h3 class="mini-head hand reveal">一問一答！</h3>
+        <div class="qa">
+          {qa.map((x, i) => (
+            <div class={`qa-item reveal d${(i % 4) + 1}`}>
+              <span class="q">{x.q}</span>
+              <span class="a">{x.a}</span>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="mini-head hand reveal">ぼくの取扱説明書（友人談）</h3>
+        <div class="traits">
+          {traits.map((t, i) => (
+            <div class={`trait reveal d${(i % 4) + 1}`} style={`--c:${t.c}`}>
+              <h4>{t.t}</h4>
+              <p>{t.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- ===== できること ===== -->
     <section class="section skills">
       <div class="wrap">
-        <p class="eyebrow reveal"><span class="dot"></span>04 — できること</p>
+        <p class="eyebrow reveal"><span class="dot"></span>09 — できること</p>
         <div class="skill-grid">
           {skills.map((s, i) => (
             <div class={`skill reveal d${i + 1}`} style={`--tag:${s.color}`}>
@@ -215,12 +398,23 @@ const skills = [
   .p-splash path { fill: var(--amber); opacity: .9; }
   .p-swoosh { position: absolute; inset: -6% auto auto 58%; width: 42%; height: 30%; transform: rotate(14deg); }
   .p-swoosh path { fill: var(--ink); opacity: .13; }
-  .avatar {
-    position: relative; z-index: 2; width: min(72%, 330px);
+  /* 本人の実写（ブロブ型）＋小さなうまくん */
+  .p-photo {
+    position: relative; z-index: 2; width: min(78%, 350px); margin: 0;
+    border-radius: 48% 52% 45% 55% / 54% 46% 54% 46%;
+    overflow: hidden; border: 4px solid var(--ink); box-shadow: 0 16px 36px rgba(27,42,74,.24);
+    cursor: zoom-in;
+  }
+  .p-photo img { width: 100%; height: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+  .avatar-mini {
+    position: absolute; z-index: 3; right: 2%; bottom: -2%; width: clamp(90px, 10vw, 130px);
     filter: drop-shadow(3px 5px 5px rgba(27,42,74,.2));
     animation: bob 3.2s ease-in-out infinite;
   }
   @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .arole { margin-top: 1.1rem; font-weight: 700; font-size: .95rem; line-height: 1.9; color: var(--ink-2); }
+  .arole b { color: var(--ink); border-bottom: 3px solid var(--amber); }
+  .alead .warm { color: var(--scarlet-d); }
 
   .cf { position: absolute; width: 13px; height: 13px; border-radius: 2px; z-index: 3; }
   .cf.c1 { top: 4%; left: 14%; background: var(--scarlet); transform: rotate(22deg); }
@@ -413,9 +607,68 @@ const skills = [
     .atitle { font-size: clamp(2.2rem, 10.5vw, 2.9rem); }
     .portrait { min-height: 300px; }
     .p-hello { font-size: .9rem; }
+    .tl-item { grid-template-columns: 22px 1fr; }
+    .tl-num { grid-column: 2; }
+    .qa { columns: 1; }
     .facts { grid-template-columns: 1fr; }
     .cheers { right: 0; }
     .outro { flex-direction: row; }
     .omu { width: 88px; }
   }
+  /* ===== これまでの、話。（年表） ===== */
+  .tl { list-style: none; margin-top: 2rem; position: relative; display: grid; gap: 1.1rem; }
+  .tl::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 3px; background: var(--amber); border-radius: 2px; }
+  .tl-item { position: relative; display: grid; grid-template-columns: 34px 92px 1fr; gap: .8rem; align-items: start; }
+  .tl-dot { position: relative; z-index: 1; width: 22px; height: 22px; border-radius: 50%; background: var(--c); border: 3px solid var(--paper); box-shadow: 0 0 0 2px var(--c); margin-top: .2rem; }
+  .tl-num { font-family: var(--f-mono); font-weight: 700; color: var(--c); padding-top: .25rem; }
+  .tl-body { background: var(--card); border: 2px solid color-mix(in oklab, var(--ink) 22%, transparent); border-radius: var(--r-md); padding: .85rem 1.1rem; box-shadow: var(--sh-1); }
+  .tl-tag { font-family: var(--f-mono); font-size: .6rem; font-weight: 700; letter-spacing: .1em; color: color-mix(in oklab, var(--c) 75%, var(--ink)); }
+  .tl-body h3 { font-size: 1.06rem; margin: .15rem 0 .25rem; }
+  .tl-body p { color: var(--mut); font-weight: 500; font-size: .9rem; line-height: 1.85; }
+  .tl-item.future .tl-body { border: 2px dashed var(--amber-d); background: color-mix(in oklab, var(--amber) 10%, var(--paper)); }
+  .tl-item.future .tl-body h3 { color: var(--amber-d); }
+
+  /* ===== 信条 ===== */
+  .motto { position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg); box-shadow: var(--sh-2); text-align: center; padding: 2rem 1.5rem 1.6rem; margin-top: 1.6rem; }
+  .m-label { color: var(--scarlet-d); font-size: 1rem; }
+  .m-word { font-size: clamp(2.6rem, 7vw, 4.2rem); font-weight: 900; letter-spacing: .06em; margin: .2rem 0 .5rem; }
+  .m-reason { color: var(--mut); font-weight: 500; max-width: 52ch; margin-inline: auto; line-height: 1.9; font-size: .92rem; }
+  .credo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+  .credo { background: var(--card); border: 2px solid color-mix(in oklab, var(--ink) 22%, transparent); border-radius: var(--r-md); padding: 1.1rem 1.2rem; box-shadow: var(--sh-1); }
+  .credo .c-tag { font-family: var(--f-mono); font-size: .6rem; font-weight: 700; letter-spacing: .1em; color: var(--amber-d); }
+  .credo h3 { font-size: 1.05rem; margin: .3rem 0 .4rem; }
+  .credo p { color: var(--mut); font-weight: 500; font-size: .88rem; line-height: 1.85; }
+
+  /* ===== 主な実績 ===== */
+  .hls { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.6rem; }
+  .hl { position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md); padding: 1.2rem 1.2rem 1rem; box-shadow: var(--sh-1); transition: transform .2s var(--spring), box-shadow .2s ease; }
+  .hl:hover { transform: translateY(-6px) rotate(-.6deg); box-shadow: var(--sh-2); }
+  .hl-n { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 900; color: var(--amber-d); line-height: 1; }
+  .hl-l { display: inline-block; margin-left: .4rem; font-family: var(--f-mono); font-size: .66rem; font-weight: 700; color: var(--mut); letter-spacing: .08em; }
+  .hl p { margin-top: .55rem; color: var(--mut); font-weight: 500; font-size: .86rem; line-height: 1.8; }
+  .hl-go { display: inline-block; margin-top: .5rem; font-family: var(--f-round); font-weight: 700; font-size: .8rem; color: var(--scarlet-d); }
+
+  /* ===== つくる以外の、わたし。 ===== */
+  .pcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(1rem, 3vw, 1.8rem); margin-top: 2rem; }
+  .pcard { position: relative; margin: 0; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg); overflow: visible; box-shadow: var(--sh-2); }
+  .pcard .tape.t2 { background: color-mix(in oklab, var(--scarlet) 30%, #fff 36%); transform: translateX(-50%) rotate(4deg); }
+  .pc-media { position: relative; display: block; width: 100%; padding: 0; border: none; border-radius: calc(var(--r-lg) - 4px) calc(var(--r-lg) - 4px) 0 0; overflow: hidden; cursor: zoom-in; background: var(--paper-3); }
+  .pc-media img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; transition: transform .35s var(--ease); }
+  .pc-media:hover img { transform: scale(1.05); }
+  .pc-chip { position: absolute; left: .7rem; bottom: .7rem; font-family: var(--f-round); font-weight: 700; font-size: .8rem; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-pill); padding: .2rem .7rem; }
+  .pcard figcaption { padding: 1rem 1.2rem 1.2rem; }
+  .pcard h3 { font-size: 1.1rem; margin-bottom: .4rem; }
+  .pcard figcaption p { color: var(--mut); font-weight: 500; font-size: .9rem; line-height: 1.9; }
+  .pc-link { display: inline-block; margin-top: .6rem; font-family: var(--f-round); font-weight: 700; font-size: .84rem; color: var(--scarlet-d); border-bottom: 2px solid var(--scarlet-d); }
+
+  /* ===== もっと、知る。 ===== */
+  .mini-head { font-size: 1.25rem; color: var(--scarlet-d); margin-top: 2rem; transform: rotate(-1.2deg); width: fit-content; }
+  .qa { columns: 2; column-gap: 1rem; margin-top: 1rem; }
+  .qa-item { break-inside: avoid; background: var(--card); border: 2px solid color-mix(in oklab, var(--ink) 20%, transparent); border-radius: var(--r-md); padding: .8rem 1rem; margin-bottom: .8rem; box-shadow: var(--sh-1); }
+  .qa-item .q { display: block; font-family: var(--f-mono); font-size: .62rem; font-weight: 700; letter-spacing: .08em; color: var(--amber-d); }
+  .qa-item .a { display: block; font-weight: 700; font-size: .92rem; margin-top: .2rem; line-height: 1.8; }
+  .traits { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .8rem; margin-top: 1rem; }
+  .trait { background: color-mix(in oklab, var(--c) 10%, var(--paper)); border: 2px solid color-mix(in oklab, var(--c) 34%, transparent); border-radius: var(--r-md); padding: .8rem 1rem; }
+  .trait h4 { font-size: .95rem; color: color-mix(in oklab, var(--c) 66%, var(--ink)); }
+  .trait p { color: var(--mut); font-weight: 500; font-size: .84rem; margin-top: .25rem; line-height: 1.75; }
 </style>
