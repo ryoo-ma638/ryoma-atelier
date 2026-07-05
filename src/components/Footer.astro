@@ -40,12 +40,10 @@ const year = 2026;
     .foot { position: relative; margin-top: var(--stack); padding: var(--stack) 0 3rem; background: var(--ink); color: var(--paper); overflow: hidden; }
     /* 上辺＝琥珀→朱のライン（夜にならないための灯） */
     .foot::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: linear-gradient(90deg, var(--amber), var(--scarlet)); }
-    /* 破り紙のギザギザ（生成りの紙から千切った継ぎ目） */
+    /* 破り紙のギザギザ（連続した細かい山＝紙の千切れ目。歯抜けの旧実装は王冠に見えたので廃止） */
     .foot::after {
-      content: ''; position: absolute; left: 0; right: 0; top: 0; height: 13px; z-index: 3; pointer-events: none;
-      background:
-        linear-gradient(45deg, var(--paper) 6.5px, transparent 0) 0 0 / 18px 13px repeat-x,
-        linear-gradient(-45deg, var(--paper) 6.5px, transparent 0) 9px 0 / 18px 13px repeat-x;
+      content: ''; position: absolute; left: 0; right: 0; top: 0; height: 9px; z-index: 3; pointer-events: none;
+      background: conic-gradient(from 135deg at 50% 0, var(--paper) 90deg, transparent 0) top / 14px 9px repeat-x;
     }
     .inner { position: relative; z-index: 2; text-align: center; }
 

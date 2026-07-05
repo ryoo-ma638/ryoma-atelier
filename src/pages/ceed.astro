@@ -146,44 +146,10 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
       </div>
     </header>
 
-    <!-- ===== 01 発表・スライド ===== -->
-    <section class="section decks-sec">
-      <div class="wrap">
-        <p class="eyebrow reveal"><span class="dot"></span>01 — 発表・スライド制作</p>
-        <h2 class="big reveal d1">「何を・どの順で・どう見せるか」を<span class="am2">設計する。</span></h2>
-        <p class="sec-lead reveal d2">登壇の機会が多くて、企画・台本・スライドまで一貫して作るのが得意です。実物を抜粋で載せます！</p>
-
-        {decks.map((d, di) => (
-          <article class={`deck reveal d${di + 1}`}>
-            <span class={`tape ${di % 2 ? '' : 'amber'}`} aria-hidden="true"></span>
-            <div class="deck-head">
-              <p class="role-row">
-                <span class="role-tag">{d.role}</span>
-                <span class="role-date">{d.date}</span>
-                <span class="deck-note hand">{d.note}</span>
-              </p>
-              <h3 class="deck-title">{d.title}</h3>
-              <p class="deck-lead">{d.lead}</p>
-              <ul class="deck-list">{d.article.map((a) => <li>{a}</li>)}</ul>
-            </div>
-            <p class="strip-hint hand" aria-hidden="true">→ 横にスクロール・クリックで拡大！</p>
-            <div class="filmstrip" role="list" aria-label={`${d.title} のスライド`}>
-              {d.slides.map((s, j) => (
-                <button class="slide" role="listitem" data-gallery={JSON.stringify(d.slides)} data-index={j} data-caption={d.title} aria-label={`スライド ${j + 1} を拡大`}>
-                  <img src={s} alt={`${d.title} スライド ${j + 1}`} loading="lazy" />
-                  <span class="slide-no" aria-hidden="true">{j + 1}</span>
-                </button>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <!-- ===== 02 WEB班 ===== -->
+    <!-- ===== 01 WEB班 ===== -->
     <section class="section web-sec">
       <div class="wrap">
-        <p class="eyebrow reveal"><span class="dot"></span>02 — WEB班</p>
+        <p class="eyebrow reveal"><span class="dot"></span>01 — WEB班</p>
         <h2 class="big reveal d1">つくり、任され、<span class="am2">まとめる。</span></h2>
 
         <div class="pgrid reveal d2">
@@ -211,10 +177,10 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
       </div>
     </section>
 
-    <!-- ===== 03 イベント企画 ===== -->
+    <!-- ===== 02 イベント企画 ===== -->
     <section class="section event-sec">
       <div class="wrap">
-        <p class="eyebrow reveal"><span class="dot"></span>03 — イベント企画・運営</p>
+        <p class="eyebrow reveal"><span class="dot"></span>02 — イベント企画・運営</p>
         <h2 class="big reveal d1">人が集まる場を、<span class="am2">つくる。</span></h2>
         <p class="sec-lead reveal d2">副部長として、部員が楽しめて交流が生まれる場を、企画から当日の進行まで担当しました。</p>
 
@@ -242,10 +208,10 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
       </div>
     </section>
 
-    <!-- ===== 04 CEEDのみんなと ===== -->
+    <!-- ===== 03 CEEDのみんなと ===== -->
     <section class="section circle-sec">
       <div class="wrap">
-        <p class="eyebrow reveal"><span class="dot"></span>04 — CEEDのみんなと</p>
+        <p class="eyebrow reveal"><span class="dot"></span>03 — CEEDのみんなと</p>
         <h2 class="big reveal d1">サークルとして、<span class="am2">社会につなげる。</span></h2>
         <p class="sec-lead reveal d2">ここからはチームでの取り組み（個人の成果じゃなくて、サークルの実績として）。副部長として運営に関わっています。</p>
 
@@ -304,10 +270,10 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
       </div>
     </section>
 
-    <!-- ===== 05 大切にしていること ===== -->
+    <!-- ===== 04 大切にしていること ===== -->
     <section class="section phil-sec">
       <div class="wrap">
-        <p class="eyebrow reveal"><span class="dot"></span>05 — 企画で大切にしていること</p>
+        <p class="eyebrow reveal"><span class="dot"></span>04 — 企画で大切にしていること</p>
         <h2 class="big reveal d1">イベントは、人が定着するための<span class="am2">手段。</span></h2>
         <p class="sec-lead reveal d2">「楽しい」だけじゃなくて、交流を深めて、組織に人が定着するための手段だと考えています。</p>
 
@@ -327,6 +293,40 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
             <path d="M5,9 C50,3 100,12 150,7 C175,4 190,9 195,7" />
           </svg></span>へ成長しました。
         </p>
+      </div>
+    </section>
+
+    <!-- ===== 05 発表・スライド（アーカイブ的に最後へ） ===== -->
+    <section class="section decks-sec">
+      <div class="wrap">
+        <p class="eyebrow reveal"><span class="dot"></span>05 — 発表・スライド制作</p>
+        <h2 class="big reveal d1">「何を・どの順で・どう見せるか」を<span class="am2">設計する。</span></h2>
+        <p class="sec-lead reveal d2">登壇の機会が多くて、企画・台本・スライドまで一貫して作るのが得意です。実物を抜粋で載せます！</p>
+
+        {decks.map((d, di) => (
+          <article class={`deck reveal d${di + 1}`}>
+            <span class={`tape ${di % 2 ? '' : 'amber'}`} aria-hidden="true"></span>
+            <div class="deck-head">
+              <p class="role-row">
+                <span class="role-tag">{d.role}</span>
+                <span class="role-date">{d.date}</span>
+                <span class="deck-note hand">{d.note}</span>
+              </p>
+              <h3 class="deck-title">{d.title}</h3>
+              <p class="deck-lead">{d.lead}</p>
+              <ul class="deck-list">{d.article.map((a) => <li>{a}</li>)}</ul>
+            </div>
+            <p class="strip-hint hand" aria-hidden="true">→ 横にスクロール・クリックで拡大！</p>
+            <div class="filmstrip" role="list" aria-label={`${d.title} のスライド`}>
+              {d.slides.map((s, j) => (
+                <button class="slide" role="listitem" data-gallery={JSON.stringify(d.slides)} data-index={j} data-caption={d.title} aria-label={`スライド ${j + 1} を拡大`}>
+                  <img src={s} alt={`${d.title} スライド ${j + 1}`} loading="lazy" />
+                  <span class="slide-no" aria-hidden="true">{j + 1}</span>
+                </button>
+              ))}
+            </div>
+          </article>
+        ))}
       </div>
     </section>
 

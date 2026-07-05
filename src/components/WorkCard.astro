@@ -13,7 +13,7 @@ const external = !!work.link?.startsWith('http');
   href={href}
   style={`--tag:${cat.color}`}
 >
-  <div class={`media${work.thumb ? '' : ' empty'}`} transition:name={`w-${work.slug}`}>
+  <div class={`media${work.thumb ? '' : ' empty'}${work.contain ? ' fit-contain' : ''}`} transition:name={`w-${work.slug}`}>
     {work.thumb
       ? (work.video
           ? <video data-hover src={work.video} poster={work.thumb} muted loop playsinline preload="none"></video>
@@ -35,7 +35,6 @@ const external = !!work.link?.startsWith('http');
       <span class="tools"><i class="chip" aria-hidden="true"></i>{work.tools.slice(0, 3).join(' · ')}</span>
     )}
   </div>
-  <span class="peel" aria-hidden="true"></span>
 </a>
 
 <style>
@@ -60,6 +59,9 @@ const external = !!work.link?.startsWith('http');
   /* ---- メディア ---- */
   .media { position: relative; aspect-ratio: 16 / 10; background: var(--paper-3); overflow: hidden; display: grid; place-items: center; }
   .media img, .media video { width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease); }
+  /* 縦長ポスター等＝余白を作って全体を見せる */
+  .media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 10px, var(--paper-2) 10px, var(--paper-2) 20px); }
+  .media.fit-contain img { object-fit: contain; padding: .45rem 0; }
   .card:hover .media > img { transform: scale(1.06); }
 
   /* 準備中＝生成りの斜線＋うまくんの顔 */
@@ -116,12 +118,4 @@ const external = !!work.link?.startsWith('http');
   .tools .chip { flex: 0 0 auto; width: 7px; height: 7px; border-radius: 2px; background: var(--amber); transform: rotate(18deg); }
 
   /* ---- hoverで現れるシール角（分野色） ---- */
-  .peel {
-    position: absolute; top: 0; right: 0; z-index: 3; width: 36px; height: 36px;
-    opacity: 0; transform: scale(.4); transform-origin: top right;
-    background: linear-gradient(135deg, transparent 50%, color-mix(in oklab, var(--tag) 32%, var(--paper)) 50%);
-    border-bottom-left-radius: 9px; box-shadow: -3px 3px 6px rgba(27,42,74,.18);
-    transition: transform .22s var(--spring), opacity .2s ease;
-  }
-  .card:hover .peel { transform: scale(1); opacity: 1; }
 </style>

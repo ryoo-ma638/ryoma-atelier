@@ -36,7 +36,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
 
       <!-- ===== ヒーロー（メディア＋情報） ===== -->
       <div class="head">
-        <div class="media" transition:name={`w-${work.slug}`} style={`--tag:${cat.color}`}>
+        <div class={`media${work.contain ? ' fit-contain' : ''}`} transition:name={`w-${work.slug}`} style={`--tag:${cat.color}`}>
           {work.video
             ? <video data-autoplay src={work.video} poster={work.thumb} muted loop playsinline preload="none"></video>
             : work.thumb
@@ -175,6 +175,8 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
   .media { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--paper-3); border: 2px solid var(--ink); box-shadow: var(--sh-3); }
   .media::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--tag); z-index: 2; }
   .media video, .media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+  .media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 12px, var(--paper-2) 12px, var(--paper-2) 24px); }
+  .media.fit-contain img { object-fit: contain; padding: .6rem 0; }
   .media .noimg { aspect-ratio: 16/10; display: grid; place-items: center; gap: .4rem; padding: 2rem;
     background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 14px, var(--paper-2) 14px, var(--paper-2) 28px); }
   .media .noimg img { width: 90px; aspect-ratio: auto; }
@@ -206,7 +208,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
   .gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .9rem; margin-top: 1rem; }
   .shot, .slide { padding: 0; border: 2px solid var(--ink); border-radius: var(--r-md); overflow: hidden; background: var(--card); box-shadow: var(--sh-1); cursor: zoom-in; transition: transform .2s var(--spring), box-shadow .2s ease; }
   .shot:hover, .slide:hover { transform: translateY(-5px) rotate(-.6deg); box-shadow: var(--sh-2); }
-  .shot img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+  .shot img { width: 100%; aspect-ratio: 16/10; object-fit: contain; background: var(--paper-2); display: block; }
 
   .slides { display: flex; gap: .9rem; overflow-x: auto; padding: 1rem .2rem .6rem; scrollbar-width: thin; }
   .slide { flex: 0 0 auto; width: min(420px, 74vw); }
