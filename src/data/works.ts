@@ -240,10 +240,10 @@ export const works: Work[] = [
     goal: "手の形・動きをコンピュータに認識させ、楽しく学べる“次世代の手話アプリ”をつくる。",
     approach: "MediaPipe の Hands / Face Mesh で指・顔の特徴点を取得し、各手話のポーズを判定するロジックを実装。初級（単音）・中級（フレーズ）・上級（ヒントなし）の難易度、ライブカメラへのランドマーク描画、制限時間とスコア、学習モード・手話辞典・成績確認（苦手な手話の集計）まで作り込んだ。実装とプレゼン資料を主に担当。",
     tools: ["Python", "MediaPipe", "OpenCV", "FreeSimpleGUI"],
-    thumb: "/assets/works/shuwa-home.jpg",
+    thumb: "/assets/works/shuwa-play.jpg",
     contain: true,
     slideGroups: [
-      { title: "アプリの画面", images: ["/assets/works/shuwa-play.jpg", "/assets/works/shuwa-app-2.jpg", "/assets/works/shuwa-app-1.jpg", "/assets/works/shuwa-app-3.jpg", "/assets/works/shuwa-app-4.jpg", "/assets/works/shuwa-result.jpg"] },
+      { title: "アプリの画面", images: ["/assets/works/shuwa-home.jpg", "/assets/works/shuwa-app-2.jpg", "/assets/works/shuwa-app-1.jpg", "/assets/works/shuwa-app-3.jpg", "/assets/works/shuwa-app-4.jpg", "/assets/works/shuwa-result.jpg"] },
       { title: "開発レポート（発表スライド）", images: ["/assets/works/shuwa-rep-1.jpg", "/assets/works/shuwa-rep-2.jpg", "/assets/works/shuwa-rep-3.jpg", "/assets/works/shuwa-rep-4.jpg", "/assets/works/shuwa-rep-5.jpg"] },
     ],
   },

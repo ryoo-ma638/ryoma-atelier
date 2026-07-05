@@ -35,6 +35,16 @@ img, video, canvas { max-width: 100%; display: block; }
 /* 手書きマーカーの文字 */
 .hand { font-family: var(--f-hand); }
 
+/* 切り抜かず全体表示（縦長ポスター・アプリ画面）。
+   WorkCard/作品詳細の .media に fit-contain を付けて使う。
+   ※動的クラスはコンポーネントのscoped CSSから脱落するためグローバルで定義 */
+.media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 10px, var(--paper-2) 10px, var(--paper-2) 20px) !important; }
+.media.fit-contain img {
+  /* height:100%は親の高さと循環して破綻するため、img自身に16:10を持たせて中にcontain */
+  width: 100%; height: auto !important; aspect-ratio: 16 / 10; box-sizing: border-box;
+  object-fit: contain !important; padding: .45rem 0;
+}
+
 /* クリックで跳ねる（scaleなのでtransform系アニメと併用可） */
 .jump { animation: jumpy .55s var(--spring); }
 @keyframes jumpy { 0%, 100% { scale: 1; } 35% { scale: 1.14; } 65% { scale: .96; } }
