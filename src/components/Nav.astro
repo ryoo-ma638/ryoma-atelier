@@ -54,9 +54,12 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .horse {
     width: 48px; height: 48px; flex: 0 0 auto; object-fit: contain;
     transform-origin: 70% 80%;
-    animation: gallopIn 1s var(--spring) both;
+    /* fillを残すとhoverのtransformが効かず、hoverでanimationを差し替えると
+       入場が何度も再生される（ピョンピョンバグ）→ 入場は1回きり・hoverはtransitionで */
+    animation: gallopIn 1s var(--spring) backwards;
+    transition: transform .28s var(--spring);
   }
-  .brand:hover .horse { animation: earTwitch .5s var(--spring); }
+  .brand:hover .horse { transform: rotate(-8deg) translateY(-2px) scale(1.05); }
   @keyframes gallopIn {
     0%   { opacity: 0; transform: translateX(-56px) rotate(-14deg); }
     60%  { opacity: 1; transform: translateX(6px) rotate(3deg); }

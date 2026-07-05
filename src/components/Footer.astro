@@ -84,20 +84,21 @@ const year = 2026;
 
     .copy { font-family: var(--f-mono); font-size: .72rem; color: color-mix(in oklab, var(--paper) 55%, transparent); margin-top: -.4rem; }
 
-    /* ---- 紙吹雪（紺の面をお祭りに） ---- */
-    .cf { position: absolute; width: 12px; height: 12px; border-radius: 2px; z-index: 1; }
-    .cf.k1 { top: 8%; left: 7%; background: var(--amber); transform: rotate(18deg); }
-    .cf.k2 { top: 22%; left: 14%; background: var(--scarlet); transform: rotate(-24deg); width: 9px; height: 9px; }
-    .cf.k3 { top: 10%; right: 10%; background: var(--amber-l); transform: rotate(38deg); }
-    .cf.k4 { top: 30%; right: 5%; background: var(--paper); transform: rotate(-10deg); width: 9px; height: 9px; opacity: .8; }
-    .cf.k5 { top: 46%; left: 4%; background: var(--amber-l); transform: rotate(-32deg); width: 10px; height: 10px; }
-    .cf.k6 { top: 55%; right: 16%; background: var(--scarlet); transform: rotate(12deg); width: 10px; height: 10px; }
-    .cf.k7 { top: 62%; left: 18%; background: var(--paper); transform: rotate(30deg); width: 8px; height: 8px; opacity: .7; }
+    /* ---- 紙吹雪（中央のボタン帯には置かない・上端と透かし付近だけを品よく） ---- */
+    .cf { position: absolute; width: 11px; height: 11px; border-radius: 2px; z-index: 1; opacity: .9; }
+    .cf.k1 { top: 6%; left: 8%; background: var(--amber); transform: rotate(18deg); }
+    .cf.k2 { top: 13%; left: 4%; background: var(--scarlet); transform: rotate(-24deg); width: 8px; height: 8px; border-radius: 50%; opacity: .75; }
+    .cf.k3 { top: 7%; right: 9%; background: var(--amber-l); transform: rotate(38deg); }
+    .cf.k4 { top: 15%; right: 4%; background: var(--paper); transform: rotate(-10deg); width: 8px; height: 8px; border-radius: 50%; opacity: .6; }
+    .cf.k5 { bottom: 20%; left: 5%; background: var(--amber-l); transform: rotate(-32deg); }
+    .cf.k6 { bottom: 30%; left: 11%; background: var(--scarlet); transform: rotate(12deg); width: 8px; height: 8px; opacity: .7; }
+    .cf.k7 { bottom: 14%; right: 7%; background: var(--paper); transform: rotate(30deg); width: 8px; height: 8px; opacity: .55; }
 
     @media (max-width: 720px) {
       .uma { bottom: -.2rem; }
       .uma-note { font-size: .8rem; right: 76%; }
-      .cf.k2, .cf.k7 { display: none; }
+      /* スマホは四隅の3つだけ＝ボタンやSNSに一切かぶせない */
+      .cf.k2, .cf.k4, .cf.k6, .cf.k7 { display: none; }
     }
     @media (max-width: 460px) {
       .uma-note { display: none; }
