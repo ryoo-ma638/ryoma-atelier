@@ -59,12 +59,10 @@
 </style>
 
 <script>
-  const lb = document.getElementById("lightbox");
-  if (lb) {
-    const img = document.getElementById("lb-img") as HTMLImageElement;
-    const cap = document.getElementById("lb-cap")!;
-    const cur = document.getElementById("lb-cur")!;
-    const total = document.getElementById("lb-total")!;
+  // View Transitions対応：要素参照は astro:page-load ごとに取り直す（documentリスナーは一度だけ）
+  let lb: HTMLElement | null = null;
+  let img: HTMLImageElement, cap: HTMLElement, cur: HTMLElement, total: HTMLElement;
+  {
     let list: string[] = [];
     let caption = "";
     let i = 0;
@@ -75,6 +73,7 @@
     const onTrap = (e: KeyboardEvent) => { if (e.key !== "Tab") return; const f = focusables(); if (!f.length) return; const first = f[0], last = f[f.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } };
 
     const show = () => {
+      if (!lb) return;
       lb.classList.remove("show-img");
       img.src = list[i];
       cur.textContent = String(i + 1);
@@ -86,6 +85,7 @@
       if (list.length > 1) { const n = new Image(); n.src = list[(i + 1) % list.length]; }
     };
     const open = (arr: string[], start: number, capText: string) => {
+      if (!lb) return;
       list = arr; i = start; caption = capText || "";
       lastFocused = document.activeElement as HTMLElement;
       lb.classList.add("open"); lb.setAttribute("aria-hidden", "false");
@@ -95,6 +95,7 @@
       const cb = lb.querySelector(".lb-close") as HTMLElement | null; cb?.focus();
     };
     const close = () => {
+      if (!lb) return;
       // フォーカスがLightbox内に残っていると aria-hidden が無効になる→先に外す
       const fa = document.activeElement as HTMLElement | null;
       if (fa && lb.contains(fa) && fa.blur) fa.blur();
@@ -117,7 +118,7 @@
       }
     });
     document.addEventListener("keydown", (e) => {
-      if (!lb.classList.contains("open")) return;
+      if (!lb || !lb.classList.contains("open")) return;
       // capture フェーズ＋伝播停止で、背後のモーダル(詳細/相関図)のEscより先に“最前面のLightboxだけ”閉じる
       if (e.key === "Escape") { e.stopImmediatePropagation(); close(); }
       else if (e.key === "ArrowRight") step(1);
@@ -130,9 +131,21 @@
         (document.activeElement as HTMLElement).click();
       }
     });
-    lb.querySelector(".lb-close")!.addEventListener("click", close);
-    lb.querySelector(".lb-prev")!.addEventListener("click", () => step(-1));
-    lb.querySelector(".lb-next")!.addEventListener("click", () => step(1));
-    lb.addEventListener("click", (e) => { if (e.target === lb || (e.target as HTMLElement).classList.contains("lb-figure")) close(); });
+    // ページ遷移のたびに新しい #lightbox 要素へバインドし直す
+    const bind = () => {
+      lb = document.getElementById("lightbox");
+      if (!lb || lb.dataset.bound === "1") return;
+      lb.dataset.bound = "1";
+      img = document.getElementById("lb-img") as HTMLImageElement;
+      cap = document.getElementById("lb-cap")!;
+      cur = document.getElementById("lb-cur")!;
+      total = document.getElementById("lb-total")!;
+      lb.querySelector(".lb-close")!.addEventListener("click", close);
+      lb.querySelector(".lb-prev")!.addEventListener("click", () => step(-1));
+      lb.querySelector(".lb-next")!.addEventListener("click", () => step(1));
+      lb.addEventListener("click", (e) => { if (e.target === lb || (e.target as HTMLElement).classList.contains("lb-figure")) close(); });
+    };
+    document.addEventListener("astro:page-load", bind);
+    bind();
   }
 </script>

@@ -4,16 +4,16 @@ import type { Work } from '../data/works.ts';
 interface Props { work: Work; i?: number; }
 const { work, i = 0 } = Astro.props;
 const cat = categoryLabels[work.category];
-const href = work.link ?? '/works';
-const external = href.startsWith('http');
+// カードは必ず詳細ページへ（外部サイトへは詳細ページのボタンから）
+const href = `/works/${work.slug}`;
+const external = !!work.link?.startsWith('http');
 ---
 <a
   class={`card reveal d${(i % 4) + 1}`}
   href={href}
   style={`--tag:${cat.color}`}
-  {...(external ? { target: '_blank', rel: 'noopener' } : {})}
 >
-  <div class={`media${work.thumb ? '' : ' empty'}`}>
+  <div class={`media${work.thumb ? '' : ' empty'}`} transition:name={`w-${work.slug}`}>
     {work.thumb
       ? (work.video
           ? <video data-hover src={work.video} poster={work.thumb} muted loop playsinline preload="none"></video>
