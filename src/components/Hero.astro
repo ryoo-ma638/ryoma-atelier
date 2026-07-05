@@ -42,53 +42,39 @@ const strip = stripOrder
         <span class="warm">まっすぐ、たのしく、あたたかい作品を届けます！</span>
       </p>
 
-      <p class="two-tags">
-        <span class="chip c1">つくる人</span>
-        <span class="chip c2">ビール売り子</span>
-      </p>
-
       <div class="cta">
         <a class="btn" href="/works">作品を見る<span class="ar">→</span></a>
         <a class="btn ghost" href="/about">ぼくのこと →</a>
       </div>
     </div>
 
-    <!-- ===== 右：躍動コラージュ（モック再現・マウスでゆるく視差） ===== -->
+    <!-- ===== 右：本人写真（クリーンな琥珀の円＋落書き） ===== -->
     <div class="art-col" aria-hidden="true" data-px-scene>
-      <!-- ブラシのスプラッシュ（琥珀＋紺） -->
-      <svg class="splash amber" viewBox="0 0 640 560" preserveAspectRatio="none">
-        <path d="M120,540 C40,470 60,380 140,330 C90,260 130,160 230,130 C250,60 350,20 440,50 C520,10 610,60 620,150 C660,240 600,330 520,360 C520,440 440,510 340,500 C270,560 170,580 120,540 Z" />
-      </svg>
-      <svg class="splash navy" viewBox="0 0 600 500" preserveAspectRatio="none">
-        <path d="M30,470 L200,300 C280,215 380,120 470,60 L575,8 C592,0 604,16 592,30 L470,170 C380,270 260,380 140,465 L55,498 C36,506 16,486 30,470 Z" />
-      </svg>
-      <!-- スピード線 -->
+      <span class="ring" data-px="4"></span>
+      <span class="ring2"></span>
       <svg class="lines" viewBox="0 0 300 120" preserveAspectRatio="none">
         <path d="M8,18 L210,10" /><path d="M30,52 L290,40" /><path d="M14,90 L180,84" />
       </svg>
-      <!-- 紙吹雪 -->
-      <span class="cf c1"></span><span class="cf c2"></span><span class="cf c3"></span>
-      <span class="cf c4"></span><span class="cf c5"></span><span class="cf c6"></span><span class="cf c7"></span>
+      <span class="cf c1"></span><span class="cf c2"></span><span class="cf c3"></span><span class="cf c4"></span>
 
-      <!-- 本人写真（実写） -->
       <div class="photo" data-px="7">
         <img src="/assets/about/portrait.jpg" alt="大崎稜馬のポートレート" />
       </div>
 
-      <!-- 手書き落書きラベル -->
-      <span class="doodle d-game hand" data-px="18">🎮 GAME
-        <svg viewBox="0 0 60 24" class="d-arrow"><path d="M4,20 C20,16 34,10 54,4 M54,4 l-10,0 M54,4 l-2,9" /></svg>
-      </span>
-      <span class="doodle d-cg hand" data-px="22">✦ CG →</span>
-      <span class="doodle d-ip hand" data-px="15">IMAGE<br />PROCESSING</span>
+      <span class="doodle d-cg hand" data-px="18">✦ CG →</span>
+      <span class="doodle d-ip hand" data-px="12">IMAGE<br />PROCESSING</span>
+    </div>
+  </div>
 
-      <!-- うまくん（本物の2コマでギャロップ・クリックで紙吹雪） -->
-      <span class="pony" data-horse data-confetti-click="30" data-px="12" style="pointer-events:auto">
+  <!-- ===== うまくんの走路（画面の端から端へ駆け抜ける） ===== -->
+  <div class="runway" aria-hidden="true">
+    <span class="track"></span>
+    <span class="dash" data-horse>
+      <span class="gallop">
         <img class="f1" src="/assets/mascot/run.png" alt="" />
         <img class="f2" src="/assets/mascot/run2.png" alt="" />
       </span>
-      <span class="hello hand" data-px="14">うまくん、よろしく！</span>
-    </div>
+    </span>
   </div>
 
   <!-- ===== 下部：つくってるもの ストリップ ＋ 画鋲メモ ===== -->
@@ -117,10 +103,10 @@ const strip = stripOrder
 
 <style>
   .hero { position: relative; padding-top: clamp(1.2rem, 3vw, 2.4rem); overflow: clip; }
-  .grid { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(.5rem, 2vw, 1.5rem); align-items: center; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(.8rem, 2.5vw, 2rem); align-items: center; }
 
   /* ---- 左：ことば ---- */
-  .title { font-size: clamp(2.6rem, 6.4vw, 5.6rem); line-height: 1.04; letter-spacing: .01em; }
+  .title { font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1.04; letter-spacing: .01em; }
   .title .l1, .title .l2 { display: block; white-space: nowrap; }
   .title .l1 { position: relative; width: fit-content; }
   .title .of { color: var(--mut); font-weight: 700; font-size: .52em; margin-left: .06em; }
@@ -143,104 +129,105 @@ const strip = stripOrder
     100% { opacity: 1; transform: scale(1) rotate(-8deg); }
   }
 
-  .catch { position: relative; width: fit-content; color: var(--scarlet); font-size: clamp(1.2rem, 2.6vw, 1.7rem); margin-top: 1.2rem; transform: rotate(-1.6deg); }
+  .catch { position: relative; width: fit-content; color: var(--scarlet); font-size: clamp(1.2rem, 2.4vw, 1.6rem); margin-top: 1.2rem; transform: rotate(-1.6deg); }
   .swoosh { position: absolute; left: 2%; bottom: -.45em; width: 96%; height: .5em; overflow: visible; }
   .swoosh path { fill: none; stroke: var(--scarlet); stroke-width: 2.5; stroke-linecap: round; opacity: .85; }
 
-  .chips-line { margin-top: 1.15rem; font-weight: 700; line-height: 2; }
-  .chips-line .kw { display: inline-block; background: var(--ink); color: var(--paper); padding: .12rem .55rem; border-radius: 8px; margin-right: .1rem; font-size: .92rem; }
+  .chips-line { margin-top: 1.1rem; font-weight: 700; line-height: 2; }
+  .chips-line .kw { display: inline-block; background: var(--ink); color: var(--paper); padding: .12rem .55rem; border-radius: 8px; margin-right: .1rem; font-size: .9rem; }
   .chips-line .sl { color: var(--amber-d); font-weight: 900; margin: 0 .22rem; }
   .chips-line .dots { color: var(--mut); }
-  .chips-line b { color: var(--ink); font-size: clamp(1rem, 2.2vw, 1.22rem); }
+  .chips-line b { color: var(--ink); font-size: clamp(1rem, 2vw, 1.18rem); }
 
-  .intro { margin-top: 1rem; font-weight: 700; font-size: clamp(.96rem, 1.75vw, 1.12rem); line-height: 2; }
+  .intro { margin-top: 1rem; font-weight: 700; font-size: clamp(.95rem, 1.6vw, 1.1rem); line-height: 2; }
   .intro b { color: var(--ink); border-bottom: 3px solid var(--amber); white-space: nowrap; }
   .intro .warm { color: var(--scarlet-d); }
-
-  .two-tags { display: flex; gap: .5rem; margin-top: 1.1rem; }
-  .chip { font-family: var(--f-round); font-size: .82rem; padding: .32rem .85rem; border-radius: var(--r-pill); font-weight: 700; box-shadow: var(--sh-1); }
-  .chip.c1 { background: color-mix(in oklab, var(--amber) 24%, var(--paper)); color: #7a5410; }
-  .chip.c1::before { content: '● '; color: var(--amber-d); font-size: .72em; }
-  .chip.c2 { background: color-mix(in oklab, var(--scarlet) 15%, var(--paper)); color: var(--scarlet-d); }
-  .chip.c2::before { content: '● '; color: var(--scarlet); font-size: .72em; }
 
   .cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
   .cta .ar { transition: transform .2s var(--spring); margin-left: .15rem; }
   .btn:hover .ar { transform: translateX(4px); }
 
-  /* ---- 右：コラージュ ---- */
-  .art-col { position: relative; min-height: clamp(420px, 40vw, 590px); margin-right: calc(50% - 50vw); }
+  /* ---- 右：クリーンな円＋写真（MacBook幅でも見切れない） ---- */
+  .art-col { position: relative; min-height: clamp(380px, 34vw, 540px); }
 
-  .splash { position: absolute; z-index: 0; }
-  .splash path { stroke: none; }
-  .splash.amber { inset: -2% -8% 0% 4%; width: 104%; height: 102%; }
-  .splash.amber path { fill: var(--amber); opacity: .92; }
-  .splash.navy { inset: -4% -10% auto 34%; width: 72%; height: 52%; transform: rotate(6deg); }
-  .splash.navy path { fill: var(--ink); opacity: .2; }
+  /* 背景＝琥珀のきれいな円（名刺のたてがみ色。ロゴ的なワンサークル） */
+  .ring {
+    position: absolute; inset: 8% 0% 4% 14%;
+    background: var(--amber); border-radius: 50%;
+    transform: rotate(-6deg);
+    box-shadow: inset -10px -14px 0 rgba(201,135,31,.35);
+  }
+  /* 紺の細いリング＝理系のキレをひとつだけ */
+  .ring2 {
+    position: absolute; top: 2%; left: 4%; width: 22%; aspect-ratio: 1;
+    border: 3.5px solid var(--ink); border-radius: 50%; opacity: .18;
+  }
 
-  .lines { position: absolute; top: 1.5%; right: 12%; width: 230px; height: 92px; z-index: 3; }
-  .lines path { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; opacity: .55; }
+  .lines { position: absolute; top: 1%; right: 6%; width: 165px; height: 66px; z-index: 3; }
+  .lines path { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; opacity: .5; }
 
-  .cf { position: absolute; width: 13px; height: 13px; z-index: 4; border-radius: 2px; }
-  .cf.c1 { top: 5%; left: 18%; background: var(--scarlet); transform: rotate(20deg); }
-  .cf.c2 { top: 13%; left: 30%; background: var(--amber); transform: rotate(-14deg); width: 10px; height: 10px; }
-  .cf.c3 { top: 3%; right: 26%; background: var(--ink); transform: rotate(40deg); width: 9px; height: 9px; }
-  .cf.c4 { top: 34%; left: 8%; background: var(--amber-l); transform: rotate(10deg); }
-  .cf.c5 { bottom: 26%; right: 6%; background: var(--scarlet); transform: rotate(-28deg); width: 10px; height: 10px; }
-  .cf.c6 { bottom: 8%; left: 34%; background: var(--amber); transform: rotate(32deg); }
-  .cf.c7 { top: 48%; right: 2%; background: var(--ink); transform: rotate(-8deg); width: 8px; height: 8px; }
+  .cf { position: absolute; width: 12px; height: 12px; z-index: 4; border-radius: 2px; }
+  .cf.c1 { top: 6%; left: 6%; background: var(--scarlet); transform: rotate(20deg); }
+  .cf.c2 { top: 46%; left: 8%; background: var(--amber-d); transform: rotate(-14deg); width: 9px; height: 9px; }
+  .cf.c3 { bottom: 4%; left: 30%; background: var(--ink); transform: rotate(40deg); width: 9px; height: 9px; }
+  .cf.c4 { bottom: 14%; right: 1%; background: var(--scarlet); transform: rotate(-28deg); width: 10px; height: 10px; }
 
+  /* 写真＝画面内に完全に収まるブロブ */
   .photo {
-    position: absolute; inset: 7% 9% 13% 24%; z-index: 2;
+    position: absolute; inset: 2% 3% 8% 22%; z-index: 2;
     border-radius: 48% 52% 44% 56% / 54% 46% 54% 46%;
     overflow: hidden; background: var(--paper-3);
-    box-shadow: 0 18px 40px rgba(27,42,74,.22);
+    border: 4px solid var(--ink);
+    box-shadow: 0 16px 36px rgba(27,42,74,.22);
   }
   .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
 
-  .doodle { position: absolute; z-index: 3; color: var(--ink); font-size: 1.05rem; }
-  .doodle.d-game { top: 0; right: 28%; color: var(--scarlet-d); transform: rotate(3deg); }
-  .doodle .d-arrow { display: block; width: 46px; height: 20px; margin: 2px auto 0; }
-  .doodle .d-arrow path { fill: none; stroke: var(--scarlet-d); stroke-width: 2.2; stroke-linecap: round; }
-  .doodle.d-cg { top: 40%; left: 11%; transform: rotate(-8deg); font-size: 1.15rem; }
-  .doodle.d-ip { bottom: 4%; right: 5%; color: var(--ink); font-size: .98rem; line-height: 1.3; text-align: right; transform: rotate(2deg); }
+  .doodle { position: absolute; z-index: 5; color: var(--ink); font-size: 1rem; }
+  .doodle.d-cg { top: 34%; left: 8%; transform: rotate(-8deg); font-size: 1.1rem; }
+  .doodle.d-ip { bottom: 0; right: 4%; color: var(--ink); font-size: .92rem; line-height: 1.3; text-align: right; transform: rotate(2deg); }
 
-  .pony {
-    position: absolute; bottom: 0; left: 1%; width: clamp(200px, 23vw, 320px); z-index: 5;
-    transform-origin: 55% 88%;
-    animation: gallop .48s ease-in-out infinite;
-    filter: drop-shadow(4px 7px 6px rgba(27,42,74,.24));
+  /* ---- うまくんの走路（全幅を駆け抜ける） ---- */
+  .runway { position: relative; height: clamp(78px, 8vw, 108px); margin-top: .6rem; }
+  .track { position: absolute; left: 0; right: 0; bottom: 18px; height: 3px; background: color-mix(in oklab, var(--amber) 55%, var(--paper)); }
+  .track::after { content: ''; position: absolute; right: 0; bottom: -4.5px; border-left: 12px solid color-mix(in oklab, var(--amber) 80%, var(--paper)); border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+
+  .dash {
+    position: absolute; bottom: 18px; left: 0;
+    width: clamp(120px, 11.5vw, 165px);
+    transform: translateX(-130%);
+    animation: dash 12s linear infinite;
+    will-change: transform;
   }
-  .pony img { width: 100%; height: auto; display: block; }
-  /* 本物の2コマ（脚のばし↔脚たたみ）を交互に表示＝ギャロップ */
-  .pony .f2 { position: absolute; inset: 0; }
-  .pony .f1 { animation: flipA .48s steps(1) infinite; }
-  .pony .f2 { animation: flipB .48s steps(1) infinite; }
+  /* 端から端へ駆け抜けて、しばらくお休み、また走る */
+  @keyframes dash {
+    0%       { transform: translateX(-130%); }
+    52%      { transform: translateX(calc(100vw + 30%)); }
+    100%     { transform: translateX(calc(100vw + 30%)); }
+  }
+  .gallop { display: block; position: relative; transform-origin: 55% 88%; animation: hoof .46s ease-in-out infinite; }
+  .gallop img { width: 100%; height: auto; display: block; filter: drop-shadow(3px 5px 5px rgba(27,42,74,.2)); }
+  .gallop .f2 { position: absolute; inset: 0; }
+  .gallop .f1 { animation: flipA .46s steps(1) infinite; }
+  .gallop .f2 { animation: flipB .46s steps(1) infinite; }
   @keyframes flipA { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
   @keyframes flipB { 0%, 49.9% { opacity: 0; } 50%, 100% { opacity: 1; } }
-  @keyframes gallop {
-    0%, 100% { transform: translateY(0) rotate(calc(var(--lean, 0deg) - 1deg)); }
-    50%      { transform: translateY(-7px) rotate(calc(var(--lean, 0deg) + 1deg)); }
-  }
-  .pony::before, .pony::after {
+  @keyframes hoof { 0%,100% { transform: translateY(0) rotate(calc(var(--lean, 0deg) - 1deg)); } 50% { transform: translateY(-6px) rotate(calc(var(--lean, 0deg) + 1deg)); } }
+  /* 砂ぼこり */
+  .gallop::before, .gallop::after {
     content: ''; position: absolute; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,252,244,.9), rgba(232,161,58,.35) 60%, transparent 72%);
+    background: radial-gradient(circle, rgba(255,252,244,.9), rgba(232,161,58,.32) 60%, transparent 72%);
   }
-  .pony::before { left: -6%; bottom: 5%; width: 13%; height: 9%; animation: dust .62s ease-out infinite; }
-  .pony::after  { left: -11%; bottom: 11%; width: 9%; height: 6%; animation: dust .62s ease-out .2s infinite; }
+  .gallop::before { left: -7%; bottom: 5%; width: 14%; height: 9%; animation: dust .46s ease-out infinite; }
+  .gallop::after  { left: -13%; bottom: 12%; width: 9%; height: 6%; animation: dust .46s ease-out .18s infinite; }
   @keyframes dust { 0% { opacity: .6; transform: scale(.5); } 100% { opacity: 0; transform: scale(1.5) translateX(-12px); } }
 
-  .hello {
-    position: absolute; bottom: 34%; left: 6%; z-index: 6;
-    background: var(--card); border: 2.5px solid var(--ink); border-radius: 16px 16px 16px 4px;
-    padding: .4rem .85rem; font-size: 1rem; box-shadow: var(--sh-2);
-    animation: floaty 3s ease-in-out infinite;
+  /* 動きを控えたい人には：右端で静止 */
+  @media (prefers-reduced-motion: reduce) {
+    .dash { animation: none; left: auto; right: 4%; transform: none; }
   }
-  .hello::after { content: ''; position: absolute; left: 22px; bottom: -11px; border: 6px solid transparent; border-top: 8px solid var(--ink); }
-  @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(-2deg); } }
 
   /* ---- 下部ストリップ ---- */
-  .belt { margin-top: clamp(1.6rem, 4vw, 3rem); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(.8rem, 2vw, 1.4rem); }
+  .belt { margin-top: .4rem; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(.8rem, 2vw, 1.4rem); }
   .belt-label { position: relative; color: var(--scarlet-d); font-size: 1.08rem; white-space: nowrap; transform: rotate(-2deg); padding-right: 2.4rem; }
   .b-arrow { position: absolute; right: 0; top: .4rem; width: 34px; height: 24px; }
   .b-arrow path { fill: none; stroke: var(--scarlet-d); stroke-width: 2.2; stroke-linecap: round; }
@@ -275,16 +262,16 @@ const strip = stripOrder
   /* ---- レスポンシブ ---- */
   @media (max-width: 980px) {
     .grid { grid-template-columns: 1fr; }
-    .art-col { order: 2; min-height: 400px; margin-right: calc(0px - var(--gutter)); margin-left: calc(0px - var(--gutter)); }
-    .photo { inset: 4% 4% 12% 16%; }
+    .art-col { order: 2; min-height: 380px; }
+    .photo { inset: 2% 6% 8% 18%; }
     .belt { grid-template-columns: 1fr; }
     .pin-note { justify-self: end; }
   }
   @media (max-width: 560px) {
     .title { font-size: clamp(2.35rem, 11.5vw, 3rem); }
-    .art-col { min-height: 330px; }
-    .pony { width: 170px; }
+    .art-col { min-height: 320px; }
     .doodle.d-cg { display: none; }
-    .lines { width: 150px; }
+    .lines { width: 140px; }
+    .dash { width: 130px; }
   }
 </style>
