@@ -35,20 +35,33 @@ function initReveal() {
   document.querySelectorAll('.reveal, .draw-line, [data-reveal]').forEach((el) => io.observe(el));
 }
 
-/* ---------- 2. スクロール進捗＝ビール充填 ---------- */
+/* ---------- 2. スクロール進捗＝ビール充填（先端をうまくんが駆ける） ---------- */
 function initProgress() {
   const bar = document.querySelector('[data-progress]');
   if (!bar) return;
   let ticking = false;
+  let lastTop = document.documentElement.scrollTop;
+  let idleTimer;
   const update = () => {
     const h = document.documentElement;
     const max = h.scrollHeight - h.clientHeight;
     bar.style.setProperty('--p', (max > 0 ? h.scrollTop / max : 0).toFixed(4));
+    // 走行中フラグ＋進行方向（うまくんの足と向き）
+    if (!REDUCE) {
+      const dv = h.scrollTop - lastTop;
+      if (dv !== 0) bar.dataset.dir = dv < 0 ? 'up' : 'down';
+      lastTop = h.scrollTop;
+      bar.classList.add('scrolling');
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => bar.classList.remove('scrolling'), 180);
+    }
     ticking = false;
   };
   update();
+  bar.classList.remove('scrolling');
   onEvt(window, 'scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   onEvt(window, 'resize', update, { passive: true });
+  cleanups.push(() => clearTimeout(idleTimer));
 }
 
 /* ---------- 3. 紙吹雪 ---------- */

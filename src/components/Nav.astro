@@ -29,10 +29,13 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     <a class="btn call" href="#contact" data-confetti="26">声かけて<span class="wave">👋</span></a>
   </nav>
 
-  <!-- 芯ライン＝スクロールでビールのように満ちる -->
+  <!-- 芯ライン＝スクロールでビールのように満ちる。先端を小さなうまくんが駆ける -->
   <div class="spine" data-progress aria-hidden="true">
     <span class="fill"></span>
-    <span class="foam"></span>
+    <span class="spine-uma">
+      <img class="f1" src="/assets/mascot/run.png" alt="" />
+      <img class="f2" src="/assets/mascot/run2.png" alt="" />
+    </span>
   </div>
 </header>
 
@@ -96,12 +99,22 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     position: absolute; inset: 0; transform-origin: left; transform: scaleX(var(--p, 0));
     background: linear-gradient(90deg, var(--amber-d), var(--amber));
   }
-  .spine .foam {
-    position: absolute; top: -2px; height: 7px; width: 7px; border-radius: 50%;
-    background: var(--amber-l); box-shadow: 0 0 8px var(--amber-l);
-    left: calc(var(--p, 0) * 100%); transform: translateX(-50%);
-    opacity: calc(var(--p, 0) * 3);
+  /* 先端を駆ける小さなうまくん（スクロール中だけ足が動く・戻るときは反転） */
+  .spine-uma {
+    position: absolute; bottom: 1px; left: calc(var(--p, 0) * 100%);
+    width: 34px; transform: translateX(-72%);
+    opacity: calc(var(--p, 0) * 6);   /* 最上部では隠れて、走り出すと現れる */
+    pointer-events: none;
   }
+  .spine-uma img { width: 100%; height: auto; display: block; filter: drop-shadow(1px 2px 2px rgba(27,42,74,.25)); }
+  .spine-uma .f2 { position: absolute; inset: 0; opacity: 0; }
+  /* スクロール中＝2コマギャロップ */
+  :global(.spine.scrolling) .spine-uma .f1 { animation: navFlipA .3s steps(1) infinite; }
+  :global(.spine.scrolling) .spine-uma .f2 { animation: navFlipB .3s steps(1) infinite; }
+  @keyframes navFlipA { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes navFlipB { 0%, 49.9% { opacity: 0; } 50%, 100% { opacity: 1; } }
+  /* 上に戻るとき＝向きも反転して駆け戻る */
+  :global(.spine[data-dir='up']) .spine-uma { transform: translateX(-28%) scaleX(-1); }
 
   @media (max-width: 720px) {
     .lk .en { display: none; }
