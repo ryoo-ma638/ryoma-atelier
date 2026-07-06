@@ -37,6 +37,10 @@ const total = works.length;
 
         <p class="wlead">「これだ」と思って、最後までつくったもの。<b>全{total}点</b>を分野ごとに並べています。</p>
 
+        <span class="guide" aria-hidden="true">
+          <span class="g-note hand">ここから見てって！</span>
+          <img src="/assets/mascot/point.png" alt="" loading="eager" />
+        </span>
         <nav class="jump" aria-label="分野で移動">
           {groups.map((g) => (
             <a href={`#cat-${g.c}`} style={`--tag:${g.label.color}`}>
@@ -142,10 +146,25 @@ const total = works.length;
 
   /* 余白の紙吹雪（ヘッダー右） */
   .cf { position: absolute; border-radius: 2px; pointer-events: none; }
-  .cf.f1 { top: 8%; right: 7%; width: 13px; height: 13px; background: var(--amber); transform: rotate(24deg); }
+  .cf.f1 { top: 8%; right: 26%; width: 13px; height: 13px; background: var(--amber); transform: rotate(24deg); }
   .cf.f2 { top: 38%; right: 15%; width: 9px; height: 9px; background: var(--scarlet); transform: rotate(-18deg); }
   .cf.f3 { top: 62%; right: 4%; width: 11px; height: 11px; background: var(--ink); opacity: .75; transform: rotate(40deg); }
   .cf.f4 { top: 20%; right: 24%; width: 8px; height: 8px; background: var(--amber-l); transform: rotate(-30deg); }
+
+  /* 指差しうまくん「ここから見てって！」（ヘッダー右） */
+  .guide { position: absolute; right: 1%; top: -0.4rem; z-index: 2; display: grid; justify-items: center; gap: .3rem; }
+  .guide img { width: clamp(110px, 12vw, 168px); filter: drop-shadow(3px 5px 5px rgba(27,42,74,.2)); transition: transform .25s var(--spring); }
+  .guide:hover img { transform: translateY(-5px) rotate(-4deg); }
+  .guide .g-note {
+    color: var(--scarlet-d); font-size: 1rem; transform: rotate(-2.5deg); white-space: nowrap;
+    background: var(--card); border: 2px solid var(--ink); border-radius: 14px 14px 14px 4px;
+    padding: .28rem .75rem; box-shadow: var(--sh-1);
+  }
+  @media (max-width: 900px) {
+    .guide { position: static; grid-auto-flow: column; justify-content: start; align-items: center; gap: .6rem; margin-top: 1rem; }
+    .guide img { width: 78px; }
+    .guide .g-note { font-size: .9rem; }
+  }
 
   /* ===== 分野セクション ===== */
   .cat { padding-block: clamp(2.4rem, 5.5vw, 4rem); scroll-margin-top: 84px; }

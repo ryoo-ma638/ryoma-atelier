@@ -30,7 +30,7 @@ const year = 2026;
       <p class="mark">RYOMA</p>
       <span class="uma" data-confetti-click="34" title="うまくんにタッチ！">
         <span class="uma-note hand">きてくれて、ありがとう！</span>
-        <img src="/assets/mascot/wave.png" alt="" loading="lazy" />
+        <img src="/assets/mascot/bow.png" alt="" loading="lazy" />
       </span>
     </div>
     <p class="copy">© {year} 大崎稜馬 — つくって、手渡す。</p>
@@ -66,12 +66,13 @@ const year = 2026;
     .uma {
       position: absolute; right: clamp(.2rem, 4vw, 4rem); bottom: -.4rem;
       width: clamp(86px, 12vw, 150px); z-index: 3;
-      animation: umaWave 2.8s ease-in-out infinite; transform-origin: 50% 92%;
+      animation: umaBow 3.4s ease-in-out infinite; transform-origin: 50% 92%;
     }
     .uma img { width: 100%; height: auto; display: block; filter: drop-shadow(3px 5px 5px rgba(0,0,0,.35)); }
-    @keyframes umaWave {
-      0%, 100% { transform: translateY(0) rotate(-1.5deg); }
-      50%      { transform: translateY(-7px) rotate(1.5deg); }
+    /* ぺこり：ゆっくり礼をするリズム */
+    @keyframes umaBow {
+      0%, 55%, 100% { transform: rotate(0deg); }
+      25%           { transform: rotate(7deg) translateY(4px); }
     }
     .uma-note {
       position: absolute; right: 92%; bottom: 74%;
