@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-# 非公式ファンサイトは検索に載せない
+# 非公式ファンサイト（作品として掲載）は検索に載せない
 Disallow: /yumiki/
-
-Sitemap: https://ryoo-ma638.github.io/sitemap.xml
