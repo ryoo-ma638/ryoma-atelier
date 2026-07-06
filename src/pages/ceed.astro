@@ -195,7 +195,7 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
               <span class="role-tag">企画・運営</span>
               <h3>新歓バーベキュー ＆ ビンゴ大会</h3>
               <p>約60名規模の新歓を企画・運営！買い出し・会場図・名札・当日の役割分担まで設計して、現場の進行も担当しました。</p>
-              <img class="uma-cheers" src="/assets/mascot/cheers.png" alt="" aria-hidden="true" />
+              <img class="uma-cheers" src="/assets/mascot/wave.png" alt="" aria-hidden="true" />
             </div>
             {bbqPhotos.slice(1).map((p, i) => (
               <button class={`pcard pcard-sm reveal d${(i % 2) + 2}`} data-gallery={lb(bbqPhotos)} data-index={i + 1} data-caption={p.cap} aria-label={`${p.cap} を拡大`}>
@@ -499,6 +499,7 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
   /* ===== 03 イベント ===== */
   .feat { margin-top: 1.8rem; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(1rem, 2.6vw, 1.6rem); align-items: stretch; }
   .pcard-lg { rotate: -1deg; display: flex; flex-direction: column; }
+  .pcard-lg img { margin-block: auto; }  /* 写真を縦センターへ＝余白を上下に等分配 */
   /* 高さの余りはポラロイドの白帯に＝下辺のキャプション＋判子で意図的な佇まいに */
   .pcard-lg::after { content: '馬'; position: absolute; right: .7rem; bottom: .55rem; width: 30px; height: 30px; display: grid; place-items: center; font-family: var(--f-round); font-weight: 700; font-size: .8rem; color: #fff; background: var(--scarlet); border-radius: 50%; rotate: -9deg; box-shadow: inset 0 0 0 2px rgba(255,255,255,.4); }
   .pcard-lg img { aspect-ratio: 1 / 1; } /* 集合写真は正方形＝クロップしない */
