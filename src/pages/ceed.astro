@@ -470,6 +470,7 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
   .pcard:hover { rotate: 0deg; translate: 0 -5px; box-shadow: 6px 10px 20px rgba(27,42,74,.2); }
   .pcard .tape { z-index: 3; top: -11px; }
   .pcard img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-radius: 3px; background: var(--paper-3); }
+  .feat-side .pcard-sm img { aspect-ratio: 16 / 10; }  /* BBQの右4枚は浅めに＝左の集合写真と高さバランスを取る */
   .pcap { position: absolute; left: .8rem; right: .6rem; bottom: .45rem; color: var(--ink); font-size: .88rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   /* ===== 02 WEB班 ===== */
