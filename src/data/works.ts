@@ -363,8 +363,8 @@ export const works: Work[] = [
     status: "ハッカソン企業賞・開発中",
     link: "https://settlo-app.web.app",
     slideGroups: [
-      { title: "コンセプト — 友達との時間のあとの“精算”をスマートに", images: ["/assets/works/settlo-intro.jpg"] },
-      { title: "アプリ画面（実機・デモモードで体験できます）", images: ["/assets/works/settlo-login.jpg", "/assets/works/settlo-pay.jpg", "/assets/works/settlo-friend.jpg"] },
+      { title: "アプリ画面①（はじめる・記録する — 実際のデモ画面）", images: ["/assets/works/settlo-login.jpg", "/assets/works/settlo-tutorial.jpg", "/assets/works/settlo-addevent.jpg", "/assets/works/settlo-addpay.jpg"] },
+      { title: "アプリ画面②（精算・お知らせ・フレンド）", images: ["/assets/works/settlo-pay.jpg", "/assets/works/settlo-notif.jpg", "/assets/works/settlo-friend.jpg"] },
     ],
   },
   {
