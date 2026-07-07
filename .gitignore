@@ -4,3 +4,6 @@ dist/
 .DS_Store
 .playwright-mcp/
 
+
+# 内部メモ（公開しない）
+ASSET-PROMPTS.md
