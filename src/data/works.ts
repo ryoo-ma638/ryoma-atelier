@@ -197,18 +197,31 @@ export const works: Work[] = [
   },
   // ====================== 画像処理・インタラクション（研究室＝CG・画像処理・インタラクションに直結） ======================
   {
-    slug: "death-comer",
-    title: "鎌ゲーム ― LiDAR×鎌で戦う全身アクション",
+    slug: "deathcamer",
+    title: "デスカマー ― LiDAR×鎌で戦う全身アクション",
     category: "imaging",
     status: "研究室で継続開発中",
-    summary: "LiDARで自分の足を追跡し、M5Stickを付けた「鎌」を実際に振って戦う、全身で遊ぶ設置型のアクションゲーム。歩く・振る・止まる――体の動きそのものが操作になる。",
-    goal: "ボタンではなく“体の動き”で遊ぶ爽快感をつくる。足元の床を戦場にして、敵も攻撃も自分の位置もそこに映し、動き回ること自体を楽しさにする。",
-    approach: "床のLiDARで足の位置を、鎌に付けたM5StickC Plus2（6軸センサー）で振りを検知。歩く＝移動＋向き、縦振り＝強攻撃、横振り＝薙ぎ払い、立ち止まる＝防御（前方の弾を跳ね返し、反射でも攻撃できる）。WAVE制（練習→反射→ボス戦）＋「スコア×残りHP」のランク評価で、攻めと守りの両立を促す。床＝戦場／壁＝情報の2画面構成。企画・ハード・C++/OpenGL描画まで個人制作。デジコン演習(2025)で発表したのち、“動かなかった原因はハードではなくコードの調整だった”と精読で突き止め、水野慎士研究室の個人プロジェクトとして再設計・継続開発中（向きの一本化・防御のノイズ対策・デバッグ表示などを実装済み。今後はLiDAR点群からの姿勢推定など研究へ発展）。",
-    tools: ["C++ / OpenGL / GLUT", "M5StickC Plus2", "LiDAR"],
+    summary: "LiDARで自分の足の位置を追い、M5Stickを付けた「鎌」を実際に振って戦う、全身で遊ぶ設置型のアクションゲーム。歩く・振る・立ち止まる――体の動きそのものが操作になる。",
+    goal: "ボタンではなく“体の動き”で遊ぶ爽快感をつくる。足元の床を戦場に見立て、敵も攻撃も自分の位置もそこに映し、動き回ること自体を楽しさにする。",
+    approach: "床のLiDARで足の位置を、鎌に付けたM5StickC Plus2（6軸センサー）で振りを検知。歩く＝移動＋向き、縦振り（A）＝射程の長い強攻撃、横振り（S）＝範囲攻撃、立ち止まる＝防御（前方の弾を反射し、反射で攻撃もできる）。WAVE1→2→3（ボス）→クリアまで通して遊べ、床面にLiDARの点群・壁面に戦闘画面を映す2画面構成をめざした。企画・ハード・C++11/OpenGLの描画まで個人制作。デジコン演習(2025)で発表したのち“動かない原因はハードではなくコードの競合だった”と精読で突き止め、水野慎士研究室の個人プロジェクトとして再設計・継続開発中（向き制御の二重化や防御判定の競合を修正し、M5StickやLiDARが無くてもキーボードで通しプレイできる状態まで整備）。",
+    tools: ["C++11 / OpenGL / GLUT", "M5StickC Plus2", "LiDAR"],
     thumb: "/assets/works/death-comer.jpg",
     video: "/assets/works/video/death-comer.mp4",
     gallery: ["/assets/works/deathcomer-title.jpg", "/assets/works/deathcomer-boss.jpg", "/assets/works/deathcomer-rule.jpg", "/assets/works/deathcomer-scythe.jpg"],
+    links: [{ label: "GitHub（ソース）", href: "https://github.com/ryoo-ma638/deathkama_rider_game" }],
     featured: true,
+  },
+  {
+    slug: "kamakama-quest",
+    title: "カマカマクエスト ― 鎌ゲームの子ども版",
+    category: "imaging",
+    status: "イベント展示に向けて制作中",
+    summary: "「デスカマー」を、小さな子どもでも安心して遊べるように作り直した版。かわいいスライムやおばけの世界で、文字はすべてひらがな・カタカナ。イベント展示用に、やさしい難易度で調整している。",
+    goal: "怖さや難しさのハードルをなくして、小さな子でも“鎌を振って敵をやっつける”爽快感を楽しめるようにする。展示では体験は任意・短時間・安全第一を徹底する。",
+    approach: "ゲームエンジンや操作（歩いて自動で向く／縦振り・横振り／立ち止まって防御）はデスカマーと共通のまま、世界観をまるごと子ども向けに置き換え。敵をかわいいスライム・おばけに、UIや演出の文字をすべてひらがな・カタカナへ差し替え、難易度もやさしく再調整している。ゲーム本体はWAVE1→2→3（ボス）→クリアまで動作し、M5StickやLiDARが無くてもキーボードで体験できる。いまは画像の子ども向け差し替えとバランス調整を進行中。",
+    tools: ["C++11 / OpenGL / GLUT", "M5StickC Plus2", "LiDAR"],
+    thumb: "/assets/works/kamakama-title.jpg",
+    contain: true,
   },
   {
     slug: "wis-umbrella",
@@ -334,22 +347,36 @@ export const works: Work[] = [
   },
   {
     slug: "settlo",
-    title: "Settlo（割り勘アプリ）",
+    title: "Settlo（セトロ）― レシートAI割り勘アプリ",
     category: "web",
-    summary: "システム工学研究会主催のハッカソン『シスハック』でチーム開発し、学生団体経由で企業賞を受賞した割り勘アプリ。「友達との楽しい時間のあとの“精算”を、スマートに」がコンセプト。支払いを記録して精算でき、現在も開発を継続中。",
-    goal: "支払いの記録と精算を、誰でも迷わず使えるシンプルなUIで実現する。",
-    approach: "5人チームでのハッカソン開発。自分はUI・フロントエンドを中心に、レシート読み込みなどのバックエンドや、発表の構成・登壇も担当した。スマホのスワイプUIとPCレスポンシブの両対応をめざしている。",
-    tools: ["Vue 3", "Firebase"],
-    thumb: "/assets/works/settlo.jpg",
+    summary: "システム工学研究会主催のハッカソン『シスハック』でチーム開発し、学生団体経由で企業賞を受賞した割り勘・精算アプリ。「友達との楽しい時間のあとの“精算”を、スマートに」がコンセプト。レシートをAIで読み取って自動で割り勘でき、現在も開発を継続中。",
+    goal: "支払いの記録から割り勘・精算までを、誰でも迷わず使えるシンプルなUIで完結させる。飲み会や旅行のあとに残りがちな“お金のモヤモヤ”をゼロにする。",
+    approach: "5人チームでのハッカソン開発。自分はUI・フロントエンドを中心に、レシートのAI読み取りなどのバックエンドや、発表の構成・登壇も担当した。レシートを撮ると Gemini が品目と金額を読み取り、複数方式の割り勘・ジャンル分類・自動精算・イベント／参加者管理・フレンド＆取引履歴・通知までをカバー。スマホのスワイプUIとPCレスポンシブの両対応をめざしている。Vue 3＋Firebase（Auth／Firestore／Functions／Hosting／FCM）で構築し、APIキーはサーバーレス関数側に隠す設計にした。",
+    tools: ["Vue 3 / Vite", "Firebase", "Gemini API"],
+    thumb: "/assets/works/settlo-home.jpg",
+    contain: true,
     status: "ハッカソン企業賞・開発中",
+    slideGroups: [
+      { title: "コンセプト — 友達との時間のあとの“精算”をスマートに", images: ["/assets/works/settlo-intro.jpg"] },
+      { title: "アプリ画面（ホーム・支払い・履歴）", images: ["/assets/works/settlo-home.jpg", "/assets/works/settlo-pay.jpg", "/assets/works/settlo-history.jpg"] },
+    ],
   },
   {
     slug: "nogi-photo",
-    title: "NogiPhotoManager（iOSアプリ）",
+    title: "NogiPhotoManager ― 生写真コレクション管理アプリ",
     category: "web",
-    summary: "生写真コレクションを管理するiOSアプリ。Swift で制作中。",
-    tools: ["Swift", "iOS"],
-    status: "制作中",
+    summary: "集めた生写真（約390セット・約1,300枚）を1枚ずつ管理できる個人用のコレクション管理アプリ。バインダー・セット・ポジション単位で「持っている／いない」を記録し、コンプ率やレアリティ別・年別の統計まで見られる。ブラウザにそのまま入れて使えるPWA。",
+    goal: "紙のバインダーでは把握しきれない“何を持っていて何が足りないか”を、スマホでいつでも確認できるようにする。トレードや買い足しの判断を一瞬で。",
+    approach: "写真1枚ごとを最小単位に、バインダー→セット→ポジションの階層で所有を管理。作品カタログ（静的JSON）と自分の所有データ（IndexedDB）を完全に分離し、所有情報は端末内だけに保存して外部には一切送らない設計にした。当初はiOS（SwiftUI）で作っていたが、無料枠だと署名が7日で失効して使い続けられない問題に直面。そこで“インストール不要でずっと使える”PWAへ全面的に作り直した（Vite＋React＋TypeScript＋Tailwind＋Dexie）。コンプ率のリング表示、レアリティ別・年別の統計、一括取込などを実装済み。",
+    tools: ["React / TypeScript", "Tailwind CSS", "Dexie (IndexedDB)", "PWA / Vite"],
+    thumb: "/assets/works/nogi-home.jpg",
+    contain: true,
+    status: "開発中",
+    slideGroups: [
+      { title: "コレクション — 所有枚数とコンプ率をひと目で", images: ["/assets/works/nogi-home.jpg"] },
+      { title: "バインダー — セット・ポジション単位で所有を記録", images: ["/assets/works/nogi-binder.jpg"] },
+      { title: "統計 — レアリティ別・年別の集計", images: ["/assets/works/nogi-stats.jpg"] },
+    ],
   },
   {
     slug: "uriko-site",
@@ -368,6 +395,18 @@ export const works: Work[] = [
     tools: ["HTML", "CSS", "JavaScript"],
     thumb: "/assets/works/uriko.jpg",
     link: "https://uriko-v-dome-ryoma.vercel.app",
+  },
+  {
+    slug: "portfolio-vol1",
+    title: "ポートフォリオ vol.1（SPECTRUM）",
+    category: "web",
+    summary: "このサイトの前作。ダーク×スペクトラム（可視光線）を基調に、「つくって、光を放つ。」をテーマにしたポートフォリオ。いまの vol.2 と見比べられるよう、そのまま公開して残している。Astro で制作。",
+    goal: "「いろいろな分野に手を出すほど、出せる色が増えていく」を、光のスペクトラムで表現する。",
+    approach: "巨大タイポ・グレイン・カスタムカーソル・スクロール演出で“脱・量産型”の没入感を狙った版。vol.2 では方向性を「明るい仕事場」へ切り替えたため、対照として見比べられるよう別サイトとして保存している。",
+    tools: ["Astro", "TypeScript", "CSS"],
+    thumb: "/assets/works/portfolio-vol1.jpg",
+    status: "前作・公開中",
+    link: "https://ryoo-ma638.github.io/",
   },
 
   // ====================== 企画・発表（スライド制作・プレゼン・企画） ======================
@@ -425,7 +464,7 @@ export const works: Work[] = [
 
 // トップBento（Featured）の並び順を明示制御。featured な作品を、この順で大きく見せる。
 // 1番目＝大カード、2番目＝準大カード（強調枠）。
-const featuredOrder = ["shibuya-crossing", "death-comer", "robot-argus", "meegri", "yumiki-world", "chuo-seisakusho", "drone-note", "mushiba-animals"];
+const featuredOrder = ["shibuya-crossing", "deathcamer", "robot-argus", "meegri", "yumiki-world", "chuo-seisakusho", "drone-note", "mushiba-animals"];
 export const featuredWorks = works
   .filter((w) => w.featured)
   .sort((a, b) => featuredOrder.indexOf(a.slug) - featuredOrder.indexOf(b.slug));
