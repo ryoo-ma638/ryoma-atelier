@@ -38,7 +38,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
       <div class="head">
         <div class={`media${work.contain ? ' fit-contain' : ''}`} transition:name={`w-${work.slug}`} style={`--tag:${cat.color}`}>
           {work.video
-            ? <video data-autoplay src={work.video} poster={work.thumb} muted loop playsinline preload="none"></video>
+            ? <video data-autoplay autoplay src={work.video} poster={work.thumb} muted loop playsinline preload="auto"></video>
             : work.thumb
               ? <img src={work.thumb} alt={work.title} data-gallery={galleryJson ?? JSON.stringify([work.thumb])} data-caption={work.title} />
               : <span class="noimg"><img src="/assets/mascot/logo3d.png" alt="" /><span class="hand">いま準備中！</span></span>}

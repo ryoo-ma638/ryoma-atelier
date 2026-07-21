@@ -163,20 +163,34 @@ function initHorse() {
 
 /* ---------- 6. 動画：data-autoplay は画面内で再生 / data-hover はホバー再生 ---------- */
 function initVideo() {
+  // View Transitions のDOM入れ替え後、<video> の src が選択されず currentSrc が空・readyState 0 の
+  // まま読み込まれないことがある（＝更新するまで動画が出ない不具合）。load() で確実に読み込ませてから再生する。
+  const ensurePlay = (v) => {
+    if (!v.currentSrc && v.getAttribute('src')) { try { v.load(); } catch {} }
+    v.muted = true; v.play?.().catch(() => {});
+  };
   const auto = document.querySelectorAll('video[data-autoplay]');
   if (auto.length) {
     const io = keepIO(new IntersectionObserver((entries) => {
       for (const e of entries) {
         const v = e.target;
-        if (e.isIntersecting) { v.muted = true; v.play?.().catch(() => {}); }
+        if (e.isIntersecting) ensurePlay(v);
         else v.pause?.();
       }
     }, { threshold: 0.35 }));
     auto.forEach((v) => io.observe(v));
+    // 遷移直後は IO の初回判定が外れることもあるため、少し置いて画面内の動画を確実に再生する保険。
+    const kick = () => auto.forEach((v) => {
+      const r = v.getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0) ensurePlay(v);
+    });
+    const t1 = setTimeout(kick, 250);
+    const t2 = setTimeout(kick, 900);
+    cleanups.push(() => { clearTimeout(t1); clearTimeout(t2); });
   }
   document.querySelectorAll('video[data-hover]').forEach((v) => {
     const host = v.closest('a, article, div') || v;
-    onEvt(host, 'mouseenter', () => { v.muted = true; v.play?.().catch(() => {}); });
+    onEvt(host, 'mouseenter', () => ensurePlay(v));
     onEvt(host, 'mouseleave', () => { v.pause?.(); v.currentTime = 0; });
   });
 }
