@@ -94,9 +94,24 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
       <!-- ===== 2本目の動画（いまのPC版プレイ） ===== -->
       {work.video2 && (
         <section class="sec reveal">
-          <p class="eyebrow"><span class="dot"></span>いまのPC版プレイ <span class="mut">（キーボードで通しプレイ）</span></p>
+          <p class="eyebrow"><span class="dot"></span>通しプレイ・ハイライト <span class="mut">（早送り）</span></p>
           <div class="v2">
             <video data-autoplay src={work.video2} muted loop playsinline preload="none"></video>
+          </div>
+        </section>
+      )}
+
+      <!-- ===== ステージ別プレイ（3カラム） ===== -->
+      {work.stageVideos && work.stageVideos.length > 0 && (
+        <section class="sec reveal">
+          <p class="eyebrow"><span class="dot"></span>ステージ別プレイ <span class="mut">（WAVE1・WAVE2・ボス）</span></p>
+          <div class="stages">
+            {work.stageVideos.map((sv) => (
+              <figure class="stage">
+                <video data-autoplay src={sv.src} muted loop playsinline preload="none"></video>
+                <figcaption>{sv.label}</figcaption>
+              </figure>
+            ))}
           </div>
         </section>
       )}
@@ -190,6 +205,12 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
   /* 2本目の動画（いまのPC版プレイ） */
   .v2 { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--paper-3); border: 2px solid var(--ink); box-shadow: var(--sh-3); }
   .v2 video { width: 100%; height: auto; max-height: 62vh; object-fit: contain; display: block; }
+  /* ステージ別プレイ（3カラム） */
+  .stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.6rem, 1.5vw, 1rem); }
+  .stage { border-radius: var(--r-md); overflow: hidden; border: 2px solid var(--ink); background: var(--card); box-shadow: var(--sh-1); }
+  .stage video { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+  .stage figcaption { padding: .5rem .7rem; font-size: .8rem; font-weight: 700; }
+  @media (max-width: 640px) { .stages { grid-template-columns: 1fr; } }
   .media .noimg { aspect-ratio: 16/10; display: grid; place-items: center; gap: .4rem; padding: 2rem;
     background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 14px, var(--paper-2) 14px, var(--paper-2) 28px); }
   .media .noimg img { width: 90px; aspect-ratio: auto; }

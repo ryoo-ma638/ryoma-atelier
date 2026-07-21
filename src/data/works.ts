@@ -32,6 +32,7 @@ export interface Work {
   thumb?: string;         // サムネイル画像パス
   video?: string;         // ループ再生する軽量mp4（任意）
   video2?: string;        // 2本目の動画（個別ページ下部に追加表示。任意）
+  stageVideos?: { label: string; src: string }[]; // ステージ別の短い動画（3カラム表示。任意）
   gallery?: string[];     // 複数画像（ライトボックスで拡大閲覧。スライド資料・スクショ等）
   audio?: { title: string; src: string; note?: string }[]; // 試聴用の音源（モーダルにプレイヤー表示）
   slideGroups?: { title: string; images: string[] }[];     // 発表/種類ごとに分けた横スクロールのスライド群
@@ -209,7 +210,12 @@ export const works: Work[] = [
     thumb: "/assets/works/death-comer.jpg",
     video: "/assets/works/video/death-comer.mp4",
     video2: "/assets/works/video/deathcomer-play.mp4",
-    gallery: ["/assets/works/deathcomer-title.jpg", "/assets/works/deathcomer-boss.jpg", "/assets/works/deathcomer-rule.jpg", "/assets/works/deathcomer-bossguide.jpg", "/assets/works/deathcomer-scythe.jpg", "/assets/works/deathcomer-rank-s.jpg"],
+    stageVideos: [
+      { label: "WAVE 1 ― 駆けて斬る", src: "/assets/works/video/deathcomer-stage-wave1.mp4" },
+      { label: "WAVE 2 ― ガードで反射", src: "/assets/works/video/deathcomer-stage-wave2.mp4" },
+      { label: "WAVE 3 ― ボス討伐戦", src: "/assets/works/video/deathcomer-stage-boss.mp4" },
+    ],
+    gallery: ["/assets/works/deathcomer-title.jpg", "/assets/works/deathcomer-rule.jpg", "/assets/works/deathcomer-wave1.jpg", "/assets/works/deathcomer-wave1help.jpg", "/assets/works/deathcomer-wave2.jpg", "/assets/works/deathcomer-wave2help.jpg", "/assets/works/deathcomer-boss.jpg", "/assets/works/deathcomer-bossguide.jpg", "/assets/works/deathcomer-rank-s.jpg", "/assets/works/deathcomer-scythe.jpg"],
     links: [{ label: "GitHub（ソース）", href: "https://github.com/ryoo-ma638/deathkama_rider_game" }],
     featured: true,
   },
