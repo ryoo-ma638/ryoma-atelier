@@ -371,15 +371,15 @@ export const works: Work[] = [
     category: "web",
     summary: "レシートを撮るだけで、旅行や飲み会の割り勘から精算までを完結できるアプリ。サークル内ハッカソン「SysHack（シスハック）」での制作をきっかけに5人チームで開発を継続し、学生団体経由で企業賞も受賞。技育博2026にもエントリーしている。",
     goal: "旅行や飲み会での立て替えは、あとから“誰がいくら払うか”を計算するのが面倒で、精算がうやむやになりがち。その“お金のモヤモヤ”をゼロにするのが狙い。レシートを撮るだけで記録が終わり、誰でも迷わず割り勘から精算まで完了できる——そんな体験をめざした。",
-    approach: "5人チームでの開発で、自分はUI・フロントエンドを中心に、レシートのAI読み取りなどのバックエンドや発表・登壇も担当した。主な機能は、①レシートを撮ると Gemini（2.5 Flash）のOCRが店名・金額・品目を自動入力、②全員で均等・金額を指定・商品ごとに支払う人を選ぶ、の3方式の割り勘、③食事・カフェ・交通などをアイコンで分類、④“誰が誰にいくら払うか”を最小回数の送金で求める自動精算、⑤招待コードでのイベント・参加者管理、⑥フレンド申請と取引履歴、⑦承認・催促・拒否の通知（アプリ内＋プッシュ）、⑧「〇〇の支払いの件」単位のチャット相談、⑨承認待ちを一覧できるビュー、⑩イベントごとの精算進捗の可視化。直近では、“次にやること”を教える「お支払いアシスタント」、画面のボタンを1つずつ案内する使い方ガイド／ツアー、登録なしで試せるゲストデモ、ホーム画面に入れて使える PWA 対応まで加え、使い勝手を大きく改修した。技術は Vue 3（script setup）＋Vite、ルーティングは Vue Router、バックエンドは Firebase（Authentication／Firestore／Cloud Functions／Hosting／FCM）で、精算ロジックは composable に切り出し、APIキーはサーバーレス関数側に置いてフロントには出さない。スマホのスワイプUIとPCレスポンシブに両対応している。",
+    approach: "5人チームでの開発で、自分はUI・フロントエンドを中心に、レシートのAI読み取りなどのバックエンドや発表・登壇も担当した。ホームを開くと、受け取る額・支払う額・今月の収支がひと目でわかる。主な機能は、①レシートを撮ると Gemini（2.5 Flash）のOCRが店名・金額・消費税まで自動入力（手入力にも対応）、②全員で均等・金額を指定・商品ごとに支払う人を選ぶ、の3方式の割り勘、③食事・カフェ・交通などをアイコンで分類、④招待コードや「＋招待」でのイベント・参加者管理と、誰が誰にいくら払うかが残り件数つきで見える精算サマリー、⑤相手ごとに全イベントの貸し借りを相殺して、送金の回数を最小にまとめる「まとめて精算」、⑥PayPayリンクでの請求と「支払いを催促する」通知。現金でやり取りした時は「受け取った／支払った」を相手が承認して完了する二段階の精算、⑦承認待ちを自分側・相手側・履歴に分けて確認できる一覧、⑧「〇〇の支払いの件」単位で会話できるチャット、⑨フレンド申請・承認と、友達ごとの貸し借りのまとめ、⑩支払い・受け取り・精算済みで絞り込めるお支払い履歴。さらに、“次にやること”を金額つきで教える「お支払いアシスタント」、削除したイベントや取引を7日間だけ預かって戻せるゴミ箱、実際のデモ画面で1手ずつ説明するヘルプ（画面ごとの解説と画面遷移マップ、順に案内する使い方ツアー）、登録なしで試せるゲストデモ、ホーム画面に入れて使える PWA 対応まで用意した。技術は Vue 3（script setup）＋Vite、ルーティングは Vue Router、バックエンドは Firebase（Authentication／Firestore／Cloud Functions／Hosting／FCM）で、精算ロジックは composable に切り出し、APIキーはサーバーレス関数側に置いてフロントには出さない。スマホのスワイプUIとPCレスポンシブに両対応している。",
     tools: ["Vue 3 / Vite", "Firebase", "Gemini 2.5 Flash（OCR）", "PWA"],
     thumb: "/assets/works/settlo-event.jpg",
     contain: true,
     status: "ハッカソン企業賞・開発中",
     link: "https://settlo-app.web.app",
     slideGroups: [
-      { title: "使う・記録する（ゲストデモの実画面）", images: ["/assets/works/settlo-home.jpg", "/assets/works/settlo-event.jpg", "/assets/works/settlo-pay.jpg"] },
-      { title: "新しい体験（アシスタント・お知らせ・使い方ガイド）", images: ["/assets/works/settlo-assistant.jpg", "/assets/works/settlo-notif.jpg", "/assets/works/settlo-guide.jpg", "/assets/works/settlo-friend.jpg"] },
+      { title: "記録する・まとめて精算する（ゲストデモの実画面）", images: ["/assets/works/settlo-home.jpg", "/assets/works/settlo-event.jpg", "/assets/works/settlo-pay.jpg"] },
+      { title: "迷わせない仕組み（アシスタント・お知らせ・使い方ガイド・フレンド）", images: ["/assets/works/settlo-assistant.jpg", "/assets/works/settlo-notif.jpg", "/assets/works/settlo-guide.jpg", "/assets/works/settlo-friend.jpg"] },
     ],
   },
   {
