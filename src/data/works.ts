@@ -219,6 +219,8 @@ export const works: Work[] = [
     links: [{ label: "GitHub（ソース）", href: "https://github.com/ryoo-ma638/deathkama_rider_game" }],
     featured: true,
   },
+  // === カマカマクエスト：本人指示で「一時的に非表示」（2026-09-14／展示に至らなかったため）。再表示する時はこの /* */ を外すだけ。 ===
+  /*
   {
     slug: "kamakama-quest",
     title: "カマカマクエスト ― 鎌ゲームの子ども版",
@@ -237,6 +239,7 @@ export const works: Work[] = [
       { title: "あそびかた・クリア", images: ["/assets/works/kamakama-howto.jpg", "/assets/works/kamakama-stageclear.jpg", "/assets/works/kamakama-clear.jpg", "/assets/works/kamakama-retry.jpg"] },
     ],
   },
+  */
   {
     slug: "wis-umbrella",
     title: "雨に向く傘 — WISS2026 応募準備中の研究",
@@ -251,6 +254,8 @@ export const works: Work[] = [
       { title: "コンセプト — 雨の来る方へ、傘が自動で向く", images: ["/assets/works/wis-scene.jpg", "/assets/works/wis-mechanism.jpg", "/assets/works/wis-concept.jpg"] },
     ],
   },
+  // === 福岡市科学館 CREATIVE AWARD：本人指示で「一時的に非表示」（2026-09-14／応募に至らなかったため）。再表示する時はこの /* */ を外すだけ。 ===
+  /*
   {
     slug: "fukuoka-award",
     title: "福岡市科学館 CREATIVE AWARD 2026（応募構想）",
@@ -259,6 +264,7 @@ export const works: Work[] = [
     summary: "福岡市科学館の展示アイデア公募『CREATIVE AWARD 2026』（テーマ：生きもののコミュニケーション）への応募を準備している、研究室での個人企画。",
     goal: "科学を“体で感じて学べる”体験を考える。（応募準備中のため、具体的なアイデアの公開は控えています）",
   },
+  */
   {
     slug: "shuwa-game",
     title: "手話認識ゲーム",
