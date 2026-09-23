@@ -405,7 +405,7 @@ export const works: Work[] = [
     slug: "uriko-site",
     title: "売り子 応援サイト",
     category: "web",
-    summary: "バンテリンドームのビール売り子活動を広めるために作った個人サイト。『「応援したくなる」を、めざして。』をテーマに、明るくポップにまとめた一枚。",
+    summary: "バンテリンドームのビール売り子活動を広めるために作った個人サイト。『「応援したくなる」を、めざして。』をテーマに、明るくポップにまとめた一枚。運営している本人は、2026年の年間ランキングで新人売上10位・おつまみは全体15位。",
     goal: "ビールの売り子という活動をより多くの人に知ってもらい、球場での時間をもっと楽しんでもらうこと。Webでの発信を通じて、活動のイメージアップにつなげる。",
     approach: "初めて訪れた人にも雰囲気が伝わるよう、親しみやすくポップな世界観で統一。活動紹介・おしながき・うりこ日記・キャッシュレス決済の案内などを、見やすく一枚に構成した。HTML / CSS / JavaScript でデザインから実装まで対応。",
     slideGroups: [
@@ -418,6 +418,7 @@ export const works: Work[] = [
     tools: ["HTML", "CSS", "JavaScript"],
     thumb: "/assets/works/uriko.jpg",
     link: "https://uriko-v-dome-ryoma.vercel.app",
+    status: "新人売上10位・おつまみ全体15位",
   },
   {
     slug: "portfolio-vol1",
