@@ -49,6 +49,7 @@ const qa = [
   { q: '好きなドラマ', a: '『ROOKIES（ルーキーズ）』。' },
   { q: '中日の推し', a: '捕手・加藤匠馬選手。かつては堂上直倫選手。' },
   { q: '推しのきっかけ', a: 'TBS『ラヴィット！』で弓木奈於さんの面白さと可愛らしさに惹かれ、乃木坂46の虜に。' },
+  { q: '応援しているグループ', a: '乃木坂46 と ≒JOY（ニアジョイ）。' },
   { q: '休日', a: '寝る。推し活。新しいことに挑戦する。つくりたいものをつくる。' },
   { q: '好きな食べ物', a: '餃子・お寿司・焼肉。' },
   { q: '落ち着く場所', a: '家。' },
@@ -69,7 +70,7 @@ const traits = [
 // 主な実績（すべて事実・ガクチカ準拠）
 const highlights = [
   { n: '60名', l: '規模のサークル', d: 'CEED副部長として「誰も置いてけぼりにしない」運営を支え、サークルは60名規模のコミュニティに成長。', href: '/ceed' },
-  { n: '企業賞', l: 'ハッカソン', d: 'シスハックで割り勘アプリ「Settlo」を開発し、企業賞を受賞。', href: '/works/settlo' },
+  { n: '企業協賛賞', l: 'ハッカソン', d: 'シスハックで割り勘アプリ「Settlo」を開発し、企業協賛賞を受賞。', href: '/works/settlo' },
   { n: '出展', l: 'TGS ほか', d: '体感型ゲーム「虫歯アニマルズ」をデザイン・造形で担当。東京ゲームショウ・ゲームマーケット・安城Eフェスで出展。', href: '/works/mushiba-animals' },
   { n: '接客', l: 'ビール売り子', d: 'バンテリンドームナゴヤで、ビールの売り子として活動。「応援したくなる接客」を工夫している。', href: '/works/uriko-site' },
 ];
@@ -250,7 +251,7 @@ const highlights = [
         <div class="hls">
           {highlights.map((h, i) => (
             <a class={`hl reveal d${(i % 4) + 1}`} href={h.href}>
-              <span class="hl-n">{h.n}</span>
+              <span class:list={["hl-n", { "hl-n--long": h.n.length >= 4 }]}>{h.n}</span>
               <span class="hl-l">{h.l}</span>
               <p>{h.d}</p>
               <span class="hl-go">くわしく →</span>
@@ -648,6 +649,7 @@ const highlights = [
   .hl { position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md); padding: 1.2rem 1.2rem 1rem; box-shadow: var(--sh-1); transition: transform .2s var(--spring), box-shadow .2s ease; }
   .hl:hover { transform: translateY(-6px) rotate(-.6deg); box-shadow: var(--sh-2); }
   .hl-n { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 900; color: var(--amber-d); line-height: 1; }
+  .hl-n--long { font-size: clamp(1.4rem, 2.2vw, 1.9rem); letter-spacing: -.01em; }
   .hl-l { display: inline-block; margin-left: .4rem; font-family: var(--f-mono); font-size: .66rem; font-weight: 700; color: var(--mut); letter-spacing: .08em; }
   .hl p { margin-top: .55rem; color: var(--mut); font-weight: 500; font-size: .86rem; line-height: 1.8; }
   .hl-go { display: inline-block; margin-top: .5rem; font-family: var(--f-round); font-weight: 700; font-size: .8rem; color: var(--scarlet-d); }

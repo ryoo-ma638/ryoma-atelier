@@ -35,7 +35,7 @@ export interface Work {
   stageVideos?: { label: string; src: string }[]; // ステージ別の短い動画（3カラム表示。任意）
   gallery?: string[];     // 複数画像（ライトボックスで拡大閲覧。スライド資料・スクショ等）
   audio?: { title: string; src: string; note?: string }[]; // 試聴用の音源（モーダルにプレイヤー表示）
-  slideGroups?: { title: string; images: string[] }[];     // 発表/種類ごとに分けた横スクロールのスライド群
+  slideGroups?: { title: string; images: string[]; portrait?: boolean }[];  // 発表/種類ごとに分けた横スクロールのスライド群（portrait:true＝スマホの縦長スクショ用の縦枠）
   featured?: boolean;     // トップのBentoで大きく見せる
   link?: string;          // 外部/別サイトへのリンク（Web作品など）
   links?: { label: string; href: string }[]; // 掲載メディア等の外部リンク（複数・任意）
@@ -369,17 +369,18 @@ export const works: Work[] = [
     slug: "settlo",
     title: "Settlo（セトロ）― レシートAI割り勘アプリ",
     category: "web",
-    summary: "レシートを撮るだけで、旅行や飲み会の割り勘から精算までを完結できるアプリ。サークル内ハッカソン「SysHack（シスハック）」での制作をきっかけに5人チームで開発を継続し、学生団体経由で企業賞も受賞。技育博2026にもエントリーしている。",
+    summary: "レシートを撮るだけで、旅行や飲み会の割り勘から精算までを完結できるアプリ。サークル内ハッカソン「SysHack（シスハック）」での制作をきっかけに5人で開発を始め、展示準備は3人体制で進めた。同ハッカソンでは企業協賛賞を受賞。技育博2026 Vol.2（2026年9月・虎ノ門ヒルズ）に出展した。",
     goal: "旅行や飲み会での立て替えは、あとから“誰がいくら払うか”を計算するのが面倒で、精算がうやむやになりがち。その“お金のモヤモヤ”をゼロにするのが狙い。レシートを撮るだけで記録が終わり、誰でも迷わず割り勘から精算まで完了できる——そんな体験をめざした。",
-    approach: "5人チームでの開発で、自分はUI・フロントエンドを中心に、レシートのAI読み取りなどのバックエンドや発表・登壇も担当した。ホームを開くと、受け取る額・支払う額・今月の収支がひと目でわかる。主な機能は、①レシートを撮ると Gemini（2.5 Flash）のOCRが店名・金額・消費税まで自動入力（手入力にも対応）、②全員で均等・金額を指定・商品ごとに支払う人を選ぶ、の3方式の割り勘、③食事・カフェ・交通などをアイコンで分類、④招待コードや「＋招待」でのイベント・参加者管理と、誰が誰にいくら払うかが残り件数つきで見える精算サマリー、⑤相手ごとに全イベントの貸し借りを相殺して、送金の回数を最小にまとめる「まとめて精算」、⑥PayPayリンクでの請求と「支払いを催促する」通知。現金でやり取りした時は「受け取った／支払った」を相手が承認して完了する二段階の精算、⑦承認待ちを自分側・相手側・履歴に分けて確認できる一覧、⑧「〇〇の支払いの件」単位で会話できるチャット、⑨フレンド申請・承認と、友達ごとの貸し借りのまとめ、⑩支払い・受け取り・精算済みで絞り込めるお支払い履歴。さらに、“次にやること”を金額つきで教える「お支払いアシスタント」、削除したイベントや取引を7日間だけ預かって戻せるゴミ箱、実際のデモ画面で1手ずつ説明するヘルプ（画面ごとの解説と画面遷移マップ、順に案内する使い方ツアー）、登録なしで試せるゲストデモ、ホーム画面に入れて使える PWA 対応まで用意した。技術は Vue 3（script setup）＋Vite、ルーティングは Vue Router、バックエンドは Firebase（Authentication／Firestore／Cloud Functions／Hosting／FCM）で、精算ロジックは composable に切り出し、APIキーはサーバーレス関数側に置いてフロントには出さない。スマホのスワイプUIとPCレスポンシブに両対応している。",
-    tools: ["Vue 3 / Vite", "Firebase", "Gemini 2.5 Flash（OCR）", "PWA"],
+    approach: "5人で開発を始め、展示は3人体制。自分はイベント詳細・精算ロジックとデータ設計、レシートのAI読み取りを担当し、UI・ホーム画面やフレンド機能はチームで分担した。ホームには、いま受け取る額・支払う額が残り件数つきで並び、相手の返事待ちは別枠。主な機能は、①レシートを撮ると Gemini（2.5 Flash）が店名・金額・消費税・品目まで自動入力し、1回に5枚までまとめて読み取れる（手入力にも対応）、②全員で均等・金額を指定・商品ごとに支払う人を選ぶ、の3方式の割り勘、③食事・カフェ・コンビニ・交通などをアイコンで分ける支払いジャンル、④招待コードや「＋招待」でのイベント・参加者管理と、未精算の残り・完了率が見える精算の進捗表示、⑤送金の回数が最小で、できるだけ100円単位で割り切れる金額になる「まとめて精算」2種類（イベント参加者全員を一度に相殺／相手ごとに全イベントをまたいで相殺）、⑥フレンド申請・承認と、フレンド詳細から相手ごとの貸し借り・取引履歴をまとめて確認・精算できるフレンド機能、⑦PayPayリンクでの請求と催促通知、現金は「受け取った／支払った」を相手が承認して完了する二段階の精算、⑧承認リクエスト・催促・拒否を一言メッセージつきでアプリ内＋プッシュに届ける通知と、承認する分・相手待ち・履歴を分けた承認待ちビュー、⑨「〇〇の支払いの件」単位で相談できるチャット（既読・未読つき）と、会話を読んで返信案を3つ出す「AIと返信を考える」（PayPayが使える・いつまでに払うなどの条件に沿わせられる。AIには名前を渡さず仮のラベルに置き換える）、⑩相手が「受け取っていない」と戻した差し戻しを普通の未払いと分けて表示、⑪支払い・受け取り・精算済みで絞り込めるお支払い履歴と、削除した取引やイベントを7日だけ預かる「元に戻す」。ほかに、次の一手を金額つきで教えるお支払いアシスタント、ボタンを1つずつ光らせて案内する「初めての方へ」、登録なしのゲストデモ、PWA も用意した。技術は Vue 3（script setup）＋Vite、Vue Router（ハッシュルーティング）、バックエンドは Firebase（Authentication／Firestore／Cloud Functions／Hosting／FCM）。設計面では、金額の正データは取引1本に決めて二重に持たず、お金を確定させる処理はサーバー側だけに置き、精算に予約された取引は編集も削除もできないようにした。計算は画面から切り離した純粋関数にし、テストで金額と状態遷移を固定。レシートの読み取りと返信案の生成は Cloud Functions 側に置いた。",
+    tools: ["Vue 3 / Vite", "Firebase（Firestore / Cloud Functions / FCM）", "Gemini 2.5 Flash（レシート読み取り・返信案）", "PWA"],
     thumb: "/assets/works/settlo-event.jpg",
     contain: true,
-    status: "ハッカソン企業賞・開発中",
+    status: "ハッカソン企業協賛賞・技育博2026出展",
     link: "https://settlo-app.web.app",
     slideGroups: [
-      { title: "記録する・まとめて精算する（ゲストデモの実画面）", images: ["/assets/works/settlo-home.jpg", "/assets/works/settlo-event.jpg", "/assets/works/settlo-pay.jpg"] },
-      { title: "迷わせない仕組み（アシスタント・お知らせ・使い方ガイド・フレンド）", images: ["/assets/works/settlo-assistant.jpg", "/assets/works/settlo-notif.jpg", "/assets/works/settlo-guide.jpg", "/assets/works/settlo-friend.jpg"] },
+      { title: "記録する・まとめて精算する（ゲストデモの実画面）", images: ["/assets/works/settlo-home.jpg", "/assets/works/settlo-event.jpg", "/assets/works/settlo-pay.jpg"], portrait: true },
+      { title: "迷わせない仕組み（アシスタント・お知らせ・使い方ガイド・フレンド）", images: ["/assets/works/settlo-assistant.jpg", "/assets/works/settlo-notif.jpg", "/assets/works/settlo-guide.jpg", "/assets/works/settlo-friend.jpg"], portrait: true },
+      { title: "相談する・AIと返信を考える（支払いの件ごとのチャット／AIが会話を読んで出した返信案）", images: ["/assets/works/settlo-chat.jpg", "/assets/works/settlo-ai.jpg"], portrait: true },
     ],
   },
   {

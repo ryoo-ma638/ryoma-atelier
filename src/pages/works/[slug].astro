@@ -136,7 +136,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
           <p class="eyebrow"><span class="dot"></span>{sg.title}</p>
           <div class="slides">
             {sg.images.map((s, si) => (
-              <button class="slide" type="button" data-gallery={JSON.stringify(sg.images)} data-index={si} data-caption={sg.title}>
+              <button class:list={["slide", { "slide--tall": sg.portrait }]} type="button" data-gallery={JSON.stringify(sg.images)} data-index={si} data-caption={sg.title}>
                 <img src={s} alt={`${sg.title} ${si + 1}`} loading="lazy" />
               </button>
             ))}
@@ -247,6 +247,8 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
   .slides { display: flex; gap: .9rem; overflow-x: auto; padding: 1rem .2rem .6rem; scrollbar-width: thin; }
   .slide { flex: 0 0 auto; width: min(420px, 74vw); }
   .slide img { width: 100%; aspect-ratio: 16/10; object-fit: contain; background: #fff; display: block; }
+  /* スマホの縦長スクショ用：縦枠にして上部を大きく見せる（全体はライトボックスで） */
+  .slide--tall img { aspect-ratio: 3/4; object-fit: cover; object-position: top center; }
 
   /* ---- 音源 ---- */
   .tracks { display: grid; gap: .9rem; margin-top: 1rem; }

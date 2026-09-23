@@ -17,14 +17,16 @@
   .lb {
     position: fixed; inset: 0; z-index: 1000; display: none;
     place-items: center; padding: clamp(1rem, 4vw, 3rem);
+    /* 下端のカウンター（1 / 2）の帯ぶんを確保＝キャプションと重ならないようにする */
+    padding-bottom: clamp(3.5rem, 8vh, 5rem);
     background: color-mix(in srgb, #05050a 88%, transparent);
     backdrop-filter: blur(14px) saturate(120%);
     opacity: 0; transition: opacity 0.35s var(--ease, cubic-bezier(0.16, 1, 0.3, 1));
   }
   .lb.open { display: grid; opacity: 1; }
-  .lb-figure { margin: 0; max-width: min(1100px, 92vw); max-height: 88vh; display: grid; gap: 0.8rem; justify-items: center; }
+  .lb-figure { margin: 0; max-width: min(1100px, 92vw); max-height: 78vh; display: grid; gap: 0.8rem; justify-items: center; }
   .lb-figure img {
-    max-width: 100%; max-height: 82vh; width: auto; height: auto;
+    max-width: 100%; max-height: 70vh; width: auto; height: auto;
     object-fit: contain; border-radius: var(--radius-sm, 12px);
     border: 1px solid var(--line, rgba(255,255,255,0.14)); box-shadow: 0 30px 80px rgba(0,0,0,0.6);
     background: var(--bg-2, #14121a);
@@ -52,6 +54,10 @@
     background: rgba(0,0,0,0.4); padding: 0.4rem 1rem; border-radius: 999px;
   }
   .lb.single .lb-prev, .lb.single .lb-next, .lb.single .lb-counter { display: none; }
+  /* 1枚だけのときはカウンターが出ないので下の余白を元に戻し、画像を大きく見せる */
+  .lb.single { padding-bottom: clamp(1rem, 4vw, 3rem); }
+  .lb.single .lb-figure { max-height: 88vh; }
+  .lb.single .lb-figure img { max-height: 82vh; }
 
   /* トリガー側の見え方（クリック可能の合図） */
   :global([data-gallery]) { cursor: zoom-in; }
@@ -78,7 +84,7 @@
       img.src = list[i];
       cur.textContent = String(i + 1);
       total.textContent = String(list.length);
-      cap.textContent = list.length > 1 ? `${caption}（${i + 1}/${list.length}）` : caption;
+      cap.textContent = caption; // 枚数は .lb-counter が出すので二重表示しない
       lb.classList.toggle("single", list.length <= 1);
       requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add("show-img")));
       // 次の画像を先読み
