@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import '../styles/tokens.css';
 import '../styles/base.css';
+import '../styles/fonts-main.css';
 
 interface Props { title?: string; description?: string; }
 const {
@@ -36,12 +37,7 @@ const canonical = new URL(Astro.url.pathname, site).href;
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Yusei+Magic&display=swap"
-    rel="stylesheet"
-  />
+  <!-- Webフォントは自前配信（src/styles/fonts-main.css）。Google Fonts への通信は無し。 -->
   <ClientRouter />
 </head>
 <body>

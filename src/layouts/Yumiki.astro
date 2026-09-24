@@ -1,5 +1,6 @@
 ---
 import "../styles/yumiki.css";
+import "../styles/fonts-yumiki.css";
 import { nav, sns, img } from "../data/yumiki.ts";
 
 interface Props { title?: string; description?: string; }
@@ -30,9 +31,7 @@ const eggStyle = eggPos[(curIdx < 0 ? 0 : curIdx) % eggPos.length];
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <link rel="icon" href="/favicon.png" type="image/png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Yomogi&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <!-- Webフォントは自前配信（src/styles/fonts-yumiki.css）。Google Fonts への通信は無し。 -->
     <!-- JS有効時のみリビールを隠す＝JS無効/失敗でも本文が必ず見える（空白防止） -->
     <script is:inline>
       document.documentElement.classList.add("js");

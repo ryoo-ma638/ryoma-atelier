@@ -27,6 +27,8 @@ CG・画像処理・Web・映像・企画・グラフィックを横断した全
 npm install
 npm run dev      # http://localhost:4321
 npm run build    # dist/ に静的出力
+npm run fonts:usage  # 太さごとの実使用文字を dist から集める（要: ビルド済み）
+npm run fonts    # Webフォントのサブセット再生成（文字を足したら build → fonts:usage → fonts）
 node qa-crawl.mjs  # 全ページQA（要: ビルド済み + preview起動）
 ```
 
