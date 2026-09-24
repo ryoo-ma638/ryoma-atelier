@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Lightbox from '../../components/Lightbox.astro';
+import Icon from '../../components/Icon.astro';
 import { works, categoryLabels, type Category } from '../../data/works.ts';
 
 export function getStaticPaths() {
@@ -22,6 +23,17 @@ const next = flat[(idx + 1) % flat.length];
 
 const externalLink = work.link?.startsWith('http');
 const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
+
+// 「工夫したこと」＝句点で区切り、2〜3文ずつの段落にして読みやすくする（文言は変えない）
+const approachParas: string[] = [];
+if (work.approach) {
+  const sentences = work.approach.match(/[^。]*。|[^。]+$/g) ?? [work.approach];
+  for (let i = 0; i < sentences.length; i += 2) approachParas.push(sentences.slice(i, i + 2).join(''));
+  if (approachParas.length > 1 && (sentences.length % 2) === 1) {
+    const tail = approachParas.pop()!;
+    approachParas[approachParas.length - 1] += tail;
+  }
+}
 ---
 <Base title={`${work.title} ― 稜馬のアトリエ`} description={work.summary}>
   <Nav />
@@ -77,15 +89,15 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
           {work.goal && (
             <section class="ga-card reveal d1">
               <span class="tape" aria-hidden="true"></span>
-              <h2 class="hand">✎ ねらい</h2>
+              <h2 class="hand"><Icon name="pencil" size={22} />ねらい</h2>
               <p>{work.goal}</p>
             </section>
           )}
           {work.approach && (
             <section class="ga-card reveal d2">
               <span class="tape t2" aria-hidden="true"></span>
-              <h2 class="hand">✎ 工夫したこと</h2>
-              <p>{work.approach}</p>
+              <h2 class="hand"><Icon name="pencil" size={22} />工夫したこと</h2>
+              {approachParas.map((t) => <p>{t}</p>)}
             </section>
           )}
         </div>
@@ -151,7 +163,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
           <div class="tracks">
             {work.audio.map((a) => (
               <div class="track">
-                <p class="t-name">🎧 {a.title}</p>
+                <p class="t-name"><Icon name="headphone" size={18} />{a.title}</p>
                 {a.note && <p class="t-note">{a.note}</p>}
                 <audio controls preload="none" src={a.src}></audio>
               </div>
@@ -193,7 +205,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
   .crumb { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
   .crumb a { font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 1px; }
   .crumb a:hover { color: var(--scarlet); border-color: var(--scarlet); }
-  .status { font-family: var(--f-mono); font-size: .62rem; font-weight: 700; background: var(--ink); color: var(--paper); padding: .28rem .6rem; border-radius: var(--r-sm); }
+  .status { font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; background: var(--ink); color: var(--paper); padding: .28rem .6rem; border-radius: var(--r-sm); }
 
   /* ---- ヒーロー ---- */
   .head { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(1.2rem, 3.5vw, 2.6rem); align-items: start; margin-top: 1.2rem; }
@@ -221,7 +233,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
 
   .meta { margin-top: 1.2rem; display: grid; gap: .6rem; }
   .meta .row { display: grid; grid-template-columns: 108px 1fr; gap: .6rem; align-items: baseline; }
-  .meta dt { font-family: var(--f-mono); font-size: .66rem; font-weight: 700; color: var(--amber-d); letter-spacing: .08em; }
+  .meta dt { font-family: var(--f-mono); font-size: .75rem; font-weight: 700; color: var(--amber-ink); letter-spacing: .08em; }
   .meta dd { font-weight: 700; font-size: .92rem; }
   .chips { display: flex; flex-wrap: wrap; gap: .35rem; }
   .chip { font-family: var(--f-mono); font-size: .66rem; padding: .22rem .55rem; border-radius: var(--r-sm); background: var(--paper-3); }
@@ -230,14 +242,21 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
   .acts .ar { margin-left: .2rem; }
 
   /* ---- ねらい/工夫 ---- */
-  .ga { display: grid; grid-template-columns: 1fr; gap: clamp(1rem, 2.5vw, 1.6rem); margin-top: clamp(1.8rem, 4vw, 2.8rem); align-items: start; }
+  .ga { display: grid; grid-template-columns: 1fr; gap: clamp(1rem, 2.5vw, 1.6rem); margin-top: var(--stack-xs); align-items: start; }
   .ga-card { position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg); padding: 1.5rem 1.5rem 1.3rem; box-shadow: var(--sh-2); }
-  .ga-card h2 { font-size: 1.15rem; color: var(--scarlet-d); margin-bottom: .6rem; transform: rotate(-1deg); width: fit-content; }
-  .ga-card p { color: var(--ink-2); font-weight: 500; line-height: 1.95; }
+  .ga-card h2 {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: var(--h3); color: var(--scarlet-d); margin-bottom: .7rem;
+    transform: rotate(-1deg); width: fit-content;
+  }
+  /* 本文だけ幅を絞る（1100px幅・16pxだと1行69字＝日本語の適正35〜45字の1.5倍で目が戻れない）。
+     カード自体は全幅のままにして、紙面のリズムは変えない。 */
+  .ga-card p { color: var(--ink-2); font-weight: 500; line-height: 1.95; max-width: 34em; }
+  .ga-card p + p { margin-top: 0.7em; }
   .ga-card .tape.t2 { background: color-mix(in oklab, var(--scarlet) 30%, #fff 36%); transform: translateX(-50%) rotate(4deg); }
 
   /* ---- ギャラリー/スライド ---- */
-  .sec { margin-top: clamp(2rem, 4.5vw, 3rem); }
+  .sec { margin-top: var(--stack-xs); }
   .sec .mut { color: var(--mut); font-size: .8em; }
   .gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .9rem; margin-top: 1rem; }
   .shot, .slide { padding: 0; border: 2px solid var(--ink); border-radius: var(--r-md); overflow: hidden; background: var(--card); box-shadow: var(--sh-1); cursor: zoom-in; transition: transform .2s var(--spring), box-shadow .2s ease; }
@@ -253,7 +272,8 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
   /* ---- 音源 ---- */
   .tracks { display: grid; gap: .9rem; margin-top: 1rem; }
   .track { background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md); padding: 1rem 1.2rem; box-shadow: var(--sh-1); }
-  .t-name { font-weight: 700; }
+  .t-name { display: flex; align-items: center; gap: .4rem; font-weight: 700; color: var(--ink); }
+  .t-name :global(.icn) { color: var(--amber-ink); }
   .t-note { color: var(--mut); font-size: .85rem; margin: .2rem 0 .5rem; }
   .track audio { width: 100%; }
 
@@ -264,7 +284,7 @@ const galleryJson = work.gallery ? JSON.stringify(work.gallery) : null;
     transition: transform .2s var(--spring), box-shadow .2s ease; }
   .pn-card:hover { transform: translateY(-4px); box-shadow: var(--sh-2); }
   .pn-card img { grid-row: 1 / span 2; width: 84px; aspect-ratio: 16/10; object-fit: cover; border-radius: 8px; }
-  .pn-dir { font-family: var(--f-mono); font-size: .62rem; font-weight: 700; color: var(--amber-d); }
+  .pn-dir { font-family: var(--f-mono); font-size: .75rem; font-weight: 700; color: var(--amber-ink); }
   .pn-title { font-weight: 700; font-size: .84rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .pn-card.next { text-align: right; grid-template-columns: 1fr 84px; }
   .pn-card.next img { grid-column: 2; }

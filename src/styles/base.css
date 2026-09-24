@@ -24,6 +24,9 @@ img, video, canvas { max-width: 100%; display: block; }
 /* --- レイアウト --- */
 .wrap { width: min(1180px, 100% - var(--gutter) * 2); margin-inline: auto; }
 .section { padding-block: var(--stack); }
+/* セクションが続くときは上下の余白を二重に取らない（間延び防止）。
+   面の色が変わる帯セクションだけ、各ページで padding-top を var(--stack) に戻す */
+.section + .section { padding-top: var(--stack-xs); }
 .eyebrow {
   font-family: var(--f-hand); font-size: 1.02rem;
   color: var(--scarlet-d); letter-spacing: .04em;
@@ -59,8 +62,8 @@ img, video, canvas { max-width: 100%; display: block; }
 }
 
 h1, h2, h3 { font-weight: 900; line-height: 1.08; letter-spacing: -.01em; }
-h2.big { font-size: clamp(1.9rem, 5vw, 3.4rem); }
-.lead { font-size: clamp(1.02rem, 2.2vw, 1.3rem); color: var(--mut); font-weight: 500; }
+h2.big { font-size: var(--h2); }
+.lead { font-size: var(--lead-size); color: var(--mut); font-weight: 500; }
 
 /* --- ボタン --- */
 .btn {
@@ -78,7 +81,7 @@ h2.big { font-size: clamp(1.9rem, 5vw, 3.4rem); }
 
 /* --- 分野タグ --- */
 .tag {
-  font-family: var(--f-mono); font-size: .64rem; letter-spacing: .08em;
+  font-family: var(--f-mono); font-size: var(--label-sm); letter-spacing: .08em;
   padding: .22rem .55rem; border-radius: var(--r-sm); font-weight: 500;
   background: color-mix(in oklab, var(--tag, var(--amber)) 16%, var(--paper));
   color: color-mix(in oklab, var(--tag, var(--amber)) 72%, var(--ink));

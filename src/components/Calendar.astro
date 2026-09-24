@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { uriko, TEAM, SHORT } from '../data/uriko.ts';
 const { year, month, games, homeVenue, handle } = uriko;
 
@@ -25,7 +26,7 @@ const workCount = Object.values(games).filter((g) => g.work).length;
     <p class="eyebrow reveal"><span class="dot"></span>売り子カレンダー · {handle}</p>
     <div class="cal-head reveal d1">
       <h2 class="big"><span class="y">{year}</span>年 <span class="m">{month}</span>月</h2>
-      <p class="cal-sub hand">今月は <b>{workCount}試合</b> 出勤予定。バンテリンドームで待ってます🍺</p>
+      <p class="cal-sub hand">今月は <b>{workCount}試合</b> 出勤予定。バンテリンドームで待ってます<Icon name="beer" size={18} class="cal-beer" /></p>
       <img class="cal-uma" src="/assets/mascot/cheers.png" alt="" aria-hidden="true" />
     </div>
 
@@ -75,10 +76,11 @@ const workCount = Object.values(games).filter((g) => g.work).length;
   </div>
 
   <style>
-    .cal-wrap { padding-block: clamp(2.5rem, 6vw, 4rem); }
+    .cal-wrap { padding-block: var(--stack-sm); }
     .cal-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin: .4rem 0 1.4rem; }
-    .cal-head .y, .cal-head .m { color: var(--amber-d); }
+    .cal-head .y, .cal-head .m { color: var(--amber-ink); }
     .cal-sub { color: var(--scarlet-d); font-size: 1.06rem; rotate: -1deg; }
+    .cal-sub :global(.icn) { margin-left: .35rem; color: var(--amber-ink); }
     .cal-sub b { color: var(--scarlet); font-size: 1.15em; }
     .cal-uma {
       width: clamp(64px, 7vw, 92px); margin-left: auto; align-self: flex-end;

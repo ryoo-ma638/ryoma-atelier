@@ -22,17 +22,41 @@ const keepIO = (io) => { cleanups.push(() => io.disconnect()); return io; };
 
 /* ---------- 1. スクロール登場 ---------- */
 function initReveal() {
+  const show = (el) => {
+    if (el.classList.contains('in')) return;
+    el.classList.add('in');
+    el.querySelectorAll('.rise-char').forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 45));
+    if (el.dataset.handoff !== undefined) el.classList.add('go');
+  };
+  // しきい値0＋画面外400pxまで先出し＝高速スクロールでも“未発火の空白”を見せない
   const io = keepIO(new IntersectionObserver((entries) => {
     for (const e of entries) {
       if (!e.isIntersecting) continue;
-      const el = e.target;
-      el.classList.add('in');
-      el.querySelectorAll('.rise-char').forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 45));
-      if (el.dataset.handoff !== undefined) el.classList.add('go');
-      io.unobserve(el);
+      show(e.target);
+      io.unobserve(e.target);
     }
-  }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' }));
-  document.querySelectorAll('.reveal, .draw-line, [data-reveal]').forEach((el) => io.observe(el));
+  }, { threshold: 0, rootMargin: '400px 0px 400px 0px' }));
+  let els = Array.from(document.querySelectorAll('.reveal, .draw-line, [data-reveal]'));
+  els.forEach((el) => io.observe(el));
+
+  // フォールバック：スクロール停止から120ms後・読み込み後・アンカー移動後に、画面の下端+400pxより
+  // 上にある未発火の要素をまとめて立ち上げる（一気に飛ぶスクロールで飛び越された要素を拾う）。
+  // 表示済みは配列から外し、全部済んだらリスナーを解放＝常時の走査を残さない。
+  let timer = 0;
+  const sweep = () => {
+    const h = innerHeight;
+    for (let i = els.length - 1; i >= 0; i--) {
+      const el = els[i];
+      if (el.getBoundingClientRect().top < h + 400) { show(el); io.unobserve(el); }
+      if (el.classList.contains('in')) els.splice(i, 1);
+    }
+    if (!els.length) { window.removeEventListener('scroll', onScroll); clearTimeout(timer); }
+  };
+  const onScroll = () => { clearTimeout(timer); timer = window.setTimeout(sweep, 120); };
+  onEvt(window, 'scroll', onScroll, { passive: true });
+  onEvt(window, 'hashchange', sweep);
+  const t = setTimeout(sweep, 300);
+  cleanups.push(() => { clearTimeout(t); clearTimeout(timer); });
 }
 
 /* ---------- 2. スクロール進捗＝ビール充填（先端をうまくんが駆ける） ---------- */

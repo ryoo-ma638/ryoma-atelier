@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 // ※「弓木」は作品（著作権に配慮した非公式ファンサイト）なのでヘッダーには置かず、
 //   作品セクションのカードから到達させる。
 const links = [
@@ -26,7 +27,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
         </svg>
       </a>
     ))}
-    <a class="btn call" href="#contact" data-confetti="26">声かけて<span class="wave">👋</span></a>
+    <a class="btn call" href="#contact" data-confetti="26">声かけて<span class="wave"><Icon class="bub" name="bubble-call" size={18} sw={1.9} /></span></a>
   </nav>
 
   <!-- 芯ライン＝スクロールでビールのように満ちる。先端を小さなうまくんが駆ける -->
@@ -71,11 +72,11 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .name { font-weight: 900; font-size: 1.28rem; line-height: .95; letter-spacing: .02em; }
   .name small {
     display: block; font-family: var(--f-round); font-weight: 700; font-size: .72rem;
-    letter-spacing: .04em; color: var(--amber-d); margin-top: 1px;
+    letter-spacing: .04em; color: var(--amber-ink); margin-top: 1px;
   }
 
   /* --- リンク --- */
-  .links { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; position: relative; z-index: 2; }
+  .links { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; position: relative; z-index: 2; padding-bottom: .2rem; }
   .lk { position: relative; padding: .2rem .15rem .35rem; font-weight: 700; }
   .lk .ja { font-size: 1.04rem; }
   .lk .en { display: block; font-family: var(--f-mono); font-size: .54rem; font-weight: 500; letter-spacing: .14em; color: var(--mut); }
@@ -90,11 +91,13 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
   .lk:hover .mk path { stroke-dashoffset: 0; }
   .lk.active .mk path { stroke-dashoffset: 0; stroke: var(--amber); }
-  .lk:hover { color: var(--amber-d); }
+  .lk:hover { color: var(--amber-ink); }
 
   .call { padding: .58rem 1.15rem; font-size: .98rem; }
-  .call .wave { display: inline-block; transform-origin: 70% 80%; animation: wave 2.6s ease-in-out infinite; }
-  @keyframes wave { 0%,88%,100% { transform: rotate(0); } 92% { transform: rotate(18deg); } 96% { transform: rotate(-8deg); } }
+  .call .wave { display: inline-flex; align-items: center; animation: wave 2.8s ease-in-out infinite; }
+  /* 吹き出しの中に「！」＝どのサイトにもある汎用アイコンにしない（声をかける勢い） */
+  .call :global(.bub) { display: block; rotate: -4deg; }
+  @keyframes wave { 0%,86%,100% { transform: translateY(0) rotate(0); } 91% { transform: translateY(-3px) rotate(-6deg); } 95% { transform: translateY(0) rotate(3deg); } }
 
   /* --- 芯ライン（ビール充填）。うまくんはロゴ/ボタンの背後を走る --- */
   .spine { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: color-mix(in oklab, var(--amber) 24%, var(--paper)); z-index: 1; }
@@ -104,8 +107,11 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
   /* 先端を駆ける小さなうまくん（スクロール中だけ足が動く・戻るときは反転） */
   .spine-uma {
-    position: absolute; bottom: 1px; left: calc(var(--p, 0) * 100%);
-    width: 34px; transform: translateX(-72%);
+    /* 芯ラインをまたぐ位置（線の下寄り）に置く＝ナビの英字ラベルに重ねない */
+    position: absolute; bottom: -9px;
+    /* 右端でバーの外へ出ないように上限をつける（横スクロール防止） */
+    left: min(calc(var(--p, 0) * 100%), calc(100% - 14px));
+    width: 27px; transform: translateX(-72%);
     opacity: calc(var(--p, 0) * 6);   /* 最上部では隠れて、走り出すと現れる */
     pointer-events: none;
   }
@@ -117,7 +123,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   @keyframes navFlipA { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
   @keyframes navFlipB { 0%, 49.9% { opacity: 0; } 50%, 100% { opacity: 1; } }
   /* 上に戻るとき＝向きも反転して駆け戻る */
-  :global(.spine[data-dir='up']) .spine-uma { transform: translateX(-28%) scaleX(-1); }
+  :global(.spine[data-dir='up']) .spine-uma { transform: translateX(-72%) scaleX(-1); }
 
   @media (max-width: 720px) {
     .lk .en { display: none; }
@@ -126,7 +132,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     .horse { width: 38px; height: 38px; }
   }
   @media (max-width: 720px) {
-    .spine-uma { width: 24px; }               /* モバイルはさらに小さく＝重なり回避 */
+    .spine-uma { width: 22px; bottom: -7px; } /* モバイルはさらに小さく＝重なり回避 */
   }
   @media (max-width: 520px) {
     .bar { gap: .6rem; padding-inline: .8rem; }

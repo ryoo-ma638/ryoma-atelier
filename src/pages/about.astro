@@ -4,6 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { works } from '../data/works.ts';
 import Calendar from '../components/Calendar.astro';
+import Icon from '../components/Icon.astro';
 
 const kama = works.find((w) => w.slug === 'deathcamer');
 
@@ -16,10 +17,10 @@ const facts = [
   { k: '性格', v: '愛嬌がある・元気・まっすぐ・諦めない' },
 ];
 const skills = [
-  { g: 'つくる（CG・画像処理）', icon: '🖥️', color: 'var(--c-violet)', items: ['C++ / OpenGL', 'OpenCV', 'Maya', 'LiDAR / センサー'] },
-  { g: 'つくる（Web・アプリ）', icon: '📱', color: 'var(--c-blue)', items: ['Astro / TypeScript', 'HTML / CSS / JS', 'Firebase', 'Vercel'] },
-  { g: 'えがく・うつす', icon: '🎨', color: 'var(--c-red)', items: ['Illustrator', 'Photoshop', 'Premiere Pro', 'ロゴ・ポスター'] },
-  { g: 'つたえる（企画・発表）', icon: '📣', color: 'var(--c-green)', items: ['スライド制作', 'イベント企画', '発表・プレゼン'] },
+  { g: 'つくる（CG・画像処理）', icon: 'monitor', color: 'var(--c-violet)', items: ['C++ / OpenGL', 'OpenCV', 'Maya', 'LiDAR / センサー'] },
+  { g: 'つくる（Web・アプリ）', icon: 'phone', color: 'var(--c-blue)', items: ['Astro / TypeScript', 'HTML / CSS / JS', 'Firebase', 'Vercel'] },
+  { g: 'えがく・うつす', icon: 'palette', color: 'var(--c-red)', items: ['Illustrator', 'Photoshop', 'Premiere Pro', 'ロゴ・ポスター'] },
+  { g: 'つたえる（企画・発表）', icon: 'megaphone', color: 'var(--c-green)', items: ['スライド制作', 'イベント企画', '発表・プレゼン'] },
 ];
 
 // これまでの話（2006→これから）。ドットの色＝出せる色が増えていく。※Vol.1から継承（事実）
@@ -141,14 +142,14 @@ const highlights = [
         <div class="duo-grid">
           <article class="panel reveal d1">
             <span class="tape" aria-hidden="true"></span>
-            <span class="ic" aria-hidden="true">🛠️</span>
+            <span class="ic" aria-hidden="true"><Icon name="pencil" size={28} /></span>
             <h3>つくる人</h3>
             <p>CG・画像処理・Web・ゲーム。水野研究室で、手を動かしてつくる。「動かない」で終わらせず、原因を突き止めて作り直す。</p>
           </article>
           <span class="amp" aria-hidden="true"><b>×</b><i class="hand">かける</i></span>
           <article class="panel sell reveal d2">
             <span class="tape red" aria-hidden="true"></span>
-            <span class="ic" aria-hidden="true">🍺</span>
+            <span class="ic" aria-hidden="true"><Icon name="beer" size={28} /></span>
             <h3>ビール売り子</h3>
             <p>バンテリンドームで、自分をプロデュースして売る。届け方まで自分ごと。現場の熱と、まっすぐな声かけが武器。</p>
           </article>
@@ -238,7 +239,7 @@ const highlights = [
           </article>
         </div>
 
-        <p class="redink-note reveal">✎ 「これだ」と思ったものは、動くまでやめない。それがぼくの作り方です。
+        <p class="redink-note reveal"><Icon name="pencil" size={19} class="rn-pen" />「これだ」と思ったものは、動くまでやめない。それがぼくの作り方です。
           <svg class="scribble" viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true"><path d="M4,8 C70,3 150,11 296,5" /></svg>
         </p>
       </div>
@@ -278,11 +279,11 @@ const highlights = [
           <h2 class="big reveal d1">ドームで、<span class="am">まっすぐ売る。</span></h2>
           <p class="lead reveal d2">バンテリンドームのビール売り子。ただ売るんじゃなくて、自分をプロデュースして、笑顔と一緒に手渡す。人に届けることの楽しさは、ものづくりと地続きです。1年目の2026年は、年間ランキングで新人売上10位。おつまみは全体ランキング15位で、TOP15に入った新人は自分だけ。男でもやれるを、証明しはじめています。</p>
           <p class="u-chips reveal d3">
-            <span>🍺 バンテリンドーム</span>
-            <span class="is-scarlet">🏆 新人売上10位</span>
-            <span class="is-scarlet">🧀 おつまみ全体15位</span>
-            <span>😊 自己プロデュース</span>
-            <span class="is-green">🤝 手渡しがすき</span>
+            <span><Icon name="beer" size={17} />バンテリンドーム</span>
+            <span class="is-scarlet"><Icon name="trophy" size={17} />新人売上10位</span>
+            <span class="is-scarlet"><Icon name="medal" size={17} />おつまみ全体15位</span>
+            <span><Icon name="smile" size={17} />自己プロデュース</span>
+            <span class="is-green"><Icon name="parcel" size={17} />手渡しがすき</span>
           </p>
         </div>
       </div>
@@ -303,7 +304,7 @@ const highlights = [
             <span class="tape" aria-hidden="true"></span>
             <button class="pc-media" type="button" data-gallery='["/assets/about/baseball.jpg"]' data-caption="バンテリンドームナゴヤにて — 中日ドラゴンズを応援。">
               <img src="/assets/about/baseball.jpg" alt="バンテリンドームで中日ドラゴンズを応援する大崎稜馬" loading="lazy" style="object-position: 50% 42%" />
-              <span class="pc-chip">⚾ 野球観戦</span>
+              <span class="pc-chip"><Icon name="baseball" size={15} />野球観戦</span>
             </button>
             <figcaption>
               <h3>中日ドラゴンズと、バンテリンドーム</h3>
@@ -315,7 +316,7 @@ const highlights = [
             <span class="tape t2" aria-hidden="true"></span>
             <button class="pc-media" type="button" data-gallery='["/assets/about/oshikatsu.jpg"]' data-caption="14th YEAR BIRTHDAY LIVE — 弓木奈於さんを応援。">
               <img src="/assets/about/oshikatsu.jpg" alt="ライブ会場でタオルを掲げて推し活をする大崎稜馬" loading="lazy" style="object-position: 50% 14%" />
-              <span class="pc-chip">💜 推し活</span>
+              <span class="pc-chip"><Icon name="heart" size={15} />推し活</span>
             </button>
             <figcaption>
               <h3>乃木坂46・弓木奈於さんの応援</h3>
@@ -361,7 +362,7 @@ const highlights = [
         <div class="skill-grid">
           {skills.map((s, i) => (
             <div class={`skill reveal d${i + 1}`} style={`--tag:${s.color}`}>
-              <span class="sic" aria-hidden="true">{s.icon}</span>
+              <span class="sic" aria-hidden="true"><Icon name={s.icon} size={24} sw={2} /></span>
               <h3>{s.g}</h3>
               <ul>{s.items.map((it) => <li>{it}</li>)}</ul>
             </div>
@@ -377,7 +378,7 @@ const highlights = [
         <p class="o-note hand">つぎは、作品を見てって！</p>
         <div class="cta-row">
           <a class="btn" href="/works">作品を見る<span class="ar">→</span></a>
-          <a class="btn ghost" href="mailto:osaki638ryoma@gmail.com">声かけて ✉️</a>
+          <a class="btn ghost" href="mailto:osaki638ryoma@gmail.com"><Icon name="mail" size={18} />声かけて</a>
         </div>
       </div>
     </div>
@@ -468,7 +469,7 @@ const highlights = [
   .fact .fv { font-weight: 700; line-height: 1.55; display: block; margin-top: .1rem; }
 
   /* --- 二面性 --- */
-  .duo-grid { margin-top: 1.8rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: clamp(1rem, 3vw, 2rem); }
+  .duo-grid { margin-top: var(--lede-gap); display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: clamp(1rem, 3vw, 2rem); }
   .panel {
     position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg);
     padding: 2rem 1.6rem 1.6rem; box-shadow: var(--sh-2); rotate: -.7deg;
@@ -479,10 +480,10 @@ const highlights = [
   .panel .tape.red { background: color-mix(in oklab, var(--scarlet) 30%, #fff 40%); transform: translateX(-50%) rotate(3deg); }
   .panel .ic {
     display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%;
-    font-size: 1.7rem; background: color-mix(in oklab, var(--amber) 22%, var(--paper));
+    color: var(--amber-ink); background: color-mix(in oklab, var(--amber) 22%, var(--paper));
   }
-  .panel.sell .ic { background: color-mix(in oklab, var(--scarlet) 14%, var(--paper)); }
-  .panel h3 { font-size: 1.4rem; margin: .6rem 0 .5rem; }
+  .panel.sell .ic { color: var(--scarlet-d); background: color-mix(in oklab, var(--scarlet) 14%, var(--paper)); }
+  .panel h3 { font-size: var(--h3); margin: .6rem 0 .5rem; }
   .panel p { color: var(--mut); font-weight: 500; }
   /* 「×」がバツに見えないよう：かけ算バッジ＋手書き「かける」 */
   .amp { align-self: center; display: grid; justify-items: center; gap: .15rem; }
@@ -496,15 +497,16 @@ const highlights = [
 
   /* --- 諦めない物語（一番の見せ場） --- */
   .story {
+    padding-top: var(--stack);
     background: var(--paper-2);
     border-block: 2px dashed color-mix(in oklab, var(--amber) 36%, var(--paper-3));
   }
-  .story .am { position: relative; display: inline-block; color: var(--amber-d); }
+  .story .am { position: relative; display: inline-block; color: var(--amber-head); }
   .draw-line.s-under { position: absolute; left: 0; bottom: -.14em; width: 100%; height: .18em; overflow: visible; }
   .draw-line.s-under path { fill: none; stroke: var(--scarlet); stroke-width: 6; stroke-linecap: round; opacity: .8; }
   .story .lead { margin-top: .5rem; font-weight: 700; }
 
-  .ba { margin-top: 2.2rem; display: grid; grid-template-columns: 1fr auto 1.4fr; align-items: center; gap: clamp(1rem, 3vw, 2rem); }
+  .ba { margin-top: var(--lede-gap); display: grid; grid-template-columns: 1fr auto 1.4fr; align-items: center; gap: clamp(1rem, 3vw, 2rem); }
   .ba-card { position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg); padding: 1.9rem 1.4rem 1.4rem; box-shadow: var(--sh-2); }
   .ba-card.before { background: var(--paper-3); border-color: var(--mut); rotate: -1deg; }
   .ba-card.after { rotate: .4deg; }
@@ -518,7 +520,7 @@ const highlights = [
   .circled { position: relative; display: inline-block; }
   .circled svg { position: absolute; inset: -30% -8%; width: 116%; height: 160%; overflow: visible; }
   .circled path { fill: none; stroke: var(--scarlet); stroke-width: 3; stroke-linecap: round; opacity: .85; }
-  .redink { position: relative; display: inline-block; font-family: var(--f-hand); color: var(--scarlet); font-size: 1.1em; rotate: -1deg; padding: 0 .1em; }
+  .redink { position: relative; display: inline-block; font-family: var(--f-hand); color: var(--scarlet-ink); font-size: 1.1em; rotate: -1deg; padding: 0 .1em; }
   .scribble { position: absolute; left: 0; bottom: -.24em; width: 100%; height: .38em; overflow: visible; }
   .scribble path { fill: none; stroke: var(--scarlet); stroke-width: 2.4; stroke-linecap: round; opacity: .8; }
 
@@ -529,10 +531,11 @@ const highlights = [
 
   .ba .media { position: relative; border-radius: var(--r-md); overflow: hidden; margin: .8rem 0 .9rem; aspect-ratio: 16/10; background: var(--ink); }
   .ba .media video, .ba .media img { width: 100%; height: 100%; object-fit: cover; }
-  .ba .badge { position: absolute; left: .6rem; bottom: .6rem; font-family: var(--f-mono); font-size: .62rem; font-weight: 700; background: var(--ink); color: var(--paper); padding: .28rem .55rem; border-radius: var(--r-sm); }
+  .ba .badge { position: absolute; left: .6rem; bottom: .6rem; font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; background: var(--ink); color: var(--paper); padding: .28rem .55rem; border-radius: var(--r-sm); }
 
   .redink-note { position: relative; margin-top: 2rem; display: inline-block; font-family: var(--f-hand); font-size: clamp(1.05rem, 2.2vw, 1.3rem); color: var(--scarlet-d); rotate: -1deg; padding-bottom: .2em; }
   .redink-note .scribble path { stroke: var(--scarlet-d); }
+  .redink-note :global(.icn) { margin-right: .3rem; vertical-align: -.22em; }
 
   /* --- 売り子 --- */
   .uriko-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
@@ -558,6 +561,7 @@ const highlights = [
   .uriko-photo:hover .cheers { rotate: -3deg; translate: 0 -8px; }
   .u-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.3rem; }
   .u-chips span {
+    display: inline-flex; align-items: center; gap: .35rem;
     font-family: var(--f-round); font-weight: 700; font-size: .84rem;
     background: color-mix(in oklab, var(--amber) 18%, var(--paper));
     color: #7a5410; padding: .34rem .85rem; border-radius: var(--r-pill); box-shadow: var(--sh-1);
@@ -566,7 +570,7 @@ const highlights = [
   .u-chips span.is-green { background: color-mix(in oklab, var(--c-green) 14%, var(--paper)); color: #1c6b45; }
 
   /* --- できること --- */
-  .skill-grid { margin-top: 1.8rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem; }
+  .skill-grid { margin-top: var(--lede-gap); display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem; }
   .skill {
     position: relative; --tag: var(--amber);
     background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md);
@@ -575,17 +579,21 @@ const highlights = [
   }
   .skill:hover { translate: 0 -5px; box-shadow: var(--sh-3); }
   .skill::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 7px; background: var(--tag); }
+  /* アイコンの丸チップは分野ごとに色を変えず琥珀1色に固定する（カテゴリは上辺3色の帯が示す）。
+     既製アイコンセットに見えないよう、線画をわずかに傾けて手描きの気配を残す。 */
   .skill .sic {
     display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%;
-    font-size: 1.35rem; background: color-mix(in oklab, var(--tag) 14%, var(--paper)); margin-bottom: .6rem;
+    color: var(--amber-ink);
+    background: color-mix(in oklab, var(--amber) 16%, var(--paper)); margin-bottom: .6rem;
   }
-  .skill h3 { font-size: 1.06rem; margin-bottom: .8rem; }
+  .skill .sic :global(.icn) { rotate: -5deg; }
+  .skill h3 { font-size: var(--h4); margin-bottom: .8rem; }
   .skill ul { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; padding: 0; margin: 0; }
   .skill li {
-    font-family: var(--f-mono); font-size: .72rem; font-weight: 500; padding: .3rem .6rem; border-radius: var(--r-sm);
-    background: color-mix(in oklab, var(--tag) 12%, var(--paper));
-    color: color-mix(in oklab, var(--tag) 60%, var(--ink));
-    border: 1px solid color-mix(in oklab, var(--tag) 28%, transparent);
+    font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 500; padding: .3rem .6rem; border-radius: var(--r-sm);
+    background: color-mix(in oklab, var(--amber) 12%, var(--paper));
+    color: var(--ink);
+    border: 1px solid color-mix(in oklab, var(--amber) 34%, transparent);
   }
 
   /* --- つぎへ --- */
@@ -623,59 +631,64 @@ const highlights = [
     .omu { width: 88px; }
   }
   /* ===== これまでの、話。（年表） ===== */
-  .tl { list-style: none; margin-top: 2rem; position: relative; display: grid; gap: 1.1rem; }
+  .tl { list-style: none; margin-top: var(--lede-gap); position: relative; display: grid; gap: 1.1rem; }
   .tl::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 3px; background: var(--amber); border-radius: 2px; }
   .tl-item { position: relative; display: grid; grid-template-columns: 34px 92px 1fr; gap: .8rem; align-items: start; }
   .tl-dot { position: relative; z-index: 1; width: 22px; height: 22px; border-radius: 50%; background: var(--c); border: 3px solid var(--paper); box-shadow: 0 0 0 2px var(--c); margin-top: .2rem; }
-  .tl-num { font-family: var(--f-mono); font-weight: 700; color: var(--c); padding-top: .25rem; }
+  /* 年号とタグは紺で読ませる。色の手がかりは左の丸ドットだけに任せる（図形はコントラスト基準の対象外）。
+     7色の文字は生成りの上で 1.9〜3.6:1 しか出ず、個人史の年表は色凡例でもないため。 */
+  .tl-num { font-family: var(--f-mono); font-weight: 700; color: var(--ink); padding-top: .25rem; }
   .tl-body { background: var(--card); border: 2px solid color-mix(in oklab, var(--ink) 22%, transparent); border-radius: var(--r-md); padding: .85rem 1.1rem; box-shadow: var(--sh-1); }
-  .tl-tag { font-family: var(--f-mono); font-size: .6rem; font-weight: 700; letter-spacing: .1em; color: color-mix(in oklab, var(--c) 75%, var(--ink)); }
+  .tl-tag { font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; letter-spacing: .1em; color: var(--mut); }
   .tl-body h3 { font-size: 1.06rem; margin: .15rem 0 .25rem; }
   .tl-body p { color: var(--mut); font-weight: 500; font-size: .9rem; line-height: 1.85; }
   .tl-item.future .tl-body { border: 2px dashed var(--amber-d); background: color-mix(in oklab, var(--amber) 10%, var(--paper)); }
-  .tl-item.future .tl-body h3 { color: var(--amber-d); }
+  .tl-item.future .tl-body h3 { color: var(--amber-ink); }
+  /* 「いま」だけ朱で立てる */
+  .tl-item:nth-last-child(2) .tl-num { color: var(--scarlet-ink); }
+  .tl-item.future .tl-num { color: var(--amber-ink); }
 
   /* ===== 信条 ===== */
   .motto { position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg); box-shadow: var(--sh-2); text-align: center; padding: 2rem 1.5rem 1.6rem; margin-top: 1.6rem; }
   .m-label { color: var(--scarlet-d); font-size: 1rem; }
   .m-word { font-size: clamp(2.6rem, 7vw, 4.2rem); font-weight: 900; letter-spacing: .06em; margin: .2rem 0 .5rem; }
   .m-reason { color: var(--mut); font-weight: 500; max-width: 52ch; margin-inline: auto; line-height: 1.9; font-size: .92rem; }
-  .credo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+  .credo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: var(--lede-gap-sm); }
   .credo { background: var(--card); border: 2px solid color-mix(in oklab, var(--ink) 22%, transparent); border-radius: var(--r-md); padding: 1.1rem 1.2rem; box-shadow: var(--sh-1); }
-  .credo .c-tag { font-family: var(--f-mono); font-size: .6rem; font-weight: 700; letter-spacing: .1em; color: var(--amber-d); }
+  .credo .c-tag { font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; letter-spacing: .1em; color: var(--amber-ink); }
   .credo h3 { font-size: 1.05rem; margin: .3rem 0 .4rem; }
   .credo p { color: var(--mut); font-weight: 500; font-size: .88rem; line-height: 1.85; }
 
   /* ===== 主な実績 ===== */
-  .hls { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.6rem; }
+  .hls { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: var(--lede-gap); }
   .hl { position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md); padding: 1.2rem 1.2rem 1rem; box-shadow: var(--sh-1); transition: transform .2s var(--spring), box-shadow .2s ease; }
   .hl:hover { transform: translateY(-6px) rotate(-.6deg); box-shadow: var(--sh-2); }
-  .hl-n { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 900; color: var(--amber-d); line-height: 1; }
+  .hl-n { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 900; color: var(--amber-head); line-height: 1; }
   .hl-n--long { font-size: clamp(1.4rem, 2.2vw, 1.9rem); letter-spacing: -.01em; }
-  .hl-l { display: inline-block; margin-left: .4rem; font-family: var(--f-mono); font-size: .66rem; font-weight: 700; color: var(--mut); letter-spacing: .08em; }
+  .hl-l { display: inline-block; margin-left: .4rem; font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; color: var(--mut); letter-spacing: .08em; }
   .hl p { margin-top: .55rem; color: var(--mut); font-weight: 500; font-size: .86rem; line-height: 1.8; }
   .hl-go { display: inline-block; margin-top: .5rem; font-family: var(--f-round); font-weight: 700; font-size: .8rem; color: var(--scarlet-d); }
 
   /* ===== つくる以外の、わたし。 ===== */
-  .pcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(1rem, 3vw, 1.8rem); margin-top: 2rem; }
+  .pcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(1rem, 3vw, 1.8rem); margin-top: var(--lede-gap); }
   .pcard { position: relative; margin: 0; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg); overflow: visible; box-shadow: var(--sh-2); }
   .pcard .tape.t2 { background: color-mix(in oklab, var(--scarlet) 30%, #fff 36%); transform: translateX(-50%) rotate(4deg); }
   .pc-media { position: relative; display: block; width: 100%; padding: 0; border: none; border-radius: calc(var(--r-lg) - 4px) calc(var(--r-lg) - 4px) 0 0; overflow: hidden; cursor: zoom-in; background: var(--paper-3); }
   .pc-media img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform .35s var(--ease); }
   .pc-media:hover img { transform: scale(1.05); }
-  .pc-chip { position: absolute; left: .7rem; bottom: .7rem; font-family: var(--f-round); font-weight: 700; font-size: .8rem; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-pill); padding: .2rem .7rem; }
+  .pc-chip { position: absolute; left: .7rem; bottom: .7rem; display: inline-flex; align-items: center; gap: .3rem; font-family: var(--f-round); font-weight: 700; font-size: .8rem; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-pill); padding: .24rem .7rem; }
   .pcard figcaption { padding: 1rem 1.2rem 1.2rem; }
   .pcard h3 { font-size: 1.1rem; margin-bottom: .4rem; }
   .pcard figcaption p { color: var(--mut); font-weight: 500; font-size: .9rem; line-height: 1.9; }
   .pc-link { display: inline-block; margin-top: .6rem; font-family: var(--f-round); font-weight: 700; font-size: .84rem; color: var(--scarlet-d); border-bottom: 2px solid var(--scarlet-d); }
 
   /* ===== もっと、知る。 ===== */
-  .mini-head { font-size: 1.25rem; color: var(--scarlet-d); margin-top: 2rem; transform: rotate(-1.2deg); width: fit-content; }
-  .qa { columns: 2; column-gap: 1rem; margin-top: 1rem; }
+  .mini-head { font-size: var(--h4); color: var(--scarlet-d); margin-top: var(--lede-gap); transform: rotate(-1.2deg); width: fit-content; }
+  .qa { columns: 2; column-gap: 1rem; margin-top: var(--lede-gap-sm); }
   .qa-item { break-inside: avoid; background: var(--card); border: 2px solid color-mix(in oklab, var(--ink) 20%, transparent); border-radius: var(--r-md); padding: .8rem 1rem; margin-bottom: .8rem; box-shadow: var(--sh-1); }
-  .qa-item .q { display: block; font-family: var(--f-mono); font-size: .62rem; font-weight: 700; letter-spacing: .08em; color: var(--amber-d); }
+  .qa-item .q { display: block; font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; letter-spacing: .08em; color: var(--amber-ink); }
   .qa-item .a { display: block; font-weight: 700; font-size: .92rem; margin-top: .2rem; line-height: 1.8; }
-  .traits { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .8rem; margin-top: 1rem; }
+  .traits { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .8rem; margin-top: var(--lede-gap-sm); }
   .trait { background: color-mix(in oklab, var(--c) 10%, var(--paper)); border: 2px solid color-mix(in oklab, var(--c) 34%, transparent); border-radius: var(--r-md); padding: .8rem 1rem; }
   .trait h4 { font-size: .95rem; color: color-mix(in oklab, var(--c) 66%, var(--ink)); }
   .trait p { color: var(--mut); font-weight: 500; font-size: .84rem; margin-top: .25rem; line-height: 1.75; }

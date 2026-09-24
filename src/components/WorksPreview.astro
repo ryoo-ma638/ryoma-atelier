@@ -26,8 +26,14 @@ const picks = works.filter((w) => w.featured && w.thumb).slice(0, 8);
     .head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
     .big .small { font-size: .42em; font-weight: 700; }
     .grid {
-      margin-top: 2.4rem; display: grid; gap: clamp(1rem, 2.4vw, 1.6rem);
+      margin-top: var(--lede-gap); display: grid; gap: clamp(1rem, 2.4vw, 1.6rem);
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    /* 筆頭の1枚だけ横2枠ぶんで大きく見せる＝一覧（works.astro の .grid--feat）と同じ作法。
+       最初に見えるページが一覧より弱くならないように。 */
+    @media (min-width: 880px) {
+      .grid > :global(:first-child) { grid-column: span 2; }
+      .grid > :global(:first-child) :global(h3) { font-size: clamp(1.25rem, 1.9vw, 1.6rem); }
     }
   </style>
 </section>

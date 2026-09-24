@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 const year = 2026;
 ---
 <footer class="foot" id="contact">
@@ -21,7 +22,7 @@ const year = 2026;
     <p class="sub reveal d2">現場でも、ここでも。まずは雑談からでも、うれしいです。</p>
 
     <div class="btns reveal d3">
-      <a class="btn big" href="mailto:osaki638ryoma@gmail.com" data-confetti="60">メールする ✉️</a>
+      <a class="btn big" href="mailto:osaki638ryoma@gmail.com" data-confetti="60"><Icon name="mail" size={20} />メールする</a>
       <a class="btn ghost" href="https://www.instagram.com/ryoma_v_dome/" target="_blank" rel="noopener">Instagram →</a>
       <a class="btn ghost" href="https://github.com/ryoo-ma638" target="_blank" rel="noopener">GitHub →</a>
     </div>
@@ -83,7 +84,7 @@ const year = 2026;
     }
     .uma-note::after { content: ''; position: absolute; right: -9px; bottom: 8px; border: 5px solid transparent; border-left: 8px solid var(--ink); }
 
-    .copy { font-family: var(--f-mono); font-size: .72rem; color: color-mix(in oklab, var(--paper) 55%, transparent); margin-top: -.4rem; }
+    .copy { font-family: var(--f-mono); font-size: var(--label-sm); color: color-mix(in oklab, var(--paper) 55%, transparent); margin-top: -.4rem; }
 
     /* ---- 紙吹雪（中央のボタン帯には置かない・上端と透かし付近だけを品よく） ---- */
     .cf { position: absolute; width: 11px; height: 11px; border-radius: 2px; z-index: 1; opacity: .9; }

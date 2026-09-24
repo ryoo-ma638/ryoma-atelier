@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 // 手渡すアトリエ：つくる人 × ビール売り子。作品が手から手へ渡る。
 ---
 <section class="maker section" id="about">
@@ -25,7 +26,7 @@
       <article class="panel make reveal d1">
         <span class="tape" aria-hidden="true"></span>
         <span class="plabel">MAKE</span>
-        <span class="ic" aria-hidden="true">🛠️</span>
+        <span class="ic" aria-hidden="true"><Icon name="pencil" size={30} /></span>
         <h3>つくる人</h3>
         <p>CG・画像処理・Web・ゲーム。愛知工業大学・水野研究室で、手を動かしてつくっています。</p>
         <ul>
@@ -40,7 +41,7 @@
         <span class="tape t2" aria-hidden="true"></span>
         <span class="plabel">SELL</span>
         <span class="hanko-mini" aria-hidden="true">馬</span>
-        <span class="ic" aria-hidden="true">🍺</span>
+        <span class="ic" aria-hidden="true"><Icon name="beer" size={30} /></span>
         <h3>ビール売り子</h3>
         <p>バンテリンドームで、自分をプロデュースして売るビール売り子。届け方まで、ぜんぶ自分ごと。</p>
         <ul>
@@ -64,7 +65,7 @@
   <style>
     .maker { position: relative; }
     .head { margin-top: .6rem; }
-    .head .am { color: var(--amber-d); position: relative; display: inline-block; }
+    .head .am { color: var(--amber-head); position: relative; display: inline-block; }
     .draw-line.under { position: absolute; left: 0; bottom: -.14em; width: 100%; height: .2em; overflow: visible; }
     .draw-line.under path { fill: none; stroke: var(--amber); stroke-width: 7; stroke-linecap: round; opacity: .9; }
     .lead { margin-top: 1rem; }
@@ -107,7 +108,8 @@
       font-family: var(--f-mono); font-size: .62rem; font-weight: 700; letter-spacing: .18em;
       color: var(--mut); opacity: .75;
     }
-    .panel .ic { font-size: 2.2rem; display: block; }
+    .panel .ic { display: block; color: var(--amber-ink); }
+    .panel.sell .ic { color: var(--scarlet-d); }
     .panel h3 { font-size: 1.5rem; margin: .5rem 0 .6rem; }
     .panel h3::after { content: ''; display: block; width: 2.6em; height: 4px; border-radius: 2px; margin-top: .35rem; background: var(--amber); }
     .panel.sell h3::after { background: var(--scarlet); }

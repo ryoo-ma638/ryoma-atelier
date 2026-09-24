@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { works, categoryLabels } from '../data/works.ts';
 
 // 下部「つくってるもの」ストリップ：7分野すべて（日本語＋件数＝分野の横断を一目で）
@@ -80,7 +81,7 @@ const strip = stripOrder
   <!-- ===== 下部：つくってるもの（7分野・横スクロール） ===== -->
   <div class="wrap belt">
     <div class="belt-head">
-      <span class="belt-label hand">つくってるもの <span class="bulb">💡</span></span>
+      <span class="belt-label hand">つくってるもの<span class="bulb"><Icon name="bulb" size={19} /></span></span>
       <span class="belt-hint hand">よこにスクロールできるよ <b class="hint-ar">→</b></span>
     </div>
     <div class="strip-wrap">
@@ -135,7 +136,7 @@ const strip = stripOrder
 
   .chips-line { margin-top: 1.1rem; font-weight: 700; line-height: 2; }
   .chips-line .kw { display: inline-block; background: var(--ink); color: var(--paper); padding: .12rem .55rem; border-radius: 8px; margin-right: .1rem; font-size: .9rem; }
-  .chips-line .sl { color: var(--amber-d); font-weight: 900; margin: 0 .22rem; }
+  .chips-line .sl { color: var(--amber-ink); font-weight: 900; margin: 0 .22rem; }
   .chips-line .dots { color: var(--mut); }
   .chips-line b { color: var(--ink); font-size: clamp(1rem, 2vw, 1.18rem); }
 
@@ -229,9 +230,10 @@ const strip = stripOrder
   /* ---- 下部ストリップ（左寄せ・全幅・スクロールの合図つき） ---- */
   .belt { margin-top: .4rem; }
   .belt-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .4rem; }
-  .belt-label { color: var(--scarlet-d); font-size: 1.1rem; transform: rotate(-1.6deg); }
+  .belt-label { display: inline-flex; align-items: center; gap: .35rem; color: var(--scarlet-d); font-size: 1.1rem; transform: rotate(-1.6deg); }
+  .belt-label .bulb { display: inline-flex; color: var(--amber-ink); }
   .belt-hint { color: var(--mut); font-size: .88rem; }
-  .belt-hint .hint-ar { display: inline-block; color: var(--amber-d); animation: hintgo 1.6s ease-in-out infinite; }
+  .belt-hint .hint-ar { display: inline-block; color: var(--amber-ink); animation: hintgo 1.6s ease-in-out infinite; }
   @keyframes hintgo { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
 
   /* 右端フェード＝「まだ続きがある」の合図 */

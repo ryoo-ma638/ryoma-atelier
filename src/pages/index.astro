@@ -7,13 +7,15 @@ import Footer from '../components/Footer.astro';
 import { works, categoryLabels } from '../data/works.ts';
 
 // 「活動と挑戦」＝つくる以外の幅（すべて実績ベース）。Vol.1の内容を継承。
+// 色は分野の凡例ではないので虹にしない（虹は色凡例と色彩実験ゾーンだけ）。
+// 琥珀1色にそろえ、01（ビール売り子＝本人の看板）だけ朱で見せ場にする。
 const activities = [
-  { c: 'var(--c-violet)', k: '課外', t: 'ビール売り子で 新人10位', d: 'バンテリンドームナゴヤのビール売り子。2026年の年間ランキングは新人売上10位。おつまみは全体15位で、TOP15に入った新人は自分だけ。', link: '/works/uriko-site', linkLabel: '応援サイトの話' },
-  { c: 'var(--c-blue)', k: '役割', t: '学生団体 CEED 副部長', d: '60名規模の運営・新歓・イベント企画。「誰も置いてけぼりにしない」を大切に。', link: '/ceed', linkLabel: 'CEEDの活動へ' },
-  { c: 'var(--c-green)', k: '出展', t: '東京ゲームショウ ほか', d: '『虫歯アニマルズ』でTGS・ゲームマーケット・安城Eフェスに出展。', link: '/works/mushiba-animals', linkLabel: '作品を見る' },
-  { c: 'var(--c-yellow)', k: 'ハッカソン', t: '企業協賛賞を受賞', d: 'シスハックで割り勘アプリ『Settlo』を開発し、企業協賛賞を受賞した。', link: '/works/settlo', linkLabel: '作品を見る' },
-  { c: 'var(--c-orange)', k: '研究', t: '学会発表に挑戦', d: '水野慎士研究室での研究を、外の場へ。いま挑戦の途中。' },
-  { c: 'var(--c-red)', k: '進学', t: '大学院 進学を準備', d: 'CG・画像処理・インタラクションを、もっと深くへ。' },
+  { c: 'var(--scarlet)', k: '課外', t: 'ビール売り子で 新人10位', d: 'バンテリンドームナゴヤのビール売り子。2026年の年間ランキングは新人売上10位。おつまみは全体15位で、TOP15に入った新人は自分だけ。', link: '/works/uriko-site', linkLabel: '応援サイトの話' },
+  { c: 'var(--amber)', k: '役割', t: '学生団体 CEED 副部長', d: '60名規模の運営・新歓・イベント企画。「誰も置いてけぼりにしない」を大切に。', link: '/ceed', linkLabel: 'CEEDの活動へ' },
+  { c: 'var(--amber)', k: '出展', t: '東京ゲームショウ ほか', d: '『虫歯アニマルズ』でTGS・ゲームマーケット・安城Eフェスに出展。', link: '/works/mushiba-animals', linkLabel: '作品を見る' },
+  { c: 'var(--amber)', k: 'ハッカソン', t: '企業協賛賞を受賞', d: 'シスハックで割り勘アプリ『Settlo』を開発し、企業協賛賞を受賞した。', link: '/works/settlo', linkLabel: '作品を見る' },
+  { c: 'var(--amber)', k: '研究', t: '学会発表に挑戦', d: '水野慎士研究室での研究を、外の場へ。いま挑戦の途中。' },
+  { c: 'var(--amber)', k: '進学', t: '大学院 進学を準備', d: 'CG・画像処理・インタラクションを、もっと深くへ。' },
 ];
 const fieldCount = Object.keys(categoryLabels).length;
 ---
@@ -89,10 +91,22 @@ const fieldCount = Object.keys(categoryLabels).length;
 </Base>
 
 <style>
-  .big .am { color: var(--amber-d); position: relative; display: inline-block; }
+  .big .am { color: var(--amber-head); position: relative; display: inline-block; }
 
   /* ---- 活動と挑戦 ---- */
-  .acts { margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+  .acts { margin-top: var(--lede-gap); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+  /* 01＝ビール売り子（本人の看板）だけ2カラムぶんに広げ、中も左右2段にして全幅を情報で使い切る。
+     均一なカードが6枚並ぶ反復を崩す＝Vol.1 の活動ブロックと同じ型。 */
+  @media (min-width: 880px) {
+    .acts { grid-template-columns: repeat(3, 1fr); }
+    .acts > :first-child { grid-column: span 2; display: grid; grid-template-columns: 1.02fr 1fr; column-gap: 2rem; align-items: center; }
+    .acts > :first-child .k { grid-column: 1; grid-row: 1; justify-self: start; }
+    .acts > :first-child h3 { grid-column: 1; grid-row: 2; font-size: var(--h3); }
+    .acts > :first-child p { grid-column: 2; grid-row: 1 / span 3; }
+    .acts > :first-child .go { grid-column: 1; grid-row: 3; }
+    /* 最後の1枚は残りの列を埋める（最終行に穴を残さない） */
+    .acts > :last-child { grid-column: 1 / -1; }
+  }
   .act {
     position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-md);
     padding: 1.2rem 1.3rem 1.1rem; box-shadow: var(--sh-1); overflow: hidden;
@@ -101,23 +115,24 @@ const fieldCount = Object.keys(categoryLabels).length;
   .act::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--c); }
   .act.link:hover { transform: translateY(-6px) rotate(-.5deg); box-shadow: var(--sh-2); }
   .act .no { position: absolute; right: .9rem; top: .6rem; font-family: var(--f-mono); font-weight: 700; font-size: 1.2rem; color: color-mix(in oklab, var(--c) 34%, transparent); }
-  .act .k { display: inline-block; font-family: var(--f-mono); font-size: .6rem; font-weight: 700; letter-spacing: .12em; color: color-mix(in oklab, var(--c) 75%, var(--ink)); background: color-mix(in oklab, var(--c) 14%, var(--paper)); padding: .2rem .5rem; border-radius: var(--r-sm); }
-  .act h3 { font-size: 1.18rem; margin: .55rem 0 .35rem; }
+  /* 文字は墨に寄せて読ませる（色の手がかりは地色と左の帯）。琥珀75%では紙の上で 2.8:1 しか出ない。 */
+  .act .k { display: inline-block; font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; letter-spacing: .12em; color: color-mix(in oklab, var(--c) 26%, var(--ink)); background: color-mix(in oklab, var(--c) 14%, var(--paper)); padding: .2rem .5rem; border-radius: var(--r-sm); }
+  .act h3 { font-size: var(--h4); margin: .55rem 0 .35rem; }
   .act p { color: var(--mut); font-weight: 500; font-size: .9rem; line-height: 1.8; }
   .act .go { display: inline-block; margin-top: .6rem; font-family: var(--f-round); font-weight: 700; font-size: .82rem; color: var(--scarlet-d); }
 
   /* ---- About ティザー ---- */
-  .teaser { background: color-mix(in oklab, var(--amber) 7%, var(--paper)); border-block: 2px solid color-mix(in oklab, var(--amber) 26%, var(--paper)); }
+  .teaser { padding-top: var(--stack); background: color-mix(in oklab, var(--amber) 7%, var(--paper)); border-block: 2px solid color-mix(in oklab, var(--amber) 26%, var(--paper)); }
   .t-under { position: absolute; left: 0; bottom: -.14em; width: 100%; height: .2em; overflow: visible; }
   .t-under path { fill: none; stroke: var(--amber); stroke-width: 7; stroke-linecap: round; opacity: .9; }
   .teaser .lead b { color: var(--ink); border-bottom: 3px solid var(--amber); font-weight: 700; }
 
-  .stats { list-style: none; display: flex; gap: clamp(1.2rem, 4vw, 3rem); flex-wrap: wrap; margin-top: 1.8rem; }
+  .stats { list-style: none; display: flex; gap: clamp(1.2rem, 4vw, 3rem); flex-wrap: wrap; margin-top: var(--lede-gap); }
   .stats b { display: block; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 900; color: var(--ink); line-height: 1; }
   .stats b small { font-size: .45em; }
-  .stats span { font-family: var(--f-mono); font-size: .66rem; font-weight: 700; color: var(--amber-d); letter-spacing: .1em; }
+  .stats span { font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; color: var(--amber-ink); letter-spacing: .1em; }
 
-  .t-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.8rem; }
+  .t-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-top: var(--lede-gap); }
   .facts { list-style: none; display: grid; gap: .3rem; }
   .facts li { font-weight: 700; font-size: .92rem; }
   .facts li::before { content: '● '; color: var(--amber); font-size: .7em; vertical-align: 2px; }

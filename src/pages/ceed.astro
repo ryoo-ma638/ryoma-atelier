@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Lightbox from '../components/Lightbox.astro';
+import Icon from '../components/Icon.astro';
 
 // CEED（マルチクリエイティブサークル・愛知工業大学）。大崎＝副部長。
 // 事実の出典はVol.1のceed.astro（一次資料で担当確認済み）。数字・実績の捏造は禁止。
@@ -90,9 +91,9 @@ const team = [
 ];
 
 const principles = [
-  { ic: '🤝', t: '誰も置いてけぼりにしない', d: '新入生の視点でヒアリングを徹底して、部長と意見をすり合わせて運営に反映。' },
-  { ic: '🌱', t: '初心者を孤立させない', d: '技術レベルの差で取り残されないように、段階的な講座やフォローで橋渡し。' },
-  { ic: '🎉', t: '交流で距離を縮める', d: 'ワークショップ・BBQなど、学年や技術の壁を越えて話せる場をつくる。' },
+  { ic: 'people', t: '誰も置いてけぼりにしない', d: '新入生の視点でヒアリングを徹底して、部長と意見をすり合わせて運営に反映。' },
+  { ic: 'sprout', t: '初心者を孤立させない', d: '技術レベルの差で取り残されないように、段階的な講座やフォローで橋渡し。' },
+  { ic: 'confetti', t: '交流で距離を縮める', d: 'ワークショップ・BBQなど、学年や技術の壁を越えて話せる場をつくる。' },
 ];
 
 const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
@@ -281,14 +282,14 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
           {principles.map((p, i) => (
             <article class={`memo reveal d${i + 1}`}>
               <span class="pin" aria-hidden="true"></span>
-              <span class="m-ic" aria-hidden="true">{p.ic}</span>
+              <span class="m-ic" aria-hidden="true"><Icon name={p.ic} size={30} /></span>
               <h3 class="m-t">{p.t}</h3>
               <p class="m-d">{p.d}</p>
             </article>
           ))}
         </div>
 
-        <p class="result reveal">✎ 心理的安全性の高いコミュニティづくりに貢献して、サークルは<span class="am-mark">60名規模
+        <p class="result reveal"><Icon name="pencil" size={20} />心理的安全性の高いコミュニティづくりに貢献して、サークルは<span class="am-mark">60名規模
           <svg class="draw-line r-under" viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true" style="--len:220">
             <path d="M5,9 C50,3 100,12 150,7 C175,4 190,9 195,7" />
           </svg></span>へ成長しました。
@@ -408,10 +409,10 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
   }
 
   /* ===== 共通：見出しまわり ===== */
-  .am2 { position: relative; display: inline-block; color: var(--amber-d); }
+  .am2 { position: relative; display: inline-block; color: var(--amber-head); }
   .sec-lead { margin-top: .9rem; color: var(--mut); font-weight: 600; max-width: 58ch; line-height: 1.9; }
   .role-tag {
-    display: inline-block; font-family: var(--f-mono); font-weight: 700; font-size: .64rem;
+    display: inline-block; font-family: var(--f-mono); font-weight: 700; font-size: var(--label-sm);
     letter-spacing: .04em; color: var(--paper); background: var(--ink);
     padding: .3rem .65rem; border-radius: var(--r-sm);
   }
@@ -432,7 +433,10 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
   .deck-lead { font-weight: 600; line-height: 1.9; max-width: 62ch; }
   .deck-list { list-style: none; padding: 0; margin: .8rem 0 0; display: grid; gap: .4rem; max-width: 64ch; }
   .deck-list li { position: relative; padding-left: 1.3rem; color: var(--mut); font-weight: 500; font-size: .92rem; line-height: 1.85; }
-  .deck-list li::before { content: '✎'; position: absolute; left: 0; color: var(--scarlet-d); }
+  .deck-list li::before {
+    content: ''; position: absolute; left: .1rem; top: .72em;
+    width: 8px; height: 8px; border-radius: 2px; background: var(--amber); rotate: 18deg;
+  }
   .deck-list b { color: var(--ink); }
 
   .strip-hint { margin: 1.2rem 0 .4rem; color: var(--scarlet-d); font-size: .98rem; rotate: -1deg; display: inline-block; }
@@ -471,10 +475,12 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
   .pcard .tape { z-index: 3; top: -11px; }
   .pcard img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-radius: 3px; background: var(--paper-3); }
   .feat-side .pcard-sm img { aspect-ratio: 16 / 10; }  /* BBQの右4枚は浅めに＝左の集合写真と高さバランスを取る */
-  .pcap { position: absolute; left: .8rem; right: .6rem; bottom: .45rem; color: var(--ink); font-size: .88rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* 1行で切ると何の回か読めないので2行まで見せる（枠の高さは2行分で固定） */
+  .pcap { position: absolute; left: .8rem; right: .6rem; bottom: .45rem; color: var(--ink); font-size: .88rem; line-height: 1.3;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 
   /* ===== 02 WEB班 ===== */
-  .web-sec { background: var(--paper-2); border-block: 2px dashed color-mix(in oklab, var(--amber) 36%, var(--paper-3)); }
+  .web-sec { padding-top: var(--stack); background: var(--paper-2); border-block: 2px dashed color-mix(in oklab, var(--amber) 36%, var(--paper-3)); }
   .build-grid { position: relative; margin-top: clamp(1.6rem, 4vw, 2.4rem); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 1.8rem); }
   .bcard {
     position: relative; background: var(--card); border: 2px solid var(--ink); border-radius: var(--r-lg);
@@ -521,11 +527,11 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
   .pcard-sm img { aspect-ratio: 1 / 1; }
 
   /* ===== 04 CEEDのみんなと ===== */
-  .circle-sec { background: var(--paper-2); border-block: 2px dashed color-mix(in oklab, var(--amber) 36%, var(--paper-3)); }
+  .circle-sec { padding-top: var(--stack); background: var(--paper-2); border-block: 2px dashed color-mix(in oklab, var(--amber) 36%, var(--paper-3)); }
   .block { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(1.2rem, 3.4vw, 2.6rem); align-items: center; margin-top: clamp(2rem, 5vw, 3.2rem); }
   .block-rev .block-text { order: 2; }
   .block-text h3 { font-size: clamp(1.24rem, 2.6vw, 1.6rem); margin: .8rem 0 .2rem; }
-  .block-meta { font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .04em; color: var(--amber-d); margin-bottom: .6rem; }
+  .block-meta { font-family: var(--f-mono); font-size: var(--label-sm); font-weight: 700; letter-spacing: .04em; color: var(--amber-ink); margin-bottom: .6rem; }
   .block-text > p { color: var(--mut); font-weight: 500; font-size: .93rem; line-height: 1.9; max-width: 56ch; }
   .block-text b { color: var(--ink); }
 
@@ -554,7 +560,7 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
     box-shadow: 0 4px 6px rgba(0,0,0,.28);
   }
   .memo:nth-child(even) .pin { background: radial-gradient(circle at 34% 30%, #ffdda6, var(--amber) 60%, var(--amber-d)); }
-  .m-ic { font-size: 1.6rem; display: block; }
+  .m-ic { display: block; color: var(--scarlet-d); }
   .m-t { font-size: 1.16rem; margin: .45rem 0 .5rem; }
   .m-t::after { content: ''; display: block; width: 2.4em; height: 4px; border-radius: 2px; margin-top: .35rem; background: var(--amber); }
   .m-d { color: var(--mut); font-weight: 500; font-size: .92rem; line-height: 1.85; }
@@ -563,7 +569,8 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
     margin-top: clamp(1.8rem, 4vw, 2.6rem); font-family: var(--f-hand);
     font-size: clamp(1.1rem, 2.4vw, 1.45rem); color: var(--scarlet-d); rotate: -1deg; display: inline-block;
   }
-  .am-mark { position: relative; display: inline-block; color: var(--amber-d); font-size: 1.15em; padding: 0 .1em; }
+  .result :global(.icn) { margin-right: .3rem; vertical-align: -.22em; }
+  .am-mark { position: relative; display: inline-block; color: var(--amber-head); font-size: 1.15em; padding: 0 .1em; }
   .draw-line.r-under { position: absolute; left: 0; bottom: -.12em; width: 100%; height: .22em; overflow: visible; }
   .draw-line.r-under path { fill: none; stroke: var(--amber); stroke-width: 6; stroke-linecap: round; }
 
@@ -596,7 +603,7 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
   @media (max-width: 560px) {
     .ctitle { font-size: clamp(2.2rem, 10.5vw, 2.9rem); }
     .pgrid, .pgrid-2, .feat-side { grid-template-columns: 1fr 1fr; }
-    .pcap { font-size: .78rem; }
+    .pcap { font-size: .78rem; -webkit-line-clamp: 3; }
     .pcard { padding: .45rem .45rem 1.9rem; }
     .slide { width: min(78vw, 340px); }
     .chips li { font-size: .78rem; }
