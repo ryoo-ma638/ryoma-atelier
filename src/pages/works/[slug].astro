@@ -162,6 +162,33 @@ if (work.approach) {
         </section>
       )}
 
+      {work.introVideo && (
+        <section class="sec reveal">
+          <p class="eyebrow"><span class="dot"></span>紹介動画</p>
+          {work.introVideo.note && <p class="resource-note">{work.introVideo.note}</p>}
+          <div class="intro-video">
+            <video controls playsinline preload="metadata" poster={work.introVideo.poster} src={work.introVideo.src} aria-label={`${work.title}の紹介動画`}></video>
+          </div>
+          {work.introVideo.credits && <p class="resource-credits">音源：{work.introVideo.credits.map((credit, i) => <><a href={credit.href} target="_blank" rel="noopener noreferrer">{credit.label}</a>{i < work.introVideo!.credits!.length - 1 && <span> ／ </span>}</>)}</p>}
+        </section>
+      )}
+
+      {work.introSlides && (
+        <section class="sec reveal">
+          <p class="eyebrow"><span class="dot"></span>紹介スライド <span class="mut">（横にスクロール・クリックで拡大）</span></p>
+          <p class="resource-title">{work.introSlides.title}</p>
+          {work.introSlides.note && <p class="resource-note">{work.introSlides.note}</p>}
+          <div class="slides intro-slides" role="region" aria-label={`${work.title} の紹介スライド`} tabindex="0">
+            {work.introSlides.images.map((s, si) => (
+              <button class="slide intro-slide" type="button" data-gallery={JSON.stringify(work.introSlides!.images)} data-index={si} data-caption={work.introSlides!.title} aria-label={`紹介スライド ${si + 1} / ${work.introSlides!.images.length} を拡大`}>
+                <img src={s} alt={`紹介スライド ${si + 1} ページ`} loading="lazy" width="1600" height="900" />
+                <span class="slide-number">{si + 1} / {work.introSlides!.images.length}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
       <!-- ===== 音源 ===== -->
       {work.audio && work.audio.length > 0 && (
         <section class="sec reveal">
@@ -284,6 +311,15 @@ if (work.approach) {
   /* アプリ画面は元画像の比率を保ち、一覧でも下端まで見せる。 */
   .slide--tall { flex-basis: clamp(180px, 20vw, 230px); width: clamp(180px, 20vw, 230px); }
   .slide--tall img { aspect-ratio: auto; height: auto; object-fit: contain; }
+  .resource-title { margin-top: .75rem; font-weight: 700; line-height: 1.5; }
+  .resource-note { margin-top: .4rem; color: var(--mut); font-size: .88rem; line-height: 1.7; }
+  .intro-video { width: min(100%, 900px); margin: 1rem auto 0; overflow: hidden; border: 2px solid var(--ink); border-radius: var(--r-md); background: #0b1428; box-shadow: var(--sh-1); }
+  .intro-video video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; }
+  .resource-credits { margin-top: .5rem; color: var(--mut); font-size: .75rem; line-height: 1.6; text-align: center; }
+  .resource-credits a { text-decoration: underline; text-underline-offset: .2em; }
+  .intro-slide { position: relative; flex-basis: min(500px, 84vw); width: min(500px, 84vw); }
+  .intro-slide img { height: auto; aspect-ratio: 16 / 9; }
+  .slide-number { position: absolute; right: .5rem; bottom: .5rem; padding: .15rem .5rem; border-radius: 999px; background: rgba(13, 27, 49, .9); color: #fff; font-size: .72rem; font-weight: 700; }
   @media (max-width: 640px) {
     .slide--tall { flex-basis: min(58vw, 230px); width: min(58vw, 230px); }
   }
