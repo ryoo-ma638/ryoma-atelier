@@ -3,6 +3,7 @@
 // data-index で初期表示、data-caption でキャプション（任意）。
 ---
 <div id="lightbox" class="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="画像ビューア">
+  <button class="lb-btn lb-zoom" type="button" aria-pressed="false">拡大して読む</button>
   <button class="lb-btn lb-close" aria-label="閉じる">✕</button>
   <button class="lb-btn lb-prev" aria-label="前の画像">‹</button>
   <figure class="lb-figure">
@@ -45,6 +46,7 @@
   .lb-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.08); }
   .lb-close { top: clamp(1rem, 3vw, 2rem); right: clamp(1rem, 3vw, 2rem); color: #0b0a12; background: #fff; border: none; box-shadow: 0 8px 24px rgba(0,0,0,0.45); }
   .lb-close:hover { background: var(--accent-ink, var(--y-peach, #5a3df0)); color: #fff; transform: scale(1.1) rotate(90deg); }
+  .lb-zoom { top: clamp(1rem, 3vw, 2rem); left: clamp(1rem, 3vw, 2rem); width: auto; height: 44px; padding: 0 .9rem; border-radius: 999px; font-size: .85rem; font-weight: 700; }
   .lb-prev { left: clamp(0.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); }
   .lb-next { right: clamp(0.5rem, 3vw, 2rem); top: 50%; transform: translateY(-50%); }
   .lb-prev:hover, .lb-next:hover { transform: translateY(-50%) scale(1.08); }
@@ -58,6 +60,10 @@
   .lb.single { padding-bottom: clamp(1rem, 4vw, 3rem); }
   .lb.single .lb-figure { max-height: 88vh; }
   .lb.single .lb-figure img { max-height: 82vh; }
+  /* 全体表示から原寸に切り替え、縦長の画面でも文字をスクロールして読めるようにする。 */
+  .lb.zoomed .lb-figure { display: block; width: min(1100px, calc(100vw - 2rem)); height: calc(100dvh - 8rem); max-height: none; overflow: auto; overscroll-behavior: contain; }
+  .lb.zoomed .lb-figure img, .lb.single.zoomed .lb-figure img { display: block; width: auto; height: auto; max-width: none; max-height: none; margin: 0 auto; transform: none; }
+  .lb.zoomed .lb-cap { margin: .7rem auto 0; }
 
   /* トリガー側の見え方（クリック可能の合図） */
   :global([data-gallery]) { cursor: zoom-in; }
@@ -77,9 +83,15 @@
     const unlockScroll = () => { const b = document.body; const n = Math.max(0, (parseInt(b.dataset.scrollLock || "0", 10)) - 1); b.dataset.scrollLock = String(n); if (n === 0) b.style.overflow = ""; };
     const focusables = () => Array.from(lb.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')).filter((el) => (el as HTMLElement).offsetParent !== null) as HTMLElement[];
     const onTrap = (e: KeyboardEvent) => { if (e.key !== "Tab") return; const f = focusables(); if (!f.length) return; const first = f[0], last = f[f.length - 1]; if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); } };
+    const resetZoom = () => {
+      lb?.classList.remove("zoomed");
+      const button = lb?.querySelector(".lb-zoom") as HTMLButtonElement | null;
+      if (button) { button.textContent = "拡大して読む"; button.setAttribute("aria-pressed", "false"); }
+    };
 
     const show = () => {
       if (!lb) return;
+      resetZoom();
       lb.classList.remove("show-img");
       img.src = list[i];
       cur.textContent = String(i + 1);
@@ -147,9 +159,21 @@
       cur = document.getElementById("lb-cur")!;
       total = document.getElementById("lb-total")!;
       lb.querySelector(".lb-close")!.addEventListener("click", close);
+      lb.querySelector(".lb-zoom")!.addEventListener("click", () => {
+        if (!lb) return;
+        const zoomed = lb.classList.toggle("zoomed");
+        const button = lb.querySelector(".lb-zoom") as HTMLButtonElement;
+        button.textContent = zoomed ? "全体表示" : "拡大して読む";
+        button.setAttribute("aria-pressed", String(zoomed));
+        if (zoomed) {
+          const figure = lb.querySelector(".lb-figure") as HTMLElement;
+          figure.scrollTop = 0;
+          figure.scrollLeft = (figure.scrollWidth - figure.clientWidth) / 2;
+        }
+      });
       lb.querySelector(".lb-prev")!.addEventListener("click", () => step(-1));
       lb.querySelector(".lb-next")!.addEventListener("click", () => step(1));
-      lb.addEventListener("click", (e) => { if (e.target === lb || (e.target as HTMLElement).classList.contains("lb-figure")) close(); });
+      lb.addEventListener("click", (e) => { if (e.target === lb || (!lb?.classList.contains("zoomed") && (e.target as HTMLElement).classList.contains("lb-figure"))) close(); });
     };
     document.addEventListener("astro:page-load", bind);
     bind();

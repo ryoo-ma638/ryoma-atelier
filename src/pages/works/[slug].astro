@@ -274,13 +274,17 @@ if (work.approach) {
   .shot img { width: 100%; aspect-ratio: 16/10; object-fit: contain; background: var(--paper-2); display: block; }
 
   .slides { align-items: stretch; }
-  .slide-group { display: flex; flex-direction: column; flex: 0 0 auto; scroll-snap-align: start; }
-  .slide-label { width: min(420px, 74vw); margin-bottom: .6rem; font-weight: 700; font-size: .9rem; line-height: 1.5; }
+  .slide-group { display: flex; flex-direction: column; flex: 0 0 auto; }
+  .slide-label { max-width: 34ch; margin-bottom: .6rem; font-weight: 700; font-size: .9rem; line-height: 1.5; }
   .slide-items { display: flex; gap: .9rem; margin-top: auto; }
-  .slide { flex: 0 0 min(420px, 74vw); width: min(420px, 74vw); }
+  .slide { flex: 0 0 min(420px, 74vw); width: min(420px, 74vw); scroll-snap-align: start; }
   .slide img { width: 100%; aspect-ratio: 16/10; object-fit: contain; background: #fff; display: block; }
-  /* スマホの縦長スクショ用：縦枠にして上部を大きく見せる（全体はライトボックスで） */
-  .slide--tall img { aspect-ratio: 3/4; object-fit: cover; object-position: top center; }
+  /* アプリ画面は元画像の比率を保ち、一覧でも下端まで見せる。 */
+  .slide--tall { flex-basis: clamp(180px, 20vw, 230px); width: clamp(180px, 20vw, 230px); }
+  .slide--tall img { aspect-ratio: auto; height: auto; object-fit: contain; }
+  @media (max-width: 640px) {
+    .slide--tall { flex-basis: min(58vw, 230px); width: min(58vw, 230px); }
+  }
 
   /* ---- 音源 ---- */
   .tracks { display: grid; gap: .9rem; margin-top: 1rem; }
