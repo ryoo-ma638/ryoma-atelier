@@ -1,8 +1,7 @@
 ---
-import { works } from '../data/works.ts';
+import { featuredWorks } from '../data/works.ts';
 import WorkCard from './WorkCard.astro';
-// 代表作（featured）でサムネのあるものを最大8件。
-const picks = works.filter((w) => w.featured && w.thumb).slice(0, 8);
+const picks = featuredWorks.slice(0, 8);
 ---
 <section class="works section" id="works">
   <div class="wrap">
