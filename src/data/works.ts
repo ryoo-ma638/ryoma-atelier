@@ -375,7 +375,7 @@ export const works: Work[] = [
     thumb: "/assets/works/settlo-event.jpg",
     contain: true,
     featured: true,
-    status: "ハッカソン企業協賛賞・技育博2026出展",
+    status: "企業協賛賞",
     link: "https://settlo-app.web.app",
     slideGroups: [
       { title: "記録する・まとめて精算する（ゲストデモの実画面）", images: ["/assets/works/settlo-home.jpg", "/assets/works/settlo-event.jpg", "/assets/works/settlo-pay.jpg"], portrait: true },
