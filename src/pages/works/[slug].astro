@@ -47,7 +47,7 @@ if (work.approach) {
 
       <!-- ===== ヒーロー（メディア＋情報） ===== -->
       <div class="head">
-        <div class={`media${work.contain ? ' fit-contain' : ''}`} transition:name={`w-${work.slug}`} style={`--tag:${cat.color}`}>
+        <div class={`media${work.contain ? ' fit-contain' : ''}${work.slug === 'settlo' ? ' settlo-intro' : ''}`} transition:name={`w-${work.slug}`} style={`--tag:${cat.color}`}>
           {work.video
             ? <video data-autoplay autoplay src={work.video} poster={work.thumb} muted loop playsinline preload="auto"></video>
             : work.thumb
@@ -220,6 +220,8 @@ if (work.approach) {
   .media video, .media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
   .media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 12px, var(--paper-2) 12px, var(--paper-2) 24px); }
   .media.fit-contain img { object-fit: contain; padding: .6rem 0; }
+  .media.settlo-intro { background: #fff; }
+  .media.settlo-intro img { object-fit: contain; padding: 0; }
   /* 2本目の動画（いまのPC版プレイ） */
   .v2 { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--paper-3); border: 2px solid var(--ink); box-shadow: var(--sh-3); }
   .v2 video { width: 100%; height: auto; max-height: 62vh; object-fit: contain; display: block; }
