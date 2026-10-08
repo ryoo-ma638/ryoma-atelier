@@ -30,7 +30,7 @@ const picks = featuredWorks.slice(0, 8);
     }
     /* 先頭は横幅を使って画像と説明を並べ、隣のカードと高さをそろえる。 */
     @media (min-width: 880px) {
-      .grid > :global(:first-child) { grid-column: span 2; display: grid; grid-template-columns: 42% minmax(0, 1fr); }
+      .grid > :global(:first-child) { grid-column: span 2; display: grid; grid-template-columns: 52% minmax(0, 1fr); }
       .grid > :global(:first-child) :global(.media) { height: 100%; min-height: 300px; aspect-ratio: auto; }
       .grid > :global(:first-child) :global(.body) { justify-content: center; }
       .grid > :global(:first-child) :global(h3) { font-size: clamp(1.25rem, 1.9vw, 1.6rem); }
