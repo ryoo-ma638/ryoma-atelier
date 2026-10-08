@@ -36,6 +36,8 @@ export interface Work {
   gallery?: string[];     // 複数画像（ライトボックスで拡大閲覧。スライド資料・スクショ等）
   audio?: { title: string; src: string; note?: string }[]; // 試聴用の音源（モーダルにプレイヤー表示）
   slideGroups?: { title: string; images: string[]; portrait?: boolean }[];  // 発表/種類ごとに分けた横スクロールのスライド群（portrait:true＝スマホの縦長スクショ用の縦枠）
+  introVideo?: { src: string; poster: string; note?: string; credits?: { label: string; href: string }[] };
+  introSlides?: { title: string; note?: string; images: string[] };
   featured?: boolean;     // トップのBentoで大きく見せる
   link?: string;          // 外部/別サイトへのリンク（Web作品など）
   links?: { label: string; href: string }[]; // 掲載メディア等の外部リンク（複数・任意）
@@ -381,6 +383,20 @@ export const works: Work[] = [
       { title: "迷わせない仕組み（アシスタント・お知らせ・使い方ガイド・フレンド）", images: ["/assets/works/settlo-assistant.jpg", "/assets/works/settlo-notif.jpg", "/assets/works/settlo-guide.jpg", "/assets/works/settlo-friend.jpg"], portrait: true },
       { title: "相談する・AIと返信を考える（支払いの件ごとのチャット／AIが会話を読んで出した返信案）", images: ["/assets/works/settlo-chat.jpg", "/assets/works/settlo-ai.jpg"], portrait: true },
     ],
+    introVideo: {
+      src: "/assets/works/video/settlo-intro.mp4",
+      poster: "/assets/works/settlo-video-poster.webp",
+      note: "2026年7月制作の紹介動画です。映っている画面は制作当時のもので、現在のアプリとは一部異なります。",
+      credits: [
+        { label: "BGM: OpenTracks", href: "https://dova-s.jp/bgm/detail/2445" },
+        { label: "効果音: 効果音ラボ", href: "https://soundeffect-lab.info/" },
+      ],
+    },
+    introSlides: {
+      title: "Settlo 紹介スライド（技育博本番用・全19ページ）",
+      note: "技育博の本番用にチームでまとめた資料です。",
+      images: Array.from({ length: 19 }, (_, i) => `/assets/works/settlo-slides/slide-${String(i + 1).padStart(2, '0')}.webp`),
+    },
   },
   {
     slug: "nogi-photo",
