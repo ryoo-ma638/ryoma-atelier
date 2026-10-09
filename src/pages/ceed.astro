@@ -53,14 +53,16 @@ const builds = [
     role: "WEB班の進行・画面構成・文章整理",
     title: '中央製作所 採用サイト（WEB班）',
     desc: "若手求職者に必要な情報を届ける採用サイトを、WEB班で制作中。画面構成や文章の整理を進め、企業担当者や班のメンバーと確認しながら改善しています。",
-    link: '/works#cat-web',
-    linkLabel: 'Web制作の実績を見る',
+    link: '/works/chuo-seisakusho',
+    linkLabel: '作品の紹介を見る',
   },
   {
     role: "共通部品の実装・共同制作の取りまとめ",
     title: 'CEED 公式サイト',
-    desc: "サークル公式サイトをWEB班で共同制作中。各ページは担当メンバーが制作し、自分は共通部品と制作環境の整備、変更内容の確認と取り込みを担当しています。",
-    status: '公開予定',
+    desc: "サークル公式サイトをWEB班で共同制作中。共通部品とAboutの初版ができ、各担当ページを制作中です。自分は共通部品の実装と変更内容の確認・取り込みを担当しています。",
+    link: '/works/ceed-site',
+    linkLabel: '作品の紹介を見る',
+    status: '制作中・未公開',
   },
 ];
 
@@ -129,7 +131,7 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
             {socials.map((s) => (
               <a class="slink" href={s.url} target="_blank" rel="noopener">{s.label}<span aria-hidden="true">↗</span></a>
             ))}
-            <span class="slink is-soon">公式サイト（公開予定）</span>
+            <span class="slink is-soon">公式サイト（制作中・未公開）</span>
           </div>
         </div>
 
