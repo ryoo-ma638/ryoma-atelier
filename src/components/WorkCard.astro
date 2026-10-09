@@ -59,12 +59,12 @@ const preview = work.cardImage ?? work.thumb;
 
   /* ---- メディア ---- */
   .media { position: relative; aspect-ratio: 16 / 10; background: var(--paper-3); overflow: hidden; display: grid; place-items: center; }
-  .media img, .media video { width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease); }
+  .media > img, .media > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease); }
   /* 縦長ポスター等＝余白を作って全体を見せる */
   .media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 10px, var(--paper-2) 10px, var(--paper-2) 20px); }
   .media.fit-contain img { object-fit: contain; padding: clamp(.75rem, 2vw, 1.25rem); }
   .media.fit-screen img { padding: .35rem; }
-  .media.fit-photo img { object-fit: cover; padding: 0; }
+  .media.fit-photo img { object-fit: cover; object-position: center bottom; padding: 0; }
   .card--settlo .media { background: #fff; }
   .card--settlo .media > img { object-fit: contain; padding: 0; }
   .card:hover .media > img { transform: scale(1.03); }
