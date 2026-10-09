@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { works, categoryLabels } from '../data/works.ts';
+import { works, orderedWorks, categoryLabels } from '../data/works.ts';
 
 // 下部「つくってるもの」ストリップ：7分野すべて（日本語＋件数＝分野の横断を一目で）
 const stripOrder = ['web', 'imaging', 'cg', 'video', 'planning', 'graphic', 'sound'] as const;
@@ -9,7 +9,7 @@ const SHORT_EN: Record<string, string> = {
 };
 const strip = stripOrder
   .map((c) => {
-    const rep = works.find((w) => w.category === c && w.thumb);
+    const rep = orderedWorks.find((w) => w.category === c && w.thumb);
     const n = works.filter((w) => w.category === c).length;
     return rep ? { cat: c, en: SHORT_EN[c], ja: categoryLabels[c].ja, n, color: categoryLabels[c].color, thumb: rep.thumb } : null;
   })
@@ -251,11 +251,10 @@ const strip = stripOrder
   }
   .fcard:hover { transform: translateY(-7px) rotate(-1.2deg); box-shadow: 0 12px 22px rgba(27,42,74,.3); }
   .flabel { display: block; font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em; color: #fff; padding: .5rem .7rem .35rem; }
-  .fthumb { display: block; aspect-ratio: 16/9; }
-  .fthumb img { width: 100%; height: 100%; object-fit: cover; opacity: .92; transition: transform .35s var(--ease); }
-  .fja { display: flex; align-items: center; justify-content: space-between; gap: .4rem; color: var(--paper); font-size: .68rem; font-weight: 700; padding: .35rem .7rem .45rem; }
-  .fja b { font-family: var(--f-mono); font-size: .72rem; color: var(--amber-l); }
-  .fcard:hover .fthumb img { transform: scale(1.07); }
+  .fthumb { display: block; aspect-ratio: 16/9; background: var(--paper-3); overflow: hidden; }
+  .fthumb img { width: 100%; height: 100%; object-fit: contain; display: block; padding: .25rem; opacity: .92; }
+  .fja { display: flex; align-items: center; justify-content: space-between; gap: .4rem; min-height: 2.8rem; color: var(--paper); font-size: .68rem; font-weight: 700; line-height: 1.35; padding: .35rem .7rem .45rem; }
+  .fja b { flex: 0 0 auto; font-family: var(--f-mono); font-size: .72rem; color: var(--amber-l); }
   .fgo { position: absolute; right: .55rem; top: .38rem; color: var(--amber); font-weight: 900; font-size: .95rem; transition: transform .2s var(--spring); }
   .fcard:hover .fgo { transform: translateX(3px); }
   .fcard::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--tag); }

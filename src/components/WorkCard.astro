@@ -41,7 +41,7 @@ const external = !!work.link?.startsWith('http');
   /* v2 */
   /* ---- 白カード＝紙が浮く（やわらかい影が基本・hoverで持ち上がる） ---- */
   .card {
-    position: relative; display: flex; flex-direction: column;
+    position: relative; display: flex; flex-direction: column; min-width: 0;
     background: var(--card);
     border: 1.5px solid color-mix(in oklab, var(--ink) 15%, transparent);
     border-radius: var(--r-md); overflow: hidden;
@@ -64,7 +64,7 @@ const external = !!work.link?.startsWith('http');
   .media.fit-contain img { object-fit: contain; padding: clamp(.75rem, 2vw, 1.25rem); }
   .card--settlo .media { background: #fff; }
   .card--settlo .media > img { object-fit: contain; padding: 0; }
-  .card:hover .media > img { transform: scale(1.06); }
+  .card:hover .media > img { transform: scale(1.03); }
   .card:hover .media.fit-contain > img { transform: none; }
 
   /* 準備中＝生成りの斜線＋うまくんの顔 */
