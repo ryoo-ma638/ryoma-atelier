@@ -246,7 +246,7 @@ if (work.approach) {
   .media::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--tag); z-index: 2; }
   .media video, .media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
   .media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 12px, var(--paper-2) 12px, var(--paper-2) 24px); }
-  .media.fit-contain img { object-fit: contain; padding: .6rem 0; }
+  .media.fit-contain img { object-fit: contain; padding: clamp(.8rem, 2vw, 1.4rem); }
   .media.settlo-intro { background: #fff; }
   .media.settlo-intro img { object-fit: contain; padding: 0; }
   /* 2本目の動画（いまのPC版プレイ） */
