@@ -7,17 +7,18 @@ const cat = categoryLabels[work.category];
 // カードは必ず詳細ページへ（外部サイトへは詳細ページのボタンから）
 const href = `/works/${work.slug}`;
 const external = !!work.link?.startsWith('http');
+const preview = work.cardImage ?? work.thumb;
 ---
 <a
   class:list={[`card reveal d${(i % 4) + 1}`, { 'card--settlo': work.slug === 'settlo' }]}
   href={href}
   style={`--tag:${cat.color}`}
 >
-  <div class={`media${work.thumb ? '' : ' empty'}${work.contain ? ' fit-contain' : ''}`} transition:name={`w-${work.slug}`}>
-    {work.thumb
+  <div class={`media${preview ? '' : ' empty'}${work.contain && work.cardView !== 'photo' ? ' fit-contain' : ''}${work.cardView === 'screen' ? ' fit-screen' : ''}${work.cardView === 'photo' ? ' fit-photo' : ''}`} transition:name={`w-${work.slug}`}>
+    {preview
       ? (work.video
-          ? <video data-hover src={work.video} poster={work.thumb} muted loop playsinline preload="none"></video>
-          : <img src={work.thumb} alt={work.title} loading="lazy" />)
+          ? <video data-hover src={work.video} poster={preview} muted loop playsinline preload="none"></video>
+          : <img src={preview} alt={work.title} loading="lazy" />)
       : (
         <span class="noimg" aria-hidden="true">
           <img class="uma" src="/assets/mascot/logo3d.png" alt="" loading="lazy" />
@@ -62,6 +63,8 @@ const external = !!work.link?.startsWith('http');
   /* 縦長ポスター等＝余白を作って全体を見せる */
   .media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 10px, var(--paper-2) 10px, var(--paper-2) 20px); }
   .media.fit-contain img { object-fit: contain; padding: clamp(.75rem, 2vw, 1.25rem); }
+  .media.fit-screen img { padding: .35rem; }
+  .media.fit-photo img { object-fit: cover; padding: 0; }
   .card--settlo .media { background: #fff; }
   .card--settlo .media > img { object-fit: contain; padding: 0; }
   .card:hover .media > img { transform: scale(1.03); }
