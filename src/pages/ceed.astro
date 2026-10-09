@@ -452,7 +452,7 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
     scroll-snap-align: start; cursor: zoom-in;
     transition: translate .2s var(--spring), border-color .2s ease, box-shadow .2s ease;
   }
-  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .slide:hover { translate: 0 -4px; border-color: var(--amber-d); box-shadow: var(--sh-2); }
   .slide-no {
     position: absolute; left: .5rem; bottom: .4rem;
