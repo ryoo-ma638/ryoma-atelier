@@ -19,7 +19,7 @@ const decks = [
   {
     title: 'ワークショップ「Amazon Prime CM分析」',
     role: '企画・登壇・資料制作',
-    date: '2024.12.23',
+    date: '2025.12.23',
     note: '61ページ、ぜんぶ自作！',
     lead: '感覚じゃなくて“ロジック”でCMを読む90分のチーム戦。企画から司会台本・61ページのスライドまで、一人で作り込みました。',
     article: [
@@ -27,7 +27,7 @@ const decks = [
       'メインワークは“ヒントだけでCMの全構成を当てる”推理戦。「なぜゴミ箱が映る？」「なぜHipHop？」を論理で導く。',
       '締めは「テスト期間の限界大学生を救う15秒CM」をチームで制作・発表。優勝チームには Amazon ギフト券！',
     ],
-    slides: [1, 2, 3, 4, 5].map((n) => `/assets/slides/slide-ws-${n}.jpg`),
+    slides: [2, 3, 4, 5].map((n) => `/assets/slides/slide-ws-${n}.jpg`),
   },
   {
     title: '新入生向けプレゼン（サークル説明会）',
@@ -36,7 +36,7 @@ const decks = [
     note: '新入生の入口をつくる！',
     lead: '「映像制作を学び、つくり、社会につなげる」CEEDの魅力が伝わるように、構成・配色・図解まで設計して登壇しました。',
     article: [
-      '当時の活動案内、企業コラボ、習得ソフト（Illustrator / Photoshop / Premiere / After Effects / Maya）、年間スケジュールをひとつの物語に。',
+      '火曜の講座と木曜の制作、企業コラボ、習得ソフト（Illustrator / Photoshop / Premiere / After Effects / Maya）、年間スケジュールをひとつの物語に。',
       '初心者から経験者まで“置いてけぼりにしない”入口づくりを意識しました。',
     ],
     slides: [1, 2, 3, 4].map((n) => `/assets/slides/slide-ceed-${n}.jpg`),
@@ -120,8 +120,8 @@ const lb = (arr: { src: string }[]) => JSON.stringify(arr.map((x) => x.src));
             <b>60名規模</b>のコミュニティへ育つ過程に関わってきました。
           </p>
           <ul class="chips" aria-label="CEEDの基本情報">
-            <li><b>活動</b>講座・チーム制作</li>
-            <li><b>見学</b>最新の日時・場所は公式SNSへ</li>
+            <li><b>活動</b>火（講座）・木（制作）16:30〜</li>
+            <li><b>場所</b>1号館 701教室</li>
             <li><b>領域</b>映像・CG・デザイン</li>
             <li><b>歓迎</b>見学・講座参加もOK</li>
           </ul>
