@@ -11,9 +11,9 @@ const strip = stripOrder
   .map((c) => {
     const rep = orderedWorks.find((w) => w.category === c && w.thumb);
     const n = works.filter((w) => w.category === c).length;
-    return rep ? { cat: c, en: SHORT_EN[c], ja: categoryLabels[c].ja, n, color: categoryLabels[c].color, thumb: rep.thumb } : null;
+    return rep ? { cat: c, en: SHORT_EN[c], ja: categoryLabels[c].ja, n, color: categoryLabels[c].color, thumb: rep.cardImage ?? rep.thumb, photo: c === 'planning' } : null;
   })
-  .filter(Boolean) as { cat: string; en: string; ja: string; n: number; color: string; thumb: string }[];
+  .filter(Boolean) as { cat: string; en: string; ja: string; n: number; color: string; thumb: string; photo: boolean }[];
 ---
 <section class="hero" id="top">
   <div class="wrap grid">
@@ -89,7 +89,7 @@ const strip = stripOrder
         {strip.map((s) => (
           <a class="fcard" href={`/works#cat-${s.cat}`} style={`--tag:${s.color}`}>
             <span class="flabel">{s.en}</span>
-            <span class="fthumb"><img src={s.thumb} alt="" loading="lazy" /></span>
+            <span class:list={["fthumb", { "is-photo": s.photo }]}><img src={s.thumb} alt="" loading="lazy" /></span>
             <span class="fja">{s.ja}<b>{s.n}</b></span>
             <span class="fgo">→</span>
           </a>
@@ -253,6 +253,7 @@ const strip = stripOrder
   .flabel { display: block; font-family: var(--f-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em; color: #fff; padding: .5rem .7rem .35rem; }
   .fthumb { display: block; aspect-ratio: 16/9; background: var(--paper-3); overflow: hidden; }
   .fthumb img { width: 100%; height: 100%; object-fit: contain; display: block; padding: .25rem; opacity: .92; }
+  .fthumb.is-photo img { object-fit: cover; padding: 0; object-position: center; }
   .fja { display: flex; align-items: center; justify-content: space-between; gap: .4rem; min-height: 2.8rem; color: var(--paper); font-size: .68rem; font-weight: 700; line-height: 1.35; padding: .35rem .7rem .45rem; }
   .fja b { flex: 0 0 auto; font-family: var(--f-mono); font-size: .72rem; color: var(--amber-l); }
   .fgo { position: absolute; right: .55rem; top: .38rem; color: var(--amber); font-weight: 900; font-size: .95rem; transition: transform .2s var(--spring); }
