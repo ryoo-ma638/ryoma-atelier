@@ -460,7 +460,7 @@ export const works: Work[] = [
     thumb: "/assets/slides/slide-ceed-1.jpg",
     slideGroups: [
       { title: "CEED 新入生説明会（2026年度）", images: [1, 2, 3, 4].map((n) => `/assets/slides/slide-ceed-${n}.jpg`) },
-      { title: "Amazon Prime CM構成分析ワークショップ", images: [2, 3, 4, 5].map((n) => `/assets/slides/slide-ws-${n}.jpg`) },
+      { title: "Amazon Prime CM構成分析ワークショップ", images: [1, 2, 3, 4, 5].map((n) => `/assets/slides/slide-ws-${n}.jpg`) },
     ],
   },
   {
