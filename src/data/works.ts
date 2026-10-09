@@ -293,6 +293,7 @@ export const works: Work[] = [
     approach: "WEB班の制作をまとめながら、画面構成と文章を整理。企業担当者やメンバーと確認を重ねている。",
     tools: ["Figma", "Webデザイン"],
     thumb: "/assets/ceed-logo.png",
+    contain: true,
     status: "進行中",
     featured: true,
   },
