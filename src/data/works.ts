@@ -30,6 +30,7 @@ export interface Work {
   tools?: string[];       // 使用ツール
   duration?: string;      // 制作時間
   thumb?: string;         // サムネイル画像パス
+  imageNote?: string;     // 画像の実物・構想の区別
   video?: string;         // ループ再生する軽量mp4（任意）
   video2?: string;        // 2本目の動画（個別ページ下部に追加表示。任意）
   stageVideos?: { label: string; src: string }[]; // ステージ別の短い動画（3カラム表示。任意）
@@ -244,17 +245,15 @@ export const works: Work[] = [
   */
   {
     slug: "wis-umbrella",
-    title: "雨に向く傘 — WISS2026 応募準備中の研究",
+    title: "雨に向く傘 — 雨筋の画像処理を用いた研究",
     category: "imaging",
     status: "研究中",
-    summary: "カメラで雨の向きを読み取り、雨の来る方へ自動で傾くスマート傘の研究。手がふさがる電動車椅子の利用者のために。",
-    goal: "「自分で傘を傾けられない人」が、濡れずに移動できるように。風から雨を“推測”する従来手法ではなく、カメラで雨そのものを見て、来る方向へ傘を向けることをめざす。",
-    approach: "傘のシャフトに前向き・横向きのカメラを付け、雨筋の傾きから雨の向きを直接推定（Python / OpenCV。合成雨を用いた予備実験で、向きの推定が機能することを確認）。2軸サーボで傘を向け、IMUで車椅子の傾き・旋回を毎秒10〜30回補正する設計。水野慎士研究室での個人研究として、WISS2026（インタラクティブシステムとソフトウェアのワークショップ）への応募を準備している段階。",
-    tools: ["Python / OpenCV", "Raspberry Pi", "カメラ・サーボ・IMU"],
-    thumb: "/assets/works/wis-scene.jpg",
-    slideGroups: [
-      { title: "コンセプト — 雨の来る方へ、傘が自動で向く", images: ["/assets/works/wis-scene.jpg", "/assets/works/wis-mechanism.jpg", "/assets/works/wis-concept.jpg"] },
-    ],
+    summary: "電動車椅子に後付けする傘の向き調整を目標に、映像から雨筋らしい線を取り出す方法を調べています。",
+    goal: "手で傘の向きを調整しにくい場面に向け、画像中の雨筋を傘の向き調整に役立てる方法を探る。",
+    approach: "既存の雨天映像から、雨筋に見える線分の候補を取り出す処理を予備評価しています。購入したカメラでは短時間の録画と、保存映像を処理して記録する経路を確認しました。現段階では背景の直線やぼけた水滴にも反応するため、雨だけの自動判定や角度の精度は確認できていません。傘を付けた動作も未確認です。掲載画像は完成品ではなく構想イメージです。",
+    tools: ["Python / OpenCV", "カメラ"],
+    thumb: "/assets/works/wis-concept.jpg",
+    imageNote: "構想イメージ・実機動作は未確認",
   },
   // === 福岡市科学館 CREATIVE AWARD：本人指示で「一時的に非表示」（2026-09-14／応募に至らなかったため）。再表示する時はこの /* */ を外すだけ。 ===
   /*
@@ -286,13 +285,13 @@ export const works: Work[] = [
   // ====================== Web・アプリ ======================
   {
     slug: "chuo-seisakusho",
-    title: "中央製作所 採用サイト リデザイン",
+    title: "中央製作所 採用サイト制作",
     category: "web",
-    summary: "学生・若手求職者に向けた企業採用サイトのリデザイン。サークル CEED のWEB班でのクライアント案件。",
-    goal: "応募者が必要な情報にたどり着き、企業の魅力が伝わる導線にして応募数を増やす。",
-    approach: "技術紹介ページの設計を担当。Figmaでレイアウトを組み、写真と文章の構成・撮影イメージをディレクション。電気／機械／化学の専門性を直感的に見せる構成にした。",
-    tools: ["Figma", "Webデザイン"],
-    thumb: "/assets/works/chuo-seisakusho.jpg",
+    summary: "学生・若手求職者に向けた採用サイトを、サークル CEED のWEB班で制作中。企業と確認を重ねるクライアント案件。",
+    goal: "応募者が必要な情報にたどり着き、企業の魅力が伝わる構成を考える。",
+    approach: "WEB班の制作をまとめながら、画面構成と文章を整理。企業担当者やメンバーと確認を重ねている。",
+    tools: ["Figma", "HTML / CSS", "Webデザイン"],
+    thumb: "/assets/ceed-logo.png",
     status: "進行中",
     featured: true,
   },
@@ -354,8 +353,8 @@ export const works: Work[] = [
     slug: "ceed-site",
     title: "CEED 公式サイト",
     category: "web",
-    summary: "所属サークル CEED（愛知工業大学マルチクリエイティブサークル）の公式サイト。WEB班として構築を進行中。",
-    tools: ["Webデザイン"],
+    summary: "所属サークル CEED の公式サイトをWEB班で共同制作中。担当メンバーが各ページをつくり、自分は共通部品の実装と変更内容の確認・取り込みを担当。",
+    tools: ["Astro", "HTML / CSS", "Webデザイン"],
     status: "公開予定",
   },
   {
@@ -454,14 +453,13 @@ export const works: Work[] = [
     slug: "presentation-slides",
     title: "プレゼン・スライド制作",
     category: "planning",
-    summary: "登壇・発表のために一から設計したスライド。『CEED新入生説明会』『中央製作所WEBリデザイン進捗報告』『Amazon Prime CM構成分析WS』など、情報の優先順位と“伝わる見せ方”を設計した。",
+    summary: "登壇・発表のために一から設計したスライド。CEED新入生説明会やCM構成分析ワークショップなど、情報の優先順位と伝わる見せ方を設計した。",
     goal: "「何を・どの順で・どう見せるか」を設計し、内容の価値が一番に伝わる発表にする。",
-    approach: "新入生説明会は活動の魅力が伝わる構成を一から設計。中央製作所の進捗報告はリデザイン案を分かりやすく可視化。ワークショップはAmazon PrimeのCM構成を図解で解体した。いずれも配色・余白・図解を整理し、視認性と説得力の両立を狙った。",
+    approach: "新入生説明会は活動の魅力が伝わる構成を一から設計。ワークショップはAmazon PrimeのCM構成を図解で解体した。いずれも配色・余白・図解を整理し、視認性と説得力の両立を狙った。",
     tools: ["Keynote", "PowerPoint", "デザイン"],
-    thumb: "/assets/slides/slide-chuo-1.jpg",
+    thumb: "/assets/slides/slide-ceed-1.jpg",
     slideGroups: [
       { title: "CEED 新入生説明会（2026年度）", images: [1, 2, 3, 4].map((n) => `/assets/slides/slide-ceed-${n}.jpg`) },
-      { title: "中央製作所 採用サイト リデザイン進捗報告", images: [1, 2, 3, 4, 5].map((n) => `/assets/slides/slide-chuo-${n}.jpg`) },
       { title: "Amazon Prime CM構成分析ワークショップ", images: [1, 2, 3, 4, 5].map((n) => `/assets/slides/slide-ws-${n}.jpg`) },
     ],
   },

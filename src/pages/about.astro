@@ -11,8 +11,8 @@ const kama = works.find((w) => w.slug === 'deathcamer');
 const facts = [
   { k: '名前', v: '大崎稜馬（おおさき りょうま）' },
   { k: '学び', v: '愛知工業大学 情報科学部 メディア情報専攻・3年' },
-  { k: '研究室', v: '水野慎士研究室（CG・画像処理・インタラクション）' },
-  { k: 'サークル', v: 'CEED（シード）副部長' },
+  { k: '研究', v: '画像処理・CG・インタラクション' },
+  { k: 'サークル', v: 'CEED（シード）副部長・WEB班の取りまとめ' },
   { k: 'もう一つの顔', v: 'バンテリンドームのビール売り子（2026年 年間ランキング 新人売上10位／おつまみ全体15位）' },
   { k: '性格', v: '愛嬌がある・元気・まっすぐ・諦めない' },
 ];
@@ -30,15 +30,15 @@ const timeline = [
   { num: '2018', tag: '中学校時代', title: '野球と、生徒会長', text: '野球チームに所属。生徒会長として学校を盛り上げ、リーダーとしての土台をつくる。', c: 'var(--c-cyan)' },
   { num: '2021', tag: '高校時代', title: '学業に励んだ3年間', text: '進路を見据えながら、3年間しっかりと学業に打ち込む。', c: 'var(--c-green)' },
   { num: '2024', tag: '大学入学', title: '愛知工業大学 情報科学部へ', text: '情報科学部に入学（コンピュータシステム専攻）。', c: 'var(--c-yellow)' },
-  { num: '2025', tag: '転機', title: '転専攻、そしてCEED', text: 'ものづくりへの興味から、メディア情報専攻へ転専攻。マルチクリエイティブサークルCEEDに所属する。', c: 'var(--c-orange)' },
-  { num: '2026', tag: '現在', title: '研究室と、副部長', text: '水野慎士研究室（CGメディア）でCG・画像処理を専門に。CEED副部長として60名規模のサークル運営を支えている。', c: 'var(--c-red)' },
+  { num: '2025', tag: '転機', title: 'メディア情報専攻へ', text: 'ものづくりへの興味から、メディア情報専攻へ転専攻。表現と制作を学ぶ範囲が広がる。', c: 'var(--c-orange)' },
+  { num: '2026', tag: '現在', title: '研究室と、副部長', text: '研究室でCG・画像処理に取り組む。CEED副部長として60名規模のサークル運営を支え、WEB班の制作をまとめている。', c: 'var(--c-red)' },
   { num: 'これから', tag: 'FUTURE', title: 'つくって、手渡す。', text: 'いろんなことに挑戦したい。人生は一度きりだから、後悔のないよう、たくさんの壁を越えていく。', c: 'var(--amber-d)', future: true },
 ];
 
 // 信条（座右の銘・尊敬する人・原点・流儀）— すべて本人の言葉
-const motto = { word: '「謙虚」', reason: '中学の野球部時代に、繰り返し言われてきた言葉。尊敬する大先輩・栗林良吏選手（広島東洋カープ）が大切にしている言葉でもある。' };
+const motto = { word: '「謙虚」', reason: '中学の野球部時代に、繰り返し言われてきた言葉。今も大切にしている。' };
 const credo = [
-  { tag: '尊敬する人', title: '戸塚優斗選手（スノーボード）', text: '2026年の冬季オリンピック金メダリスト。怪我を乗り越えて挑み続けるその姿に、勇気をもらった。自分も頑張ろう、と思える存在。' },
+  { tag: '尊敬する人', title: '挑戦を続ける選手', text: '怪我を乗り越えて挑み続ける姿に勇気をもらう。自分も頑張ろう、と思える存在。' },
   { tag: 'ものづくりの原点', title: '「やりたい」に、突き進む', text: '「自分がやりたい」という気持ちに、ただ突き進んできた。その積み重ねが、今の自分をつくっている。' },
   { tag: '制作の流儀', title: '満足するまで、諦めない', text: '自分を、作品を客観視する。厳しい評価を受け止めてから、納得のいくものに仕上がるまで徹底的に。最後は根気と、根性。' },
 ];
@@ -48,8 +48,8 @@ const qa = [
   { q: '一言で言うと', a: '真面目バカ。' },
   { q: '好きな映画', a: '『スター・ウォーズ』『バック・トゥ・ザ・フューチャー』。感性に、新しい気づきとひらめきをくれた。' },
   { q: '好きなドラマ', a: '『ROOKIES（ルーキーズ）』。' },
-  { q: '中日の推し', a: '捕手・加藤匠馬選手。かつては堂上直倫選手。' },
-  { q: '推しのきっかけ', a: 'TBS『ラヴィット！』で弓木奈於さんの面白さと可愛らしさに惹かれ、乃木坂46の虜に。' },
+  { q: '好きな球団', a: '中日ドラゴンズ。捕手のプレーを見るのが好き。' },
+  { q: '推しのきっかけ', a: 'テレビ番組をきっかけに、乃木坂46の魅力を知った。' },
   { q: '応援しているグループ', a: '乃木坂46 と ≒JOY（ニアジョイ）。' },
   { q: '休日', a: '寝る。推し活。新しいことに挑戦する。つくりたいものをつくる。' },
   { q: '好きな食べ物', a: '餃子・お寿司・焼肉。' },
@@ -91,7 +91,7 @@ const highlights = [
           </span></h1>
           <p class="arole">
             大崎稜馬（おおさき りょうま）。<br />
-            愛知工業大学 情報科学部 情報科学科 メディア情報専攻／<b>水野慎士研究室</b>。<br />
+            愛知工業大学 情報科学部 情報科学科 メディア情報専攻／<b>画像処理・CGの研究室</b>。<br />
             CG・画像処理・Web・映像・グラフィック・企画を横断してつくっています。
           </p>
           <p class="alead">
@@ -144,7 +144,7 @@ const highlights = [
             <span class="tape" aria-hidden="true"></span>
             <span class="ic" aria-hidden="true"><Icon name="pencil" size={28} /></span>
             <h3>つくる人</h3>
-            <p>CG・画像処理・Web・ゲーム。水野研究室で、手を動かしてつくる。「動かない」で終わらせず、原因を突き止めて作り直す。</p>
+            <p>CG・画像処理・Web・ゲーム。研究室でも手を動かしてつくる。「動かない」で終わらせず、原因を突き止めて作り直す。</p>
           </article>
           <span class="amp" aria-hidden="true"><b>×</b><i class="hand">かける</i></span>
           <article class="panel sell reveal d2">
@@ -232,7 +232,7 @@ const highlights = [
               {kama?.video
                 ? <video data-autoplay src={kama.video} muted loop playsinline preload="none" poster={kama.thumb}></video>
                 : <img src={kama?.thumb} alt={kama?.title} />}
-              <span class="badge">開発中 · 水野研で再設計</span>
+              <span class="badge">開発中 · 研究室で再設計</span>
             </div>
             <h3>原因は“コードの調整”だった。</h3>
             <p>ハードのせいだと思い込まず、精読で原因を突き止めた。向きの一本化・防御のノイズ対策・デバッグ表示…と直し続け、いまも研究として継続開発中。</p>
@@ -308,18 +308,18 @@ const highlights = [
             </button>
             <figcaption>
               <h3>中日ドラゴンズと、バンテリンドーム</h3>
-              <p>生まれも育ちも名古屋。中日ドラゴンズのファンとして球場へ。推しは捕手の加藤匠馬選手（かつては堂上直倫選手）。スタンドで浴びる熱気が、明日への活力です。</p>
+              <p>生まれも育ちも名古屋。中日ドラゴンズのファンとして球場へ。捕手のプレーを追い、スタンドで浴びる熱気が明日への活力です。</p>
             </figcaption>
           </figure>
 
           <figure class="pcard reveal d2">
             <span class="tape t2" aria-hidden="true"></span>
-            <button class="pc-media" type="button" data-gallery='["/assets/about/oshikatsu.jpg"]' data-caption="14th YEAR BIRTHDAY LIVE — 弓木奈於さんを応援。">
+            <button class="pc-media" type="button" data-gallery='["/assets/about/oshikatsu.jpg"]' data-caption="14th YEAR BIRTHDAY LIVE — ライブを楽しむ。">
               <img src="/assets/about/oshikatsu.jpg" alt="ライブ会場でタオルを掲げて推し活をする大崎稜馬" loading="lazy" style="object-position: 50% 14%" />
               <span class="pc-chip"><Icon name="heart" size={15} />推し活</span>
             </button>
             <figcaption>
-              <h3>乃木坂46・弓木奈於さんの応援</h3>
+              <h3>乃木坂46の応援</h3>
               <p>『ラヴィット！』をきっかけに乃木坂46の虜に。応援する熱が高じて、ファンサイト「YUMIKI WORLD」を自作するほど。“好き”が、そのまま制作の原動力になりました。</p>
               <a class="pc-link" href="/works/yumiki-world">YUMIKI WORLD の話 →</a>
             </figcaption>
