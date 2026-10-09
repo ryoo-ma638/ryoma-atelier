@@ -66,8 +66,15 @@ const preview = work.cardImage ?? work.thumb;
   .media.is-chuo > img { padding: 0; }
   .media.fit-screen img { padding: .35rem; }
   .media.fit-photo img { object-fit: cover; object-position: center bottom; padding: 0; }
-  .card--settlo .media { background: #fff; }
-  .card--settlo .media > img { object-fit: contain; padding: 0; }
+  /* 代表作の横長カードではメディア枠だけ縦に伸びる。画像も枠全体を基準に中央配置する。 */
+  .card--settlo .media.fit-contain { background: #fff !important; }
+  .card--settlo .media.fit-contain > img {
+    height: 100% !important;
+    aspect-ratio: auto;
+    object-fit: contain;
+    object-position: center;
+    padding: 0;
+  }
   .card:hover .media > img { transform: scale(1.03); }
   .card:hover .media.fit-contain > img { transform: none; }
 
