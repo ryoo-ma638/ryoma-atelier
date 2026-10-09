@@ -256,17 +256,6 @@ export const works: Work[] = [
       { title: "コンセプト — 雨の来る方へ、傘が自動で向く", images: ["/assets/works/wis-scene.jpg", "/assets/works/wis-mechanism.jpg", "/assets/works/wis-concept.jpg"] },
     ],
   },
-  // === 福岡市科学館 CREATIVE AWARD：本人指示で「一時的に非表示」（2026-09-14／応募に至らなかったため）。再表示する時はこの /* */ を外すだけ。 ===
-  /*
-  {
-    slug: "fukuoka-award",
-    title: "福岡市科学館 CREATIVE AWARD 2026（応募構想）",
-    category: "imaging",
-    status: "構想中",
-    summary: "福岡市科学館の展示アイデア公募『CREATIVE AWARD 2026』（テーマ：生きもののコミュニケーション）への応募を準備している、研究室での個人企画。",
-    goal: "科学を“体で感じて学べる”体験を考える。（応募準備中のため、具体的なアイデアの公開は控えています）",
-  },
-  */
   {
     slug: "shuwa-game",
     title: "手話認識ゲーム",
