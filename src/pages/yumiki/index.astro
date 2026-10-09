@@ -68,10 +68,10 @@ const heroLead =
   "天真爛漫なトークでバラエティを沸かせ、影では努力を惜しまない——乃木坂46 4期生・弓木奈於さんの魅力を、ファン目線でめいっぱい詰め込んだ非公式ファンサイトです。";
 // ヒーロー写真（サムネ）の背面に斜めで流すゴーストの言葉（ポートフォリオの hero-kinetic を弓木仕様に）
 const kineticWords = ["弓木奈於", "NAO YUMIKI", "ゆみっきー", "乃木坂46", "はんなり", "なおちゃん"];
-// 今の弓木さん（2026年6月時点の最新トピックス・事実）
+// 公開時点を明記して掲載するトピックス
 const now = [
-  { emoji: "💿", t: "最新シングル", d: "42nd『是非に及ばず』(2026.7.22)に選抜入り。センターは一ノ瀬美空", c: "var(--y-sky)" },
-  { emoji: "📸", t: "最新グラビア", d: "『B.L.T. 2026年5月号』に登場（“ふつうで幸せな日曜日”）", c: "var(--y-pink)" },
+  { emoji: "💿", t: "2026年のシングル", d: "42nd『是非に及ばず』(2026.7.22)に選抜入り。センターは一ノ瀬美空", c: "var(--y-sky)" },
+  { emoji: "📸", t: "雑誌掲載（2026年）", d: "『B.L.T. 2026年5月号』に登場（“ふつうで幸せな日曜日”）", c: "var(--y-pink)" },
   { emoji: "⭐️", t: "選抜の常連", d: "選抜入りを続ける、グループに欠かせない存在に", c: "var(--y-butter)" },
   { emoji: "📺", t: "バラエティで活躍", d: "『ラヴィット！』『乃木坂工事中』などで天然トークが炸裂", c: "var(--y-mint)" },
 ];
@@ -153,16 +153,16 @@ const now = [
     </div>
   </section>
 
-  <!-- NOW / 最新トピックス -->
+  <!-- 2026年のトピックス -->
   <section class="y-section y-now-sec">
     <div class="y-container">
       <div class="sb-head y-reveal">
         <span class="sb-num sb-head-num" style="--cc:var(--y-pink)" aria-hidden="true">01</span>
         <span class="sb-head-tt">
-          <span class="sb-head-eyebrow">Now</span>
-          <h2>✨ 今の<span class="sb-mark" style="--cc:var(--y-butter)">弓木さん</span></h2>
+          <span class="sb-head-eyebrow">2026</span>
+          <h2>✨ 2026年の<span class="sb-mark" style="--cc:var(--y-butter)">弓木さん</span></h2>
         </span>
-        <span class="sb-stamp sb-head-stamp" style="--cc:var(--y-peach)">♡ LATEST</span>
+        <span class="sb-stamp sb-head-stamp" style="--cc:var(--y-peach)">♡ 2026</span>
       </div>
       <div class="y-now-grid">
         {now.map((n, i) => (

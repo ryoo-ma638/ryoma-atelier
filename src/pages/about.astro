@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { works } from '../data/works.ts';
-import Calendar from '../components/Calendar.astro';
 import Icon from '../components/Icon.astro';
 
 const kama = works.find((w) => w.slug === 'deathcamer');
@@ -289,8 +288,12 @@ const highlights = [
       </div>
     </section>
 
-    <!-- ===== 売り子カレンダー ===== -->
-    <Calendar />
+    <section class="section uriko-instagram" aria-label="売り子の近況">
+      <div class="wrap">
+        <p>売り子の近況や出勤のお知らせは、Instagramでご案内しています。</p>
+        <a class="btn ghost" href="https://www.instagram.com/ryoma_v_dome/" target="_blank" rel="noopener noreferrer">Instagramで近況を見る <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
 
     <!-- ===== つくる以外の、わたし。 ===== -->
     <section class="section beyond">
@@ -538,6 +541,9 @@ const highlights = [
   .redink-note :global(.icn) { margin-right: .3rem; vertical-align: -.22em; }
 
   /* --- 売り子 --- */
+  .uriko-instagram { padding-block: 0 var(--stack-sm); }
+  .uriko-instagram .wrap { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.5rem; }
+  .uriko-instagram p { margin: 0; }
   .uriko-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
   .uriko .am { color: var(--scarlet-d); white-space: nowrap; }
   .uriko-photo { position: relative; }
