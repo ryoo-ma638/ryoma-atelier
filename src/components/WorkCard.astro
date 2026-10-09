@@ -14,7 +14,7 @@ const preview = work.cardImage ?? work.thumb;
   href={href}
   style={`--tag:${cat.color}`}
 >
-  <div class={`media${preview ? '' : ' empty'}${work.contain && work.cardView !== 'photo' ? ' fit-contain' : ''}${work.cardView === 'screen' ? ' fit-screen' : ''}${work.cardView === 'photo' ? ' fit-photo' : ''}`} transition:name={`w-${work.slug}`}>
+  <div class={`media${preview ? '' : ' empty'}${work.contain && work.cardView !== 'photo' ? ' fit-contain' : ''}${work.cardView === 'screen' ? ' fit-screen' : ''}${work.cardView === 'photo' ? ' fit-photo' : ''}${work.slug === 'chuo-seisakusho' ? ' is-chuo' : ''}`} transition:name={`w-${work.slug}`}>
     {preview
       ? (work.video
           ? <video data-hover src={work.video} poster={preview} muted loop playsinline preload="none"></video>
@@ -63,6 +63,7 @@ const preview = work.cardImage ?? work.thumb;
   /* 縦長ポスター等＝余白を作って全体を見せる */
   .media.fit-contain { background: repeating-linear-gradient(45deg, var(--paper-3), var(--paper-3) 10px, var(--paper-2) 10px, var(--paper-2) 20px); }
   .media.fit-contain img { object-fit: contain; padding: clamp(.75rem, 2vw, 1.25rem); }
+  .media.is-chuo > img { padding: 0; }
   .media.fit-screen img { padding: .35rem; }
   .media.fit-photo img { object-fit: cover; object-position: center bottom; padding: 0; }
   .card--settlo .media { background: #fff; }
